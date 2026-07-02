@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第1课：细胞的结构与功能</title>
+<style>
+  :root {
+    --bg: #faf8f5;
+    --text: #2c2c2c;
+    --accent: #2e7d32;
+    --accent-light: #e8f5e9;
+    --border: #c8e6c9;
+    --quiz-correct: #4caf50;
+    --quiz-wrong: #e53935;
+    --callout-bg: #fff8e1;
+    --callout-border: #ffc107;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: "Noto Serif SC", "Source Han Serif CN", "SimSun", Georgia, serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.9;
+    font-size: 17px;
+    padding: 2rem 1rem;
+  }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+  header {
+    border-bottom: 3px solid var(--accent);
+    padding-bottom: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  .lesson-meta {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 0.5rem;
+    font-family: "Noto Sans SC", "Microsoft YaHei", sans-serif;
+  }
+  h1 {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+    letter-spacing: 0.02em;
+  }
+  h2 {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--accent);
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.3rem;
+    border-bottom: 1px solid var(--border);
+  }
+  h3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: #333;
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+  p { margin-bottom: 1rem; }
+  .mission-link {
+    display: inline-block;
+    margin-bottom: 1.5rem;
+    font-size: 14px;
+    color: var(--accent);
+    text-decoration: none;
+    font-family: "Noto Sans SC", "Microsoft YaHei", sans-serif;
+  }
+  .mission-link:hover { text-decoration: underline; }
+
+  /* Cell diagram */
+  .cell-diagram {
+    background: white;
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    padding: 2rem;
+    margin: 2rem 0;
+    text-align: center;
+  }
+  .cell-svg { max-width: 100%; height: auto; }
+  .cell-label {
+    position: absolute;
+    font-size: 13px;
+    font-family: "Noto Sans SC", sans-serif;
+    background: var(--accent-light);
+    padding: 2px 8px;
+    border-radius: 4px;
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  /* Organelle table */
+  .organelle-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.5rem 0;
+    font-size: 15px;
+  }
+  .organelle-table th {
+    background: var(--accent);
+    color: white;
+    padding: 0.7rem 1rem;
+    text-align: left;
+    font-weight: 600;
+  }
+  .organelle-table td {
+    padding: 0.6rem 1rem;
+    border-bottom: 1px solid #e0e0e0;
+    vertical-align: top;
+  }
+  .organelle-table tr:nth-child(even) td {
+    background: #f9f9f9;
+  }
+  .organelle-table tr:hover td {
+    background: var(--accent-light);
+  }
+
+  /* Callout */
+  .callout {
+    background: var(--callout-bg);
+    border-left: 4px solid var(--callout-border);
+    padding: 1rem 1.2rem;
+    margin: 1.5rem 0;
+    border-radius: 0 8px 8px 0;
+    font-size: 15px;
+  }
+  .callout-title {
+    font-weight: 700;
+    color: #e65100;
+    margin-bottom: 0.3rem;
+    font-family: "Noto Sans SC", sans-serif;
+  }
+
+  /* Quiz */
+  .quiz-section {
+    background: white;
+    border: 2px solid var(--accent);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin: 2rem 0;
+  }
+  .quiz-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 1.2rem;
+    font-family: "Noto Sans SC", sans-serif;
+  }
+  .quiz-question {
+    margin-bottom: 1.5rem;
+    padding-bottom: 1.2rem;
+    border-bottom: 1px dashed #ddd;
+  }
+  .quiz-question:last-of-type { border-bottom: none; }
+  .quiz-q-text {
+    font-weight: 600;
+    margin-bottom: 0.8rem;
+    font-size: 16px;
+  }
+  .quiz-options { list-style: none; padding: 0; }
+  .quiz-options li {
+    margin-bottom: 0.4rem;
+  }
+  .quiz-btn {
+    display: block;
+    width: 100%;
+    padding: 0.6rem 1rem;
+    margin-bottom: 0.4rem;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    background: white;
+    cursor: pointer;
+    font-size: 15px;
+    font-family: "Noto Sans SC", "Microsoft YaHei", sans-serif;
+    text-align: left;
+    transition: all 0.2s;
+  }
+  .quiz-btn:hover {
+    border-color: var(--accent);
+    background: var(--accent-light);
+  }
+  .quiz-btn.correct {
+    border-color: var(--quiz-correct);
+    background: #e8f5e9;
+    color: #1b5e20;
+    font-weight: 600;
+  }
+  .quiz-btn.wrong {
+    border-color: var(--quiz-wrong);
+    background: #ffebee;
+    color: #b71c1c;
+  }
+  .quiz-btn.disabled {
+    pointer-events: none;
+    opacity: 0.7;
+  }
+  .quiz-feedback {
+    margin-top: 0.5rem;
+    padding: 0.5rem 0.8rem;
+    border-radius: 6px;
+    font-size: 14px;
+    font-family: "Noto Sans SC", sans-serif;
+    display: none;
+  }
+  .quiz-feedback.show { display: block; }
+  .quiz-feedback.correct-fb {
+    background: #e8f5e9;
+    color: #2e7d32;
+    border: 1px solid #a5d6a7;
+  }
+  .quiz-feedback.wrong-fb {
+    background: #ffebee;
+    color: #c62828;
+    border: 1px solid #ef9a9a;
+  }
+
+  /* Score */
+  .score-bar {
+    display: none;
+    text-align: center;
+    padding: 1rem;
+    background: var(--accent-light);
+    border-radius: 8px;
+    margin-top: 1rem;
+    font-family: "Noto Sans SC", sans-serif;
+  }
+  .score-bar.show { display: block; }
+  .score-number {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--accent);
+  }
+
+  /* Navigation */
+  nav {
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 2px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    font-family: "Noto Sans SC", sans-serif;
+  }
+  nav a {
+    color: var(--accent);
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    transition: all 0.2s;
+  }
+  nav a:hover {
+    background: var(--accent-light);
+    text-decoration: none;
+  }
+
+  /* Print */
+  @media print {
+    body { font-size: 12pt; padding: 1cm; }
+    .container { max-width: 100%; }
+    .quiz-section { break-inside: avoid; }
+    nav { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <a class="mission-link" href="../MISSION.html">← 回到学习计划</a>
+  <div class="lesson-meta">小高备考 · 第1课 · 生命科学 · 建议用时：15分钟</div>
+  <h1>细胞的结构与功能</h1>
+  <p style="color:#666;font-size:14px;">这是生命的基本单位，也是所有生命活动的场所。</p>
+</header>
+
+<section>
+<h2>学习目标</h2>
+<p>学完本课，你应该能够：</p>
+<ol style="margin-left:1.5rem;margin-bottom:1rem;">
+  <li>说出动植物细胞的基本结构</li>
+  <li>识别各细胞器的名称和功能</li>
+  <li>比较动植物细胞的异同</li>
+  <li>理解结构与功能相适应的生物学观点</li>
+</ol>
+</section>
+
+<section>
+<h2>一、什么是细胞？</h2>
+<p>细胞是生物体结构和功能的<strong>基本单位</strong>。除了病毒以外，所有的生物都是由细胞构成的。这一概念被称为<strong>细胞学说</strong>。</p>
+
+<div class="callout">
+  <div class="callout-title">💡 关键概念</div>
+  细胞学说由施莱登（植物）和施旺（动物）于1838-1839年提出，是生物学最重要的基础理论之一。它指出：<br>
+  ① 所有生物都由一个或多个细胞组成<br>
+  ② 细胞是生命活动的基本单位<br>
+  ③ 新细胞由已存在的细胞分裂产生
+</div>
+
+<p>根据细胞数量，生物可分为：</p>
+<ul style="margin-left:1.5rem;margin-bottom:1rem;">
+  <li><strong>单细胞生物</strong>：整个身体只有一个细胞，如草履虫、酵母菌、衣藻</li>
+  <li><strong>多细胞生物</strong>：由许多细胞构成，如人、动物、植物</li>
+</ul>
+
+<p>细胞的大小差异很大：</p>
+<ul style="margin-left:1.5rem;margin-bottom:1rem;">
+  <li>最小的细胞：支原体，直径约 0.1 微米</li>
+  <li>一般细胞：直径 10~100 微米</li>
+  <li>最大的细胞：鸵鸟卵黄（一个卵细胞），直径可达 8~9 厘米</li>
+</ul>
+</section>
+
+<section>
+<h2>二、细胞的基本结构</h2>
+
+<h3>1. 细胞膜</h3>
+<p>细胞膜是包裹在细胞表面的一层薄膜，主要由<strong>磷脂双分子层</strong>和<strong>蛋白质</strong>构成。</p>
+<ul style="margin-left:1.5rem;margin-bottom:1rem;">
+  <li><strong>功能</strong>：保护细胞、控制物质进出（选择透过性膜）</li>
+  <li><strong>特点</strong>：具有一定的流动性</li>
+</ul>
+
+<div class="callout">
+  <div class="callout-title">🔑 记忆口诀</div>
+  「细胞膜，薄又韧，保护细胞控进出」<br>
+  —— 就像小区的围墙和门卫，决定谁能进、谁能出。
+</div>
+
+<h3>2. 细胞质</h3>
+<p>细胞膜以内、细胞核以外的部分称为细胞质，其中悬浮着各种<strong>细胞器</strong>。</p>
+
+<h3>3. 细胞核</h3>
+<p>细胞核是细胞的<strong>"控制中心"</strong>，内含遗传物质 DNA。</p>
+<ul style="margin-left:1.5rem;margin-bottom:1rem;">
+  <li><strong>核膜</strong>：双层膜，有核孔，控制物质进出</li>
+  <li><strong>染色质</strong>：由DNA和蛋白质组成，携带遗传信息</li>
+  <li><strong>核仁</strong>：与核糖体的形成有关</li>
+  <li><strong>功能</strong>：储存遗传信息、控制细胞代谢和繁殖</li>
+</ul>
+</section>
+
+<section>
+<h2>三、主要细胞器及其功能</h2>
+
+<table class="organelle-table">
+  <thead>
+    <tr>
+      <th>细胞器</th>
+      <th>结构</th>
+      <th>功能</th>
+      <th>记忆要点</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>线粒体</strong></td>
+      <td>双层膜，内膜向内折叠成嵴</td>
+      <td>有氧呼吸的主要场所，提供能量</td>
+      <td>细胞的"发电厂"</td>
+    </tr>
+    <tr>
+      <td><strong>叶绿体</strong></td>
+      <td>双层膜，内有类囊体和基粒</td>
+      <td>光合作用的场所（仅植物细胞有）</td>
+      <td>植物的"太阳能板"</td>
+    </tr>
+    <tr>
+      <td><strong>内质网</strong></td>
+      <td>单层膜，网状管道系统</td>
+      <td>蛋白质加工运输、脂质合成</td>
+      <td>细胞的"加工厂+物流"</td>
+    </tr>
+    <tr>
+      <td><strong>高尔基体</strong></td>
+      <td>单层膜，扁平囊泡堆叠</td>
+      <td>蛋白质分拣、包装、分泌</td>
+      <td>细胞的"邮局"</td>
+    </tr>
+    <tr>
+      <td><strong>核糖体</strong></td>
+      <td>无膜，由RNA和蛋白质组成</td>
+      <td>合成蛋白质的场所</td>
+      <td>细胞的"装配线"</td>
+    </tr>
+    <tr>
+      <td><strong>溶酶体</strong></td>
+      <td>单层膜，内含多种水解酶</td>
+      <td>分解衰老细胞器、吞噬病菌</td>
+      <td>细胞的"回收站+保安"</td>
+    </tr>
+    <tr>
+      <td><strong>液泡</strong></td>
+      <td>单层膜，内含细胞液</td>
+      <td>调节细胞内环境，储存物质</td>
+      <td>植物的"大水缸"（大而明显）</td>
+    </tr>
+  </tbody>
+</table>
+</section>
+
+<section>
+<h2>四、动植物细胞的比较</h2>
+
+<table class="organelle-table">
+  <thead>
+    <tr>
+      <th>比较项目</th>
+      <th>动物细胞</th>
+      <th>植物细胞</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>细胞壁</td>
+      <td>❌ 无</td>
+      <td>✅ 有（纤维素和果胶）</td>
+    </tr>
+    <tr>
+      <td>细胞膜</td>
+      <td>✅ 有</td>
+      <td>✅ 有（紧贴细胞壁内侧）</td>
+    </tr>
+    <tr>
+      <td>细胞质</td>
+      <td>✅ 有</td>
+      <td>✅ 有</td>
+    </tr>
+    <tr>
+      <td>细胞核</td>
+      <td>✅ 有</td>
+      <td>✅ 有</td>
+    </tr>
+    <tr>
+      <td>线粒体</td>
+      <td>✅ 有</td>
+      <td>✅ 有</td>
+    </tr>
+    <tr>
+      <td>叶绿体</td>
+      <td>❌ 无</td>
+      <td>✅ 有（绿色部分）</td>
+    </tr>
+    <tr>
+      <td>液泡</td>
+      <td>❌ 无（或有微小液泡）</td>
+      <td>✅ 有（成熟细胞有大液泡）</td>
+    </tr>
+    <tr>
+      <td>中心体</td>
+      <td>✅ 有</td>
+      <td>❌ 低等植物有，高等植物无</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="callout">
+  <div class="callout-title">🔑 考试常考点</div>
+  <strong>动植物细胞都有</strong>：细胞膜、细胞质、细胞核、线粒体<br>
+  <strong>植物细胞特有</strong>：细胞壁、叶绿体、大液泡<br>
+  <strong>动物细胞特有</strong>：中心体（高等植物没有）
+</div>
+</section>
+
+<section>
+<h2>五、结构与功能相适应</h2>
+<p>生物学中一个非常重要的观点是<strong>结构与功能相适应</strong>。让我们看看几个经典例子：</p>
+
+<h3>线粒体 — 能量的工厂</h3>
+<p>线粒体内膜向内折叠形成<strong>嵴</strong>，大大增加了膜的表面积，为有氧呼吸相关的酶提供了更多的附着位点。这就是"结构适应功能"的典型例子。</p>
+
+<h3>叶绿体 — 捕获阳光的机器</h3>
+<p>叶绿体内有许多由类囊体堆叠形成的<strong>基粒</strong>，基粒之间由基质类囊体相连。这种结构使叶绿体能高效地进行光合作用。</p>
+
+<h3>红细胞 — 运氧专家</h3>
+<p>哺乳动物的成熟红细胞<strong>没有细胞核和细胞器</strong>，呈双面凹的圆饼形。这样的结构给它腾出了更多空间来装载血红蛋白，专门负责运输氧气。</p>
+</section>
+
+<section>
+<h2>📖 推荐阅读</h2>
+<p>人教版高中生物必修一《分子与细胞》第一章 — 系统了解细胞生物学基础知识。</p>
+<p>🔗 <a href="https://www.pep.com.cn/gzs/wsws/xkb/xxfb/" target="_blank">人民教育出版社 — 高中生物教材</a></p>
+</section>
+
+<section>
+<h2>✏️ 自我检测</h2>
+<p>请先独立思考，再点击选项查看答案和解析。</p>
+</section>
+
+<div class="quiz-section">
+  <div class="quiz-title">📝 课堂练习</div>
+
+  <div class="quiz-question" data-correct="2">
+    <div class="quiz-q-text">1. 下列哪项结构是植物细胞特有的？</div>
+    <ul class="quiz-options">
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 0)">A. 细胞膜</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 1)">B. 线粒体</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 2)">C. 叶绿体</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 3)">D. 细胞核</button></li>
+    </ul>
+    <div class="quiz-feedback"></div>
+  </div>
+
+  <div class="quiz-question" data-correct="1">
+    <div class="quiz-q-text">2. 细胞中的"动力车间"是指哪个结构？</div>
+    <ul class="quiz-options">
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 0)">A. 叶绿体</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 1)">B. 线粒体</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 2)">C. 核糖体</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 3)">D. 高尔基体</button></li>
+    </ul>
+    <div class="quiz-feedback"></div>
+  </div>
+
+  <div class="quiz-question" data-correct="3">
+    <div class="quiz-q-text">3. 控制物质进出细胞的结构是？</div>
+    <ul class="quiz-options">
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 0)">A. 细胞壁</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 1)">B. 细胞核</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 2)">C. 细胞质</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 3)">D. 细胞膜</button></li>
+    </ul>
+    <div class="quiz-feedback"></div>
+  </div>
+
+  <div class="quiz-question" data-correct="0">
+    <div class="quiz-q-text">4. 哺乳动物成熟的红细胞没有细胞核，这主要是为了？</div>
+    <ul class="quiz-options">
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 0)">A. 腾出空间装载更多血红蛋白</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 1)">B. 减少能量消耗</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 2)">C. 增强分裂能力</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 3)">D. 提高免疫能力</button></li>
+    </ul>
+    <div class="quiz-feedback"></div>
+  </div>
+
+  <div class="quiz-question" data-correct="2">
+    <div class="quiz-q-text">5. 细胞内的"邮局"，负责对蛋白质进行分拣和包装的是？</div>
+    <ul class="quiz-options">
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 0)">A. 内质网</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 1)">B. 核糖体</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 2)">C. 高尔基体</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 3)">D. 溶酶体</button></li>
+    </ul>
+    <div class="quiz-feedback"></div>
+  </div>
+
+  <div class="score-bar" id="scoreBar">
+    <div>你的得分</div>
+    <div class="score-number" id="scoreNumber">0/5</div>
+    <div id="scoreMessage" style="margin-top:0.5rem;color:#666;"></div>
+  </div>
+</div>
+
+<nav>
+  <a href="#">← 上一课</a>
+  <a href="#">下一课：细胞的生命历程 →</a>
+</nav>
+
+</div><!-- /container -->
+
+<script>
+let score = 0;
+let answered = 0;
+const total = 5;
+
+const explanations = [
+  // Q1
+  ["细胞膜是所有细胞都具有的结构", "线粒体动植物细胞都有", "✅ 叶绿体是植物绿色部分特有的细胞器，进行光合作用", "细胞核是所有真核细胞都具有的结构"],
+  // Q2
+  ["叶绿体是能量转换站，但不是动力车间", "✅ 线粒体是有氧呼吸的主要场所，被称为细胞的'动力车间'", "核糖体负责合成蛋白质", "高尔基体负责分拣和包装蛋白质"],
+  // Q3
+  ["细胞壁起支持和保护作用，但不控制物质进出", "细胞核控制遗传和代谢", "细胞质是细胞器所在的液体环境", "✅ 细胞膜具有选择透过性，控制物质进出细胞"],
+  // Q4
+  ["✅ 没有细胞核可以腾出更多空间装载血红蛋白，提高运氧效率", "虽然也减少了能量消耗，但这不是主要原因", "成熟红细胞已经不能分裂了", "红细胞不负责免疫"],
+  // Q5
+  ["内质网是蛋白质加工和脂质合成的场所", "核糖体是合成蛋白质的场所", "✅ 高尔基体负责对来自内质网的蛋白质进行加工、分拣和包装", "溶酶体负责分解废物和病菌"]
+];
+
+function checkAnswer(btn, choiceIndex) {
+  const question = btn.closest('.quiz-question');
+  if (question.classList.contains('answered')) return;
+  question.classList.add('answered');
+  answered++;
+
+  const correctIndex = parseInt(question.dataset.correct);
+  const buttons = question.querySelectorAll('.quiz-btn');
+  const feedback = question.querySelector('.quiz-feedback');
+
+  buttons.forEach(b => b.classList.add('disabled'));
+
+  if (choiceIndex === correctIndex) {
+    btn.classList.add('correct');
+    feedback.className = 'quiz-feedback show correct-fb';
+    feedback.textContent = '✅ 正确！' + explanations[answered - 1][choiceIndex];
+    score++;
+  } else {
+    btn.classList.add('wrong');
+    buttons[correctIndex].classList.add('correct');
+    feedback.className = 'quiz-feedback show wrong-fb';
+    feedback.textContent = '❌ 不对哦。' + explanations[answered - 1][correctIndex];
+  }
+
+  if (answered === total) {
+    const bar = document.getElementById('scoreBar');
+    bar.classList.add('show');
+    document.getElementById('scoreNumber').textContent = score + '/' + total;
+    const msg = document.getElementById('scoreMessage');
+    if (score === total) msg.textContent = '🎉 太棒了！全部正确！';
+    else if (score >= 3) msg.textContent = '👍 不错！再复习一下错题吧。';
+    else msg.textContent = '💪 建议重新阅读本课内容后再试一次。';
+  }
+}
+</script>
+
+</body>
+</html>
