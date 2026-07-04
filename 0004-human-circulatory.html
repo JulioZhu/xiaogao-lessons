@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第4课：人体循环系统</title>
+<style>
+  :root {
+    --bg: #faf8f5; --text: #2c2c2c;
+    --accent: #c62828; --accent-light: #ffebee; --border: #ef9a9a;
+    --quiz-correct: #4caf50; --quiz-wrong: #e53935;
+    --callout-bg: #fff8e1; --callout-border: #ffc107;
+    --blood-bg: #fce4ec; --blood-border: #f48fb1;
+    --heart-bg: #e8eaf6; --heart-border: #9fa8da;
+    --comparison-bg: #e3f2fd; --comparison-border: #90caf9;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: "Noto Serif SC", "Source Han Serif CN", "SimSun", Georgia, serif;
+    background: var(--bg); color: var(--text); line-height: 1.9;
+    font-size: 17px; padding: 2rem 1rem;
+  }
+  .container { max-width: 720px; margin: 0 auto; }
+  header { border-bottom: 3px solid var(--accent); padding-bottom: 1.5rem; margin-bottom: 2rem; }
+  .lesson-meta { font-size: 14px; color: #666; margin-bottom: 0.5rem; font-family: "Noto Sans SC", "Microsoft YaHei", sans-serif; }
+  h1 { font-size: 28px; font-weight: 700; color: var(--accent); margin-bottom: 0.5rem; letter-spacing: 0.02em; }
+  h2 { font-size: 22px; font-weight: 700; color: var(--accent); margin-top: 2.5rem; margin-bottom: 1rem; padding-bottom: 0.3rem; border-bottom: 1px solid var(--border); }
+  h3 { font-size: 18px; font-weight: 700; color: #333; margin-top: 1.5rem; margin-bottom: 0.5rem; }
+  p { margin-bottom: 1rem; }
+  .mission-link { display: inline-block; margin-bottom: 1.5rem; font-size: 14px; color: var(--accent); text-decoration: none; font-family: "Noto Sans SC", "Microsoft YaHei", sans-serif; }
+  .mission-link:hover { text-decoration: underline; }
+  ol, ul { margin-left: 1.5rem; margin-bottom: 1rem; }
+  li { margin-bottom: 0.3rem; }
+  .callout { background: var(--callout-bg); border-left: 4px solid var(--callout-border); padding: 1rem 1.2rem; margin: 1.5rem 0; border-radius: 0 8px 8px 0; font-size: 15px; }
+  .callout-title { font-weight: 700; color: #e65100; margin-bottom: 0.3rem; font-family: "Noto Sans SC", sans-serif; }
+  .blood-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 14px; }
+  .blood-table th { background: var(--accent); color: white; padding: 0.6rem 0.8rem; text-align: left; font-weight: 600; font-size: 13px; }
+  .blood-table td { padding: 0.5rem 0.8rem; border-bottom: 1px solid #e0e0e0; vertical-align: top; }
+  .blood-table tr:nth-child(even) td { background: #f9f9f9; }
+  .blood-table tr:hover td { background: #fce4ec; }
+  .quiz-section { background: white; border: 2px solid var(--accent); border-radius: 12px; padding: 1.5rem; margin: 2rem 0; }
+  .quiz-title { font-size: 18px; font-weight: 700; color: var(--accent); margin-bottom: 1.2rem; font-family: "Noto Sans SC", sans-serif; }
+  .quiz-question { margin-bottom: 1.5rem; padding-bottom: 1.2rem; border-bottom: 1px dashed #ddd; }
+  .quiz-question:last-of-type { border-bottom: none; }
+  .quiz-q-text { font-weight: 600; margin-bottom: 0.8rem; font-size: 16px; }
+  .quiz-options { list-style: none; padding: 0; }
+  .quiz-options li { margin-bottom: 0.4rem; }
+  .quiz-btn { display: block; width: 100%; padding: 0.6rem 1rem; margin-bottom: 0.4rem; border: 2px solid #ddd; border-radius: 8px; background: white; cursor: pointer; font-size: 15px; font-family: "Noto Sans SC", "Microsoft YaHei", sans-serif; text-align: left; transition: all 0.2s; }
+  .quiz-btn:hover { border-color: var(--accent); background: var(--accent-light); }
+  .quiz-btn.correct { border-color: var(--quiz-correct); background: #e8f5e9; color: #1b5e20; font-weight: 600; }
+  .quiz-btn.wrong { border-color: var(--quiz-wrong); background: #ffebee; color: #b71c1c; }
+  .quiz-btn.disabled { pointer-events: none; opacity: 0.7; }
+  .quiz-feedback { margin-top: 0.5rem; padding: 0.5rem 0.8rem; border-radius: 6px; font-size: 14px; font-family: "Noto Sans SC", sans-serif; display: none; }
+  .quiz-feedback.show { display: block; }
+  .quiz-feedback.correct-fb { background: #e8f5e9; color: #2e7d32; border: 1px solid #a5d6a7; }
+  .quiz-feedback.wrong-fb { background: #ffebee; color: #c62828; border: 1px solid #ef9a9a; }
+  .score-bar { display: none; text-align: center; padding: 1rem; background: var(--accent-light); border-radius: 8px; margin-top: 1rem; font-family: "Noto Sans SC", sans-serif; }
+  .score-bar.show { display: block; }
+  .score-number { font-size: 32px; font-weight: 700; color: var(--accent); }
+  nav { margin-top: 3rem; padding-top: 1.5rem; border-top: 2px solid var(--border); display: flex; justify-content: space-between; font-family: "Noto Sans SC", sans-serif; }
+  nav a { color: var(--accent); text-decoration: none; padding: 0.5rem 1rem; border: 1px solid var(--border); border-radius: 8px; transition: all 0.2s; }
+  nav a:hover { background: var(--accent-light); text-decoration: none; }
+  .heart-diagram { background: var(--heart-bg); border: 2px solid var(--heart-border); border-radius: 12px; padding: 1.5rem; margin: 1.5rem 0; text-align: center; font-family: "Noto Sans SC", sans-serif; }
+  .heart-chamber { display: inline-block; background: white; border: 2px solid var(--heart-border); border-radius: 8px; padding: 0.6rem 1rem; margin: 0.3rem; font-weight: 600; font-size: 14px; }
+  .flow-box { background: var(--blood-bg); border: 2px solid var(--blood-border); border-radius: 12px; padding: 1.2rem 1.5rem; margin: 1.5rem 0; }
+  .flow-title { font-weight: 700; color: #c62828; margin-bottom: 0.8rem; font-family: "Noto Sans SC", sans-serif; font-size: 16px; }
+  .flow-path { font-size: 15px; line-height: 2.4; text-align: center; }
+  .flow-node { display: inline-block; background: white; border: 2px solid var(--blood-border); border-radius: 6px; padding: 0.25rem 0.6rem; font-weight: 600; font-size: 13px; margin: 0.15rem; }
+  .flow-arrow { color: var(--accent); font-weight: 700; margin: 0 0.2rem; }
+  .highlight-box { background: #fff3e0; border: 2px solid #ffb74d; border-radius: 12px; padding: 1rem 1.2rem; margin: 1.5rem 0; }
+  .highlight-title { font-weight: 700; color: #e65100; margin-bottom: 0.3rem; font-family: "Noto Sans SC", sans-serif; }
+  .vessel-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 14px; }
+  .vessel-table th { background: #1565c0; color: white; padding: 0.6rem 0.8rem; text-align: left; font-weight: 600; font-size: 13px; }
+  .vessel-table td { padding: 0.5rem 0.8rem; border-bottom: 1px solid #e0e0e0; }
+  .vessel-table tr:nth-child(even) td { background: #f9f9f9; }
+  .vessel-table tr:hover td { background: #e3f2fd; }
+  @media print { body { font-size: 12pt; padding: 1cm; } .container { max-width: 100%; } .quiz-section { break-inside: avoid; } nav { display: none; } }
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <a class="mission-link" href="../MISSION.md">← 回到学习计划</a>
+  <div class="lesson-meta">小高备考 · 第4课 · 生命科学 · 建议用时：25分钟</div>
+  <h1>人体循环系统</h1>
+  <p style="color:#666;font-size:14px;">消化后的营养物质如何到达全身？循环系统是生命的"物流网络"。</p>
+</header>
+
+<section>
+<h2>学习目标</h2>
+<p>学完本课，你应该能够：</p>
+<ol style="margin-left:1.5rem;margin-bottom:1rem;">
+  <li>说出循环系统的组成（心脏、血管、血液）</li>
+  <li>描述心脏的结构和功能</li>
+  <li>区分动脉、静脉、毛细血管的特点</li>
+  <li>理解体循环和肺循环的路径及气体交换</li>
+  <li>解释血型与输血原则</li>
+  <li>描述血压的概念及影响因素</li>
+</ol>
+</section>
+
+<section>
+<h2>一、循环系统的组成</h2>
+<p>循环系统由<strong>心脏</strong>、<strong>血管</strong>和<strong>血液</strong>三部分组成，负责运输氧气、营养物质、激素和代谢废物。</p>
+
+<div class="flow-box">
+  <div class="flow-title">🔄 循环系统整体功能</div>
+  <div class="flow-path">
+    <span class="flow-node">心脏（泵）</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-node">血管（管道）</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-node">血液（载体）</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-node">全身组织</span>
+  </div>
+</div>
+
+<h3>1. 血液的组成</h3>
+<table class="blood-table">
+  <thead>
+    <tr>
+      <th>成分</th>
+      <th>占比</th>
+      <th>功能</th>
+      <th>形态特征</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>血浆</strong></td>
+      <td>约55%</td>
+      <td>运载血细胞，运输养料和废物</td>
+      <td>淡黄色液体，主要成分是水</td>
+    </tr>
+    <tr>
+      <td><strong>红细胞(RBC)</strong></td>
+      <td>约45%</td>
+      <td>运输氧气（含血红蛋白）</td>
+      <td>双面凹圆盘状，无细胞核</td>
+    </tr>
+    <tr>
+      <td><strong>白细胞(WBC)</strong></td>
+      <td>&lt;1%</td>
+      <td>吞噬病菌，免疫防御</td>
+      <td>有细胞核，体积最大</td>
+    </tr>
+    <tr>
+      <td><strong>血小板(PLT)</strong></td>
+      <td>&lt;1%</td>
+      <td>止血和凝血</td>
+      <td>最小，无细胞核，不规则</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="callout">
+  <div class="callout-title">🔬 关键对比</div>
+  <strong>三种血细胞的比较：</strong><br>
+  • 数量最多：红细胞<br>
+  • 体积最大：白细胞<br>
+  • 体积最小：血小板<br>
+  • 唯一有核的：白细胞（成熟红细胞也无核）<br>
+  • 唯一含血红蛋白的：红细胞
+</div>
+</section>
+
+<section>
+<h2>二、心脏——循环系统的动力泵</h2>
+<p>心脏位于胸腔中部偏左，大小约等于本人的拳头，是循环系统的核心器官。</p>
+
+<h3>心脏的四腔结构</h3>
+<div class="heart-diagram">
+  <div class="flow-title">心脏四腔（从观察者视角，左右相反）</div>
+  <div style="display:flex;justify-content:center;gap:1rem;flex-wrap:wrap;margin:1rem 0;">
+    <div style="text-align:center;">
+      <div class="heart-chamber" style="border-color:#e53935;color:#c62828;">右心房</div>
+      <div style="font-size:12px;color:#888;margin-top:0.3rem;">接收全身回血</div>
+    </div>
+    <div style="text-align:center;">
+      <div class="heart-chamber" style="border-color:#e53935;color:#c62828;">右心室</div>
+      <div style="font-size:12px;color:#888;margin-top:0.3rem;">泵往肺部</div>
+    </div>
+  </div>
+  <div style="font-size:24px;color:#c62828;margin:0.5rem 0;">━━━ 分隔 ━━━</div>
+  <div style="display:flex;justify-content:center;gap:1rem;flex-wrap:wrap;margin:1rem 0;">
+    <div style="text-align:center;">
+      <div class="heart-chamber" style="border-color:#1565c0;color:#1565c0;">左心房</div>
+      <div style="font-size:12px;color:#888;margin-top:0.3rem;">接收肺回血</div>
+    </div>
+    <div style="text-align:center;">
+      <div class="heart-chamber" style="border-color:#1565c0;color:#1565c0;">左心室</div>
+      <div style="font-size:12px;color:#888;margin-top:0.3rem;">泵往全身</div>
+    </div>
+  </div>
+</div>
+
+<h3>心脏瓣膜</h3>
+<ul style="margin-left:1.5rem;margin-bottom:1rem;">
+  <li><strong>房室瓣</strong>：位于心房和心室之间，防止血液倒流回心房</li>
+  <li><strong>动脉瓣</strong>：位于心室和动脉之间，防止血液倒流回心室</li>
+</ul>
+
+<div class="highlight-box">
+  <div class="highlight-title">💡 记忆口诀</div>
+  <strong>"上房下室，左右相反"</strong>——心脏四腔中，上面是心房，下面是心室；观察图时左边是右心，右边是左心。<br>
+  <strong>"室连动脉，房连静脉"</strong>——心室连接动脉，心房连接静脉。
+</div>
+
+<h3>心脏壁的厚度</h3>
+<table class="vessel-table">
+  <thead>
+    <tr>
+      <th>腔室</th>
+      <th>壁厚度</th>
+      <th>原因</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>左心室</td><td>最厚</td><td>需要把血液泵到全身（体循环），路程最长，压力最大</td></tr>
+    <tr><td>右心室</td><td>较薄</td><td>只需要把血液泵到肺部（肺循环），路程短</td></tr>
+    <tr><td>左心房</td><td>较薄</td><td>接收肺静脉回来的血，压力不大</td></tr>
+    <tr><td>右心房</td><td>最薄</td><td>接收上下腔静脉回来的血</td></tr>
+  </tbody>
+</table>
+</section>
+
+<section>
+<h2>三、血管——运输的"高速公路"</h2>
+<table class="vessel-table">
+  <thead>
+    <tr>
+      <th>特征</th>
+      <th>动脉</th>
+      <th>静脉</th>
+      <th>毛细血管</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td><strong>功能</strong></td><td>将血液从心脏送到全身</td><td>将血液从全身送回心脏</td><td>物质交换的场所</td></tr>
+    <tr><td><strong>管壁</strong></td><td>最厚，弹性大</td><td>较薄，弹性小</td><td>极薄，仅一层上皮细胞</td></tr>
+    <tr><td><strong>管腔</strong></td><td>较小</td><td>较大（有静脉瓣）</td><td>极小，红细胞单行通过</td></tr>
+    <tr><td><strong>血流速度</strong></td><td>最快</td><td>较慢</td><td>最慢</td></tr>
+    <tr><td><strong>搏动</strong></td><td>有脉搏</td><td>无</td><td>无</td></tr>
+    <tr><td><strong>颜色</strong></td><td>鲜红（动脉血）</td><td>暗红（静脉血）*</td><td>—</td></tr>
+  </tbody>
+</table>
+<p style="font-size:14px;color:#888;">* 注意：肺静脉中流的是鲜红的动脉血，肺动脉中流的是暗红的静脉血</p>
+
+<div class="callout">
+  <div class="callout-title">⚠️ 高频考点</div>
+  <strong>静脉瓣</strong>：四肢静脉的内表面有静脉瓣，防止血液倒流。这也是为什么抽血或输液时要在手臂近心端扎紧橡皮管——目的是让远心端的静脉鼓起来，便于定位。
+</div>
+</section>
+
+<section>
+<h2>四、血液循环的两条路线</h2>
+<p>人体血液循环分为<strong>体循环</strong>和<strong>肺循环</strong>两条路线，同时运行、相互连通。</p>
+
+<h3>1. 体循环（大循环）</h3>
+<div class="flow-box">
+  <div class="flow-title">🔴 体循环路径</div>
+  <div class="flow-path">
+    <span class="flow-node">左心室</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-node">主动脉</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-node">各级动脉</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-node">全身毛细血管</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-node">各级静脉</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-node">上/下腔静脉</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-node">右心房</span>
+  </div>
+  <div style="margin-top:1rem;font-size:14px;">
+    <strong>气体交换：</strong>血液释放 O₂ 和营养物质 → 组织细胞；组织细胞释放 CO₂ 和废物 → 血液<br>
+    <strong>血液变化：</strong>动脉血（鲜红）→ 静脉血（暗红）
+  </div>
+</div>
+
+<h3>2. 肺循环（小循环）</h3>
+<div class="flow-box" style="background:var(--heart-bg);border-color:var(--heart-border);">
+  <div class="flow-title" style="color:#1565c0;">🔵 肺循环路径</div>
+  <div class="flow-path">
+    <span class="flow-node">右心室</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-node">肺动脉</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-node">肺部毛细血管</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-node">肺静脉</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-node">左心房</span>
+  </div>
+  <div style="margin-top:1rem;font-size:14px;">
+    <strong>气体交换：</strong>血液释放 CO₂ → 肺泡；肺泡释放 O₂ → 血液<br>
+    <strong>血液变化：</strong>静脉血（暗红）→ 动脉血（鲜红）
+  </div>
+</div>
+
+<div class="comparison-box" style="background:var(--comparison-bg);border:2px solid var(--comparison-border);border-radius:12px;padding:1.2rem 1.5rem;margin:1.5rem 0;">
+  <div style="font-weight:700;color:#1565c0;margin-bottom:0.5rem;font-family:'Noto Sans SC',sans-serif;">📊 体循环 vs 肺循环对比</div>
+  <table style="width:100%;border-collapse:collapse;font-size:14px;">
+    <tr style="border-bottom:1px solid #90caf9;">
+      <td style="padding:0.5rem;font-weight:600;">起点</td>
+      <td style="padding:0.5rem;">体循环：左心室</td>
+      <td style="padding:0.5rem;">肺循环：右心室</td>
+    </tr>
+    <tr style="border-bottom:1px solid #90caf9;background:#f5f5f5;">
+      <td style="padding:0.5rem;font-weight:600;">终点</td>
+      <td style="padding:0.5rem;">体循环：右心房</td>
+      <td style="padding:0.5rem;">肺循环：左心房</td>
+    </tr>
+    <tr style="border-bottom:1px solid #90caf9;">
+      <td style="padding:0.5rem;font-weight:600;">交换场所</td>
+      <td style="padding:0.5rem;">全身毛细血管</td>
+      <td style="padding:0.5rem;">肺部毛细血管</td>
+    </tr>
+    <tr style="background:#f5f5f5;">
+      <td style="padding:0.5rem;font-weight:600;">血液变化</td>
+      <td style="padding:0.5rem;">动脉血 → 静脉血</td>
+      <td style="padding:0.5rem;">静脉血 → 动脉血</td>
+    </tr>
+  </table>
+</div>
+
+<div class="callout">
+  <div class="callout-title">🔑 核心规律</div>
+  <strong>体循环和肺循环是同时进行的</strong>，组成一条完整的循环路线。从左心室出发，经过体循环回到右心房，再到右心室，经过肺循环回到左心房，最后回到左心室——形成了一个完整的闭环。
+</div>
+</section>
+
+<section>
+<h2>五、血压与心率</h2>
+
+<h3>1. 血压</h3>
+<p>血压是指血液在血管内流动时对血管壁产生的侧压力。通常说的血压是指<strong>体循环的动脉血压</strong>。</p>
+
+<div class="flow-box">
+  <div class="flow-title">🩺 血压表示法</div>
+  <div class="flow-path" style="font-size:18px;">
+    <strong>收缩压</strong> / <strong>舒张压</strong> &nbsp;&nbsp;单位：mmHg（千帕 kPa）
+  </div>
+  <div style="margin-top:0.8rem;font-size:14px;text-align:center;">
+    正常值：<strong>12~18.7 / 8~12 kPa</strong>（约 90~140 / 60~90 mmHg）
+  </div>
+</div>
+
+<ul style="margin-left:1.5rem;margin-bottom:1rem;">
+  <li><strong>收缩压</strong>：心室收缩时，动脉血压上升达到的最高值</li>
+  <li><strong>舒张压</strong>：心室舒张时，动脉血压下降达到的最低值</li>
+</ul>
+
+<h3>2. 心率</h3>
+<ul style="margin-left:1.5rem;margin-bottom:1rem;">
+  <li><strong>心率</strong>：心脏每分钟跳动的次数（成人安静时 60~100 次/分）</li>
+  <li><strong>每搏输出量</strong>：心脏每次跳动泵出的血量（约 70ml）</li>
+  <li><strong>心输出量</strong> = 心率 × 每搏输出量（成人安静时约 5L/min）</li>
+</ul>
+
+<div class="highlight-box">
+  <div class="highlight-title">🏃 运动对循环系统的影响</div>
+  运动时，心率加快、每搏输出量增加、心输出量增大。<br>
+  经常锻炼的人，安静时心率较低（运动员可达 40~50 次/分），但每搏输出量更大——心脏工作效率更高。
+</div>
+</section>
+
+<section>
+<h2>六、血型与输血</h2>
+
+<h3>ABO 血型系统</h3>
+<table class="blood-table">
+  <thead>
+    <tr>
+      <th>血型</th>
+      <th>红细胞抗原</th>
+      <th>血清抗体</th>
+      <th>可接受输血</th>
+      <th>可输给血型</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td><strong>A型</strong></td><td>A抗原</td><td>抗B抗体</td><td>A型、O型</td><td>A型、AB型</td></tr>
+    <tr><td><strong>B型</strong></td><td>B抗原</td><td>抗A抗体</td><td>B型、O型</td><td>B型、AB型</td></tr>
+    <tr><td><strong>AB型</strong></td><td>A+B抗原</td><td>无</td><td>所有血型</td><td>AB型</td></tr>
+    <tr><td><strong>O型</strong></td><td>无</td><td>抗A+抗B</td><td>O型</td><td>所有血型</td></tr>
+  </tbody>
+</table>
+
+<div class="callout">
+  <div class="callout-title">🩸 输血原则</div>
+  <strong>以输同型血为原则</strong>。紧急情况下，O型血可以少量输给其他血型（万能供血者），AB型可以接受少量其他血型（万能受血者）。但大量输血必须同型！
+</div>
+
+<div class="callout">
+  <div class="callout-title">⚠️ 考试高频陷阱</div>
+  AB型血的人血清中<strong>没有任何凝集素</strong>（抗A和抗B抗体都没有），所以可以接受所有血型的少量输血，被称为"万能受血者"。但这并不意味着可以大量输入异型血！
+</div>
+</section>
+
+<section>
+<h2>七、传染病与免疫（与循环系统相关）</h2>
+<p>循环系统也是免疫防御的重要通道：</p>
+
+<ul style="margin-left:1.5rem;margin-bottom:1rem;">
+  <li><strong>特异性免疫</strong>：针对特定病原体，包括体液免疫（B细胞产生抗体）和细胞免疫（T细胞直接攻击）</li>
+  <li><strong>计划免疫</strong>：按照规定的免疫程序接种疫苗，如乙肝疫苗、麻疹疫苗等</li>
+  <li><strong>疫苗</strong>：通常是灭活或减毒的病原体，刺激机体产生抗体和记忆细胞</li>
+</ul>
+
+<div class="highlight-box">
+  <div class="highlight-title">💡 抗体 vs 抗原</div>
+  <strong>抗原</strong>：能引起免疫反应的物质（如病原体的表面蛋白）<br>
+  <strong>抗体</strong>：淋巴细胞产生的特殊蛋白质，能与相应抗原特异性结合<br>
+  一种抗体只能对抗一种特定的抗原——就像钥匙和锁的关系。
+</div>
+</section>
+
+<section>
+<h2>八、易错点总结</h2>
+
+<table class="organelle-table" style="width:100%;border-collapse:collapse;margin:1.5rem 0;font-size:14px;">
+  <thead>
+    <tr>
+      <th style="background:var(--accent);color:white;padding:0.6rem 0.8rem;text-align:left;">❌ 常见错误</th>
+      <th style="background:var(--accent);color:white;padding:0.6rem 0.8rem;text-align:left;">✅ 正确理解</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td style="padding:0.5rem 0.8rem;border-bottom:1px solid #e0e0e0;">肺动脉里流的是动脉血</td><td style="padding:0.5rem 0.8rem;border-bottom:1px solid #e0e0e0;">肺动脉里流的是<strong>静脉血</strong>（含氧量低）</td></tr>
+    <tr><td style="padding:0.5rem 0.8rem;border-bottom:1px solid #e0e0e0;">肺静脉里流的是静脉血</td><td style="padding:0.5rem 0.8rem;border-bottom:1px solid #e0e0e0;">肺静脉里流的是<strong>动脉血</strong>（刚从肺部获得氧气）</td></tr>
+    <tr><td style="padding:0.5rem 0.8rem;border-bottom:1px solid #e0e0e0;">动脉里流的都是动脉血</td><td style="padding:0.5rem 0.8rem;border-bottom:1px solid #e0e0e0;">肺动脉是个例外，流的是静脉血</td></tr>
+    <tr><td style="padding:0.5rem 0.8rem;border-bottom:1px solid #e0e0e0;">左心室里流的是静脉血</td><td style="padding:0.5rem 0.8rem;border-bottom:1px solid #e0e0e0;">左心室里流的是<strong>动脉血</strong>（从左心房来，含氧丰富）</td></tr>
+    <tr><td style="padding:0.5rem 0.8rem;border-bottom:1px solid #e0e0e0;">O型血可以大量输给任何人</td><td style="padding:0.5rem 0.8rem;border-bottom:1px solid #e0e0e0;">O型只能<strong>少量</strong>输给他人，大量输血必须同型</td></tr>
+    <tr><td style="padding:0.5rem 0.8rem;border-bottom:1px solid #e0e0e0;">静脉出血比动脉出血危险</td><td style="padding:0.5rem 0.8rem;border-bottom:1px solid #e0e0e0;"><strong>动脉出血</strong>最危险（喷射状、鲜红色），静脉出血次之（持续流出、暗红色），毛细血管出血最轻</td></tr>
+  </tbody>
+</table>
+</section>
+
+<section>
+<h2>九、与小学教学的联系</h2>
+<div class="callout">
+  <div class="callout-title">🏫 教学建议</div>
+  <strong>"小小医生"</strong>：让学生用听诊器听心跳，感受不同运动强度下心率的变化。课前安静状态测一次，跑步后立刻测一次，对比数据差异。<br><br>
+  <strong>"血液的旅行"</strong>：用彩色丝带代表红细胞，让学生在教室中模拟体循环和肺循环的路径，从"左心室"出发，经过"主动脉"、"全身毛细血管"、"上下腔静脉"回到"右心房"，再从"右心室"出发经过"肺循环"回到"左心房"。<br><br>
+  <strong>"血型配对游戏"</strong>：制作不同血型的卡片，让学生练习输血配对的规则。
+</div>
+</section>
+
+<section>
+<h2>📖 推荐阅读</h2>
+<p>人教版初中生物学七年级下册第四章——人体内物质的运输。</p>
+<p>🔗 <a href="https://www.pep.com.cn/gzs/swsw/" target="_blank">人民教育出版社 — 初中生物教材</a></p>
+<p>参考：第3课消化系统 → <a href="0003-human-digestive.html">第3课</a> · 第5课遗传与变异 → <a href="0005-genetics.html">第5课</a></p>
+</section>
+
+<section>
+<h2>✏️ 自我检测</h2>
+<p>请先独立思考，再点击选项查看答案和解析。</p>
+</section>
+
+<div class="quiz-section">
+  <div class="quiz-title">📝 课堂练习</div>
+
+  <div class="quiz-question" data-correct="2">
+    <div class="quiz-q-text">1. 人体三种血细胞中，数量最多的是：</div>
+    <ul class="quiz-options">
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 0)">A. 白细胞</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 1)">B. 血小板</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 2)">C. 红细胞</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 3)">D. 三种一样多</button></li>
+    </ul>
+    <div class="quiz-feedback correct-fb">✅ 正确！红细胞数量最多（男性约 5.0×10¹²/L，女性约 4.2×10¹²/L），白细胞最少。</div>
+    <div class="quiz-feedback wrong-fb">❌ 不对。<strong>红细胞</strong>是数量最多的血细胞，约占血液成分的45%。</div>
+  </div>
+
+  <div class="quiz-question" data-correct="1">
+    <div class="quiz-q-text">2. 心脏四个腔室中，壁最厚的是：</div>
+    <ul class="quiz-options">
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 0)">A. 右心房</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 1)">B. 左心室</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 2)">C. 右心室</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 3)">D. 左心房</button></li>
+    </ul>
+    <div class="quiz-feedback correct-fb">✅ 正确！左心室壁最厚，因为它需要将血液泵到全身各处，射程最远，需要的力量最大。</div>
+    <div class="quiz-feedback wrong-fb">❌ 不对。<strong>左心室</strong>的壁最厚，因为体循环距离最长，需要最大的压力。</div>
+  </div>
+
+  <div class="quiz-question" data-correct="3">
+    <div class="quiz-q-text">3. 肺循环的起点和终点分别是：</div>
+    <ul class="quiz-options">
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 0)">A. 左心室 → 左心房</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 1)">B. 右心房 → 右心室</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 2)">C. 左心房 → 左心室</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 3)">D. 右心室 → 左心房</button></li>
+    </ul>
+    <div class="quiz-feedback correct-fb">✅ 正确！肺循环：右心室 → 肺动脉 → 肺部毛细血管 → 肺静脉 → 左心房。</div>
+    <div class="quiz-feedback wrong-fb">❌ 不对。肺循环从<strong>右心室</strong>出发，最终回到<strong>左心房</strong>。</div>
+  </div>
+
+  <div class="quiz-question" data-correct="0">
+    <div class="quiz-q-text">4. 下列关于血管的说法正确的是：</div>
+    <ul class="quiz-options">
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 0)">A. 动脉管壁最厚，弹性最大</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 1)">B. 静脉血流速度最快</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 2)">C. 毛细血管中最粗</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 3)">D. 动脉中都有动脉血</button></li>
+    </ul>
+    <div class="quiz-feedback correct-fb">✅ 正确！A是对的。注意D是错的——肺动脉里流的是静脉血，这是最常见的陷阱。</div>
+    <div class="quiz-feedback wrong-fb">❌ 不对。<strong>动脉管壁最厚、弹性最大</strong>是正确的。D选项错误，因为肺动脉里流的是静脉血。</div>
+  </div>
+
+  <div class="quiz-question" data-correct="2">
+    <div class="quiz-q-text">5. 某人受伤后，血液呈暗红色、持续流出，这是：</div>
+    <ul class="quiz-options">
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 0)">A. 动脉出血</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 1)">B. 毛细血管出血</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 2)">C. 静脉出血</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 3)">D. 无法判断</button></li>
+    </ul>
+    <div class="quiz-feedback correct-fb">✅ 正确！静脉血含氧量低呈暗红色，静脉血压较低所以持续流出而非喷射状。动脉出血是鲜红色、喷射状。</div>
+    <div class="quiz-feedback wrong-fb">❌ 不对。<strong>暗红色、持续流出</strong>是静脉出血的特征。动脉出血是鲜红色、喷射状。</div>
+  </div>
+
+  <div class="quiz-question" data-correct="1">
+    <div class="quiz-q-text">6. 输血时，O型血的人可以接受的供血者是：</div>
+    <ul class="quiz-options">
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 0)">A. A型、B型、AB型、O型</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 1)">B. 只能O型</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 2)">C. A型和O型</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 3)">D. B型和O型</button></li>
+    </ul>
+    <div class="quiz-feedback correct-fb">✅ 正确！O型血的红细胞上没有A、B抗原，但血清中有抗A和抗B抗体。如果输入异型血，受血者的抗体会攻击供血者的红细胞，造成凝集反应。所以O型只能接受O型血。</div>
+    <div class="quiz-feedback wrong-fb">❌ 不对。O型血的人血清中有抗A和抗B抗体，只能接受<strong>O型血</strong>。虽然O型是万能供血者，但不是万能受血者。</div>
+  </div>
+
+  <div class="quiz-question" data-correct="0">
+    <div class="quiz-q-text">7. 关于体循环和肺循环的关系，下列说法正确的是：</div>
+    <ul class="quiz-options">
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 0)">A. 体循环和肺循环同时进行</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 1)">B. 先体循环后肺循环</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 2)">C. 先肺循环后体循环</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 3)">D. 体循环和肺循环交替进行</button></li>
+    </ul>
+    <div class="quiz-feedback correct-fb">✅ 正确！体循环和肺循环通过心脏连通，同时运行，组成一条完整的循环路线。</div>
+    <div class="quiz-feedback wrong-fb">❌ 不对。体循环和肺循环是<strong>同时进行</strong>的，通过心脏连为一体，不是交替进行。</div>
+  </div>
+
+  <div class="score-bar" id="scoreBar">
+    <div class="score-number" id="scoreNumber"></div>
+    <div>答对 / 7</div>
+  </div>
+</div>
+
+<nav>
+  <a href="0003-human-digestive.html">← 第3课：人体消化系统</a>
+  <a href="0005-genetics.html">第5课：遗传与变异基础 →</a>
+</nav>
+
+</div>
+
+<script>
+let totalCorrect = 0;
+let totalAnswered = 0;
+const totalQuestions = 7;
+
+function checkAnswer(btn, selectedIndex) {
+  const questionDiv = btn.closest('.quiz-question');
+  const correctIndex = parseInt(questionDiv.dataset.correct);
+  const buttons = questionDiv.querySelectorAll('.quiz-btn');
+  const feedbackCorrect = questionDiv.querySelector('.quiz-feedback.correct-fb');
+  const feedbackWrong = questionDiv.querySelector('.quiz-feedback.wrong-fb');
+
+  buttons.forEach(b => {
+    b.classList.add('disabled');
+    b.style.pointerEvents = 'none';
+  });
+
+  buttons[correctIndex].classList.add('correct');
+  if (selectedIndex !== correctIndex) {
+    btn.classList.add('wrong');
+  }
+
+  if (selectedIndex === correctIndex) {
+    feedbackCorrect.classList.add('show');
+    totalCorrect++;
+  } else {
+    feedbackWrong.classList.add('show');
+  }
+  totalAnswered++;
+
+  if (totalAnswered >= totalQuestions) {
+    const scoreBar = document.getElementById('scoreBar');
+    const scoreNumber = document.getElementById('scoreNumber');
+    scoreNumber.textContent = totalCorrect;
+    scoreBar.classList.add('show');
+  }
+}
+</script>
+
+</body>
+</html>
