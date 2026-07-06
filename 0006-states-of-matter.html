@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第6课：物质的三态与变化</title>
+<style>
+  :root {
+    --bg: #faf8f5; --text: #2c2c2c;
+    --accent: #1565c0; --accent-light: #e3f2fd; --border: #90caf9;
+    --quiz-correct: #4caf50; --quiz-wrong: #e53935;
+    --callout-bg: #fff8e1; --callout-border: #ffc107;
+    --solid-bg: #e8eaf6; --solid-border: #9fa8da;
+    --liquid-bg: #e0f7fa; --liquid-border: #80deea;
+    --gas-bg: #fce4ec; --gas-border: #f48fb1;
+    --change-bg: #fff3e0; --change-border: #ffb74d;
+    --comparison-bg: #f1f8e9; --comparison-border: #aed581;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: "Noto Serif SC", "Source Han Serif CN", "SimSun", Georgia, serif;
+    background: var(--bg); color: var(--text); line-height: 1.9;
+    font-size: 17px; padding: 2rem 1rem;
+  }
+  .container { max-width: 720px; margin: 0 auto; }
+  header { border-bottom: 3px solid var(--accent); padding-bottom: 1.5rem; margin-bottom: 2rem; }
+  .lesson-meta { font-size: 14px; color: #666; margin-bottom: 0.5rem; font-family: "Noto Sans SC", "Microsoft YaHei", sans-serif; }
+  h1 { font-size: 28px; font-weight: 700; color: var(--accent); margin-bottom: 0.5rem; letter-spacing: 0.02em; }
+  h2 { font-size: 22px; font-weight: 700; color: var(--accent); margin-top: 2.5rem; margin-bottom: 1rem; padding-bottom: 0.3rem; border-bottom: 1px solid var(--border); }
+  h3 { font-size: 18px; font-weight: 700; color: #333; margin-top: 1.5rem; margin-bottom: 0.5rem; }
+  p { margin-bottom: 1rem; }
+  .mission-link { display: inline-block; margin-bottom: 1.5rem; font-size: 14px; color: var(--accent); text-decoration: none; font-family: "Noto Sans SC", "Microsoft YaHei", sans-serif; }
+  .mission-link:hover { text-decoration: underline; }
+  ol, ul { margin-left: 1.5rem; margin-bottom: 1rem; }
+  li { margin-bottom: 0.3rem; }
+  .callout { background: var(--callout-bg); border-left: 4px solid var(--callout-border); padding: 1rem 1.2rem; margin: 1.5rem 0; border-radius: 0 8px 8px 0; font-size: 15px; }
+  .callout-title { font-weight: 700; color: #e65100; margin-bottom: 0.3rem; font-family: "Noto Sans SC", sans-serif; }
+  .state-box { border-radius: 12px; padding: 1.2rem 1.5rem; margin: 1.5rem 0; }
+  .state-title { font-weight: 700; margin-bottom: 0.5rem; font-family: "Noto Sans SC", sans-serif; font-size: 16px; }
+  .solid-state { background: var(--solid-bg); border: 2px solid var(--solid-border); }
+  .solid-state .state-title { color: #283593; }
+  .liquid-state { background: var(--liquid-bg); border: 2px solid var(--liquid-border); }
+  .liquid-state .state-title { color: #00838f; }
+  .gas-state { background: var(--gas-bg); border: 2px solid var(--gas-border); }
+  .gas-state .state-title { color: #c62828; }
+  .particle-diagram { display: flex; justify-content: center; margin: 1rem 0; }
+  .particle-grid { display: grid; gap: 4px; }
+  .particle { width: 14px; height: 14px; border-radius: 50%; display: inline-block; }
+  .change-box { background: var(--change-bg); border: 2px solid var(--change-border); border-radius: 12px; padding: 1.2rem 1.5rem; margin: 1.5rem 0; }
+  .change-title { font-weight: 700; color: #e65100; margin-bottom: 0.8rem; font-family: "Noto Sans SC", sans-serif; font-size: 16px; }
+  .change-diagram { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 0.5rem; margin: 1rem 0; }
+  .change-node { padding: 0.4rem 1rem; border-radius: 8px; font-weight: 600; font-size: 15px; font-family: "Noto Sans SC", sans-serif; }
+  .node-solid { background: var(--solid-bg); color: #1a237e; border: 2px solid var(--solid-border); }
+  .node-liquid { background: var(--liquid-bg); color: #006064; border: 2px solid var(--liquid-border); }
+  .node-gas { background: var(--gas-bg); color: #880e4f; border: 2px solid var(--gas-border); }
+  .change-arrow { font-size: 20px; color: #e65100; font-weight: 700; }
+  .change-label { font-size: 12px; color: #666; text-align: center; font-family: "Noto Sans SC", sans-serif; }
+  .energy-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 14px; }
+  .energy-table th { background: var(--accent); color: white; padding: 0.6rem 0.8rem; text-align: left; font-weight: 600; font-size: 13px; }
+  .energy-table td { padding: 0.5rem 0.8rem; border-bottom: 1px solid #e0e0e0; vertical-align: top; }
+  .energy-table tr:nth-child(even) td { background: #f9f9f9; }
+  .energy-table tr:hover td { background: var(--accent-light); }
+  .absorb { color: #e53935; font-weight: 600; }
+  .release { color: #1565c0; font-weight: 600; }
+  .comparison-box { background: var(--comparison-bg); border: 2px solid var(--comparison-border); border-radius: 12px; padding: 1.2rem 1.5rem; margin: 1.5rem 0; }
+  .comparison-title { font-weight: 700; color: #2e7d32; margin-bottom: 0.5rem; font-family: "Noto Sans SC", sans-serif; }
+  .highlight-box { background: #fff3e0; border: 2px solid #ffb74d; border-radius: 12px; padding: 1rem 1.2rem; margin: 1.5rem 0; }
+  .highlight-title { font-weight: 700; color: #e65100; margin-bottom: 0.3rem; font-family: "Noto Sans SC", sans-serif; }
+  .quiz-section { background: white; border: 2px solid var(--accent); border-radius: 12px; padding: 1.5rem; margin: 2rem 0; }
+  .quiz-title { font-size: 18px; font-weight: 700; color: var(--accent); margin-bottom: 1.2rem; font-family: "Noto Sans SC", sans-serif; }
+  .quiz-question { margin-bottom: 1.5rem; padding-bottom: 1.2rem; border-bottom: 1px dashed #ddd; }
+  .quiz-question:last-of-type { border-bottom: none; }
+  .quiz-q-text { font-weight: 600; margin-bottom: 0.8rem; font-size: 16px; }
+  .quiz-options { list-style: none; padding: 0; }
+  .quiz-options li { margin-bottom: 0.4rem; }
+  .quiz-btn { display: block; width: 100%; padding: 0.6rem 1rem; margin-bottom: 0.4rem; border: 2px solid #ddd; border-radius: 8px; background: white; cursor: pointer; font-size: 15px; font-family: "Noto Sans SC", "Microsoft YaHei", sans-serif; text-align: left; transition: all 0.2s; }
+  .quiz-btn:hover { border-color: var(--accent); background: var(--accent-light); }
+  .quiz-btn.correct { border-color: var(--quiz-correct); background: #e8f5e9; color: #1b5e20; font-weight: 600; }
+  .quiz-btn.wrong { border-color: var(--quiz-wrong); background: #ffebee; color: #b71c1c; }
+  .quiz-btn.disabled { pointer-events: none; opacity: 0.7; }
+  .quiz-feedback { margin-top: 0.5rem; padding: 0.5rem 0.8rem; border-radius: 6px; font-size: 14px; font-family: "Noto Sans SC", sans-serif; display: none; }
+  .quiz-feedback.show { display: block; }
+  .quiz-feedback.correct-fb { background: #e8f5e9; color: #2e7d32; border: 1px solid #a5d6a7; }
+  .quiz-feedback.wrong-fb { background: #ffebee; color: #c62828; border: 1px solid #ef9a9a; }
+  .score-bar { display: none; text-align: center; padding: 1rem; background: var(--accent-light); border-radius: 8px; margin-top: 1rem; font-family: "Noto Sans SC", sans-serif; }
+  .score-bar.show { display: block; }
+  .score-number { font-size: 32px; font-weight: 700; color: var(--accent); }
+  nav { margin-top: 3rem; padding-top: 1.5rem; border-top: 2px solid var(--border); display: flex; justify-content: space-between; font-family: "Noto Sans SC", sans-serif; }
+  nav a { color: var(--accent); text-decoration: none; padding: 0.5rem 1rem; border: 1px solid var(--border); border-radius: 8px; transition: all 0.2s; }
+  nav a:hover { background: var(--accent-light); text-decoration: none; }
+  .flow-box { background: white; border: 2px solid var(--border); border-radius: 12px; padding: 1.2rem 1.5rem; margin: 1.5rem 0; }
+  .flow-title { font-weight: 700; color: var(--accent); margin-bottom: 0.8rem; font-family: "Noto Sans SC", sans-serif; font-size: 16px; }
+  .flow-path { font-size: 15px; line-height: 2.4; text-align: center; }
+  .flow-node { display: inline-block; background: var(--accent-light); border: 2px solid var(--border); border-radius: 6px; padding: 0.25rem 0.6rem; font-weight: 600; font-size: 13px; margin: 0.15rem; }
+  .flow-arrow { color: var(--accent); font-weight: 700; margin: 0 0.2rem; }
+  @media print { body { font-size: 12pt; padding: 1cm; } .container { max-width: 100%; } .quiz-section { break-inside: avoid; } nav { display: none; } }
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <a class="mission-link" href="../MISSION.md">← 回到学习计划</a>
+  <div class="lesson-meta">小高备考 · 第6课 · 物质科学 · 建议用时：25分钟</div>
+  <h1>物质的三态与变化</h1>
+  <p style="color:#666;font-size:14px;">水有三种形态：冰、水、水蒸气。世界万物都是由物质构成的，物质也有不同的状态。</p>
+</header>
+
+<section>
+<h2>学习目标</h2>
+<p>学完本课，你应该能够：</p>
+<ol style="margin-left:1.5rem;margin-bottom:1rem;">
+  <li>描述固态、液态、气态三种状态的特征</li>
+  <li>理解粒子模型在三态中的应用</li>
+  <li>列举六种物态变化及其吸放热规律</li>
+  <li>区分物理变化和化学变化</li>
+  <li>理解熔点、凝固点、沸点等概念</li>
+</ol>
+</section>
+
+<section>
+<h2>一、物质的三种状态</h2>
+<p>我们周围的物质主要以<strong>固态、液态、气态</strong>三种形式存在。它们的核心区别在于<strong>内部粒子的排列方式和运动状态</strong>不同。</p>
+
+<h3>1. 固态</h3>
+<div class="state-box solid-state">
+  <div class="state-title">🧊 固态（Solid）</div>
+  <ul style="margin-left:1.5rem;margin-bottom:0.5rem;">
+    <li><strong>形状</strong>：有固定的形状</li>
+    <li><strong>体积</strong>：有固定的体积</li>
+    <li><strong>流动性</strong>：无流动性</li>
+    <li><strong>粒子排列</strong>：紧密有序，振动为主</li>
+  </ul>
+  <div style="font-size:13px;color:#555;margin-top:0.5rem;">粒子在固定位置附近振动，相互作用力强，难以被压缩</div>
+</div>
+
+<h3>2. 液态</h3>
+<div class="state-box liquid-state">
+  <div class="state-title">💧 液态（Liquid）</div>
+  <ul style="margin-left:1.5rem;margin-bottom:0.5rem;">
+    <li><strong>形状</strong>：无固定形状，随容器而变</li>
+    <li><strong>体积</strong>：有固定的体积</li>
+    <li><strong>流动性</strong>：有流动性</li>
+    <li><strong>粒子排列</strong>：较紧密但不规则，可滑动</li>
+  </ul>
+  <div style="font-size:13px;color:#555;margin-top:0.5rem;">粒子可以相对移动，相互作用力中等，不易被压缩</div>
+</div>
+
+<h3>3. 气态</h3>
+<div class="state-box gas-state">
+  <div class="state-title">💨 气态（Gas）</div>
+  <ul style="margin-left:1.5rem;margin-bottom:0.5rem;">
+    <li><strong>形状</strong>：无固定形状，充满整个容器</li>
+    <li><strong>体积</strong>：无固定体积，可被压缩</li>
+    <li><strong>流动性</strong>：有很强的流动性</li>
+    <li><strong>粒子排列</strong>：非常分散，高速无序运动</li>
+  </ul>
+  <div style="font-size:13px;color:#555;margin-top:0.5rem;">粒子自由运动，相互作用力极弱，很容易被压缩</div>
+</div>
+
+<div class="highlight-box">
+  <div class="highlight-title">🔬 粒子模型对比</div>
+  <table class="energy-table" style="width:100%;">
+    <thead>
+      <tr><th>特征</th><th>固态</th><th>液态</th><th>气态</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>粒子间距</strong></td><td>很小</td><td>较小</td><td>很大</td></tr>
+      <tr><td><strong>粒子运动</strong></td><td>原地振动</td><td>滑动、转动</td><td>高速无序运动</td></tr>
+      <tr><td><strong>相互作用力</strong></td><td>最强</td><td>中等</td><td>极弱</td></tr>
+      <tr><td><strong>可压缩性</strong></td><td>几乎不可</td><td>很难</td><td>很容易</td></tr>
+      <tr><td><strong>举例</strong></td><td>铁块、冰块</td><td>水、油</td><td>空气、氧气</td></tr>
+    </tbody>
+  </table>
+</div>
+</section>
+
+<section>
+<h2>二、物态变化</h2>
+<p>物质从一种状态变为另一种状态的过程叫做<strong>物态变化</strong>。物态变化的本质是<strong>温度的变化引起粒子动能的变化</strong>，从而改变了粒子间的相互作用。</p>
+
+<h3>六种物态变化</h3>
+
+<div class="change-box">
+  <div class="change-title">🔄 物态变化全景图</div>
+  <div class="change-diagram">
+    <div style="text-align:center;">
+      <div class="change-node node-solid">固态</div>
+      <div class="change-arrow">⇅</div>
+      <div class="change-node node-liquid">液态</div>
+      <div class="change-arrow">⇅</div>
+      <div class="change-node node-gas">气态</div>
+    </div>
+  </div>
+
+  <table class="energy-table" style="width:100%;margin-top:1rem;">
+    <thead>
+      <tr><th>变化名称</th><th>方向</th><th>能量变化</th><th>生活实例</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>熔化</strong></td><td>固态 → 液态</td><td class="absorb">吸热</td><td>冰融化成水、蜡烛受热熔化</td></tr>
+      <tr><td><strong>凝固</strong></td><td>液态 → 固态</td><td class="release">放热</td><td>水结冰、钢水浇铸</td></tr>
+      <tr><td><strong>汽化</strong></td><td>液态 → 气态</td><td class="absorb">吸热</td><td>水烧开沸腾、湿衣服晾干</td></tr>
+      <tr><td><strong>液化</strong></td><td>气态 → 液态</td><td class="release">放热</td><td>露水形成、烧水时壶嘴冒白气</td></tr>
+      <tr><td><strong>升华</strong></td><td>固态 → 气态</td><td class="absorb">吸热</td><td>干冰变成二氧化碳气体、樟脑丸消失</td></tr>
+      <tr><td><strong>凝华</strong></td><td>气态 → 固态</td><td class="release">放热</td><td>霜的形成、窗户上的冰花</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="callout">
+  <div class="callout-title">💡 记忆口诀</div>
+  <strong>"熔化凝固是固液，汽化液化是液气，升华凝华跨越气"</strong><br><br>
+  <strong>吸热过程</strong>（需要加热）：熔化、汽化、升华 — 都需要从外界吸收热量<br>
+  <strong>放热过程</strong>（释放热量）：凝固、液化、凝华 — 都会向外界放出热量
+</div>
+
+<h3>汽化的两种方式</h3>
+<div class="comparison-box">
+  <div class="comparison-title">蒸发 vs 沸腾</div>
+  <table style="width:100%;border-collapse:collapse;font-size:14px;">
+    <tr style="border-bottom:1px solid #aed581;">
+      <td style="padding:0.5rem;font-weight:600;width:120px;"><strong>区别</strong></td>
+      <td style="padding:0.5rem;"><strong>蒸发</strong></td>
+      <td style="padding:0.5rem;"><strong>沸腾</strong></td>
+    </tr>
+    <tr style="border-bottom:1px solid #aed581;background:#f5f5f5;">
+      <td style="padding:0.5rem;font-weight:600;">发生部位</td>
+      <td style="padding:0.5rem;">液体<strong>表面</strong></td>
+      <td style="padding:0.5rem;">液体<strong>表面和内部</strong>同时</td>
+    </tr>
+    <tr style="border-bottom:1px solid #aed581;">
+      <td style="padding:0.5rem;font-weight:600;">温度条件</td>
+      <td style="padding:0.5rem;">任何温度下都能发生</td>
+      <td style="padding:0.5rem;">达到<strong>沸点</strong>时才发生</td>
+    </tr>
+    <tr style="border-bottom:1px solid #aed581;background:#f5f5f5;">
+      <td style="padding:0.5rem;font-weight:600;">剧烈程度</td>
+      <td style="padding:0.5rem;">缓慢、平和</td>
+      <td style="padding:0.5rem;">剧烈、大量气泡</td>
+    </tr>
+    <tr>
+      <td style="padding:0.5rem;font-weight:600;">温度变化</td>
+      <td style="padding:0.5rem;">自身温度下降（致冷作用）</td>
+      <td style="padding:0.5rem;">温度保持不变（等于沸点）</td>
+    </tr>
+  </table>
+</div>
+
+<h3>熔化和沸腾的温度曲线</h3>
+<div class="flow-box">
+  <div class="flow-title">🌡️ 晶体熔化曲线（以冰为例）</div>
+  <div class="flow-path">
+    <span class="flow-node">升温（冰吸热）</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-node">0°C 恒温</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-node">升温（水吸热）</span>
+  </div>
+  <div style="font-size:13px;color:#666;margin-top:0.5rem;">
+    <strong>熔点</strong>：晶体熔化时的温度（冰的熔点 = 0°C）。熔化过程中温度保持不变，但需要持续吸热。
+  </div>
+</div>
+
+<div class="flow-box">
+  <div class="flow-title">🌡️ 水沸腾曲线</div>
+  <div class="flow-path">
+    <span class="flow-node">升温（水吸热）</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-node">100°C 恒温</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-node">持续沸腾</span>
+  </div>
+  <div style="font-size:13px;color:#666;margin-top:0.5rem;">
+    <strong>沸点</strong>：液体沸腾时的温度（标准大气压下水的沸点 = 100°C）。沸腾过程中温度保持不变，但需要持续吸热。<br>
+    <strong>注意</strong>：沸点与气压有关，气压越高沸点越高（高压锅），气压越低沸点越低（高原地区）。
+  </div>
+</div>
+
+<div class="highlight-box">
+  <div class="highlight-title">📌 晶体 vs 非晶体</div>
+  <strong>晶体</strong>（有固定熔点）：冰、海波、各种金属、食盐<br>
+  <strong>非晶体</strong>（没有固定熔点，逐渐软化）：蜡、松香、玻璃、沥青<br>
+  考试中常考：冰是晶体，蜡烛是非晶体。
+</div>
+</section>
+
+<section>
+<h2>三、物理变化与化学变化</h2>
+<p>物质的变化分为两大类：<strong>物理变化</strong>和<strong>化学变化</strong>。</p>
+
+<table class="energy-table" style="width:100%;">
+  <thead>
+    <tr><th>比较项目</th><th>物理变化</th><th>化学变化</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><strong>定义</strong></td><td>没有新物质生成的变化</td><td>有新物质生成的变化</td></tr>
+    <tr><td><strong>本质区别</strong></td><td colspan="2" style="text-align:center;">是否有<strong>新物质</strong>生成</td></tr>
+    <tr><td><strong>伴随现象</strong></td><td>形状、状态的改变</td><td>发光、发热、变色、产生气体、生成沉淀</td></tr>
+    <tr><td><strong>举例</strong></td><td>冰融化、水蒸发、玻璃破碎、铁块压成铁片</td><td>铁生锈、木材燃烧、食物腐烂、醋与小苏打反应</td></tr>
+    <tr><td><strong>关系</strong></td><td colspan="2" style="text-align:center;">化学变化中一定伴随物理变化，但物理变化中不一定有化学变化</td></tr>
+  </tbody>
+</table>
+
+<div class="callout">
+  <div class="callout-title">⚠️ 考试高频陷阱</div>
+  <strong>有发光发热现象的不一定是化学变化</strong>！例如电灯发光发热是物理变化（钨丝通电发热发光，没有新物质生成）。判断的关键在于<strong>是否有新物质生成</strong>。<br><br>
+  <strong>爆炸也不一定是化学变化</strong>：气球爆炸、轮胎爆炸是物理变化；火药爆炸、瓦斯爆炸是化学变化。
+</div>
+</section>
+
+<section>
+<h2>四、物理性质与化学性质</h2>
+<h3>性质分类</h3>
+<table class="energy-table" style="width:100%;">
+  <thead>
+    <tr><th>类型</th><th>定义</th><th>判断方法</th><th>举例</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><strong>物理性质</strong></td><td>不需要发生化学变化就能表现出来的性质</td><td>直接观察或通过物理方法测定</td><td>颜色、气味、状态、熔点、沸点、硬度、密度、导电性、导热性</td></tr>
+    <tr><td><strong>化学性质</strong></td><td>在化学变化中表现出来的性质</td><td>需要通过化学变化才能表现出来</td><td>可燃性、氧化性、还原性、酸性、碱性、稳定性</td></tr>
+  </tbody>
+</table>
+
+<div class="highlight-box">
+  <div class="highlight-title">🎯 快速判断技巧</div>
+  <strong>问自己：这个性质的表现是否需要产生新物质？</strong><br>
+  - 如果不需要 → 物理性质（如：水是无色的、铁的密度是7.8g/cm³）<br>
+  - 如果需要 → 化学性质（如：铁能生锈、木柴能燃烧）
+</div>
+</section>
+
+<section>
+<h2>五、易错点总结</h2>
+<table class="energy-table" style="width:100%;">
+  <thead>
+    <tr><th style="background:var(--accent);color:white;padding:0.6rem 0.8rem;text-align:left;">❌ 常见错误</th><th style="background:var(--accent);color:white;padding:0.6rem 0.8rem;text-align:left;">✅ 正确理解</th></tr>
+  </thead>
+  <tbody>
+    <tr><td style="padding:0.5rem 0.8rem;border-bottom:1px solid #e0e0e0;">所有固体都有固定熔点</td><td style="padding:0.5rem 0.8rem;border-bottom:1px solid #e0e0e0;">只有<strong>晶体</strong>有固定熔点，非晶体（蜡、玻璃）没有</td></tr>
+    <tr><td style="padding:0.5rem 0.8rem;border-bottom:1px solid #e0e0e0;">蒸发只能在高温下发生</td><td style="padding:0.5rem 0.8rem;border-bottom:1px solid #e0e0e0;">蒸发在<strong>任何温度</strong>下都能发生</td></tr>
+    <tr><td style="padding:0.5rem 0.8rem;border-bottom:1px solid #e0e0e0;">沸腾时温度会继续升高</td><td style="padding:0.5rem 0.8rem;border-bottom:1px solid #e0e0e0;">沸腾过程中温度<strong>保持不变</strong>（等于沸点）</td></tr>
+    <tr><td style="padding:0.5rem 0.8rem;border-bottom:1px solid #e0e0e0;">烧水时壶嘴冒的白气是水蒸气</td><td style="padding:0.5rem 0.8rem;border-bottom:1px solid #e0e0e0;">白气是<strong>小水珠</strong>（液化形成的），水蒸气是看不见的</td></tr>
+    <tr><td style="padding:0.5rem 0.8rem;border-bottom:1px solid #e0e0e0;">发光发热一定是化学变化</td><td style="padding:0.5rem 0.8rem;border-bottom:1px solid #e0e0e0;">电灯发光发热是<strong>物理变化</strong>，关键看是否生成新物质</td></tr>
+    <tr><td style="padding:0.5rem 0.8rem;">所有爆炸都是化学变化</td><td style="padding:0.5rem 0.8rem;">气球爆炸是<strong>物理变化</strong>，火药爆炸是化学变化</td></tr>
+    <tr><td style="padding:0.5rem 0.8rem;">凝华和升华是一回事</td><td style="padding:0.5rem 0.8rem;">凝华是气态→固态（放热），升华是固态→气态（吸热），互为逆过程</td></tr>
+  </tbody>
+</table>
+</section>
+
+<section>
+<h2>六、与小学教学的联系</h2>
+<div class="callout">
+  <div class="callout-title">🏫 教学建议</div>
+  <strong>"水的三态变化实验"</strong>：让学生观察冰块融化、水沸腾、水蒸气遇冷液化成小水珠的全过程，建立物态变化的直观感受。<br><br>
+  <strong>"自制简易冰箱"</strong>：用湿布包裹装有水的瓶子放在通风处，感受蒸发吸热降温的原理，理解夏天出汗为什么凉快。<br><br>
+  <strong>"观察生活中的物态变化"</strong>：让学生收集生活中的例子（霜、露、雾、雪、冰花等），进行分类并说明对应的物态变化名称。
+</div>
+</section>
+
+<section>
+<h2>📖 推荐阅读</h2>
+<p>人教版初中物理八年级上册第三章——物态变化。</p>
+<p>🔗 <a href="https://www.pep.com.cn/jyk/djscwl/" target="_blank">人民教育出版社 — 初中物理教材</a></p>
+<p>参考：第5课遗传变异 → <a href="0005-genetics.html">第5课</a> · 第7课力与运动 → <a href="0007-force-motion.html">第7课</a></p>
+</section>
+
+<section>
+<h2>✏️ 自我检测</h2>
+<p>请先独立思考，再点击选项查看答案和解析。</p>
+</section>
+
+<div class="quiz-section">
+  <div class="quiz-title">📝 课堂练习</div>
+
+  <div class="quiz-question" data-correct="1">
+    <div class="quiz-q-text">1. 下列物态变化中，属于吸热的是：</div>
+    <ul class="quiz-options">
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 0)">A. 凝固和液化</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 1)">B. 熔化和汽化</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 2)">C. 凝华和凝固</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 3)">D. 液化和升华</button></li>
+    </ul>
+    <div class="quiz-feedback correct-fb">✅ 正确！熔化和汽化都需要从外界吸收热量。吸热过程：熔化、汽化、升华；放热过程：凝固、液化、凝华。</div>
+    <div class="quiz-feedback wrong-fb">❌ 不对。吸热的物态变化有<strong>熔化、汽化、升华</strong>三种。选项B（熔化和汽化）都属于吸热过程。</div>
+  </div>
+
+  <div class="quiz-question" data-correct="2">
+    <div class="quiz-q-text">2. 关于沸腾，下列说法正确的是：</div>
+    <ul class="quiz-options">
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 0)">A. 沸腾在任何温度下都能发生</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 1)">B. 沸腾只在液体表面发生</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 2)">C. 沸腾时温度保持不变</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 3)">D. 沸腾不需要吸热</button></li>
+    </ul>
+    <div class="quiz-feedback correct-fb">✅ 正确！液体沸腾时需要达到沸点并持续吸热，但在沸腾过程中温度保持不变。</div>
+    <div class="quiz-feedback wrong-fb">❌ 不对。沸腾时温度<strong>保持不变</strong>（等于沸点），同时需要持续吸热。沸腾是在液体表面和内部同时发生的剧烈汽化现象。</div>
+  </div>
+
+  <div class="quiz-question" data-correct="0">
+    <div class="quiz-q-text">3. 烧水时壶嘴冒出的"白气"属于什么物态变化：</div>
+    <ul class="quiz-options">
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 0)">A. 液化</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 1)">B. 汽化</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 2)">C. 升华</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 3)">D. 凝华</button></li>
+    </ul>
+    <div class="quiz-feedback correct-fb">✅ 正确！"白气"不是水蒸气（水蒸气看不见），而是水蒸气遇冷液化形成的小水滴，属于液化现象。</div>
+    <div class="quiz-feedback wrong-fb">❌ 不对。"白气"是<strong>水蒸气遇冷液化</strong>形成的小水滴，属于<strong>液化</strong>现象。记住：水蒸气是看不见的！</div>
+  </div>
+
+  <div class="quiz-question" data-correct="3">
+    <div class="quiz-q-text">4. 下列属于化学变化的是：</div>
+    <ul class="quiz-options">
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 0)">A. 冰融化成水</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 1)">B. 水蒸发成水蒸气</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 2)">C. 玻璃破碎</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 3)">D. 铁生锈</button></li>
+    </ul>
+    <div class="quiz-feedback correct-fb">✅ 正确！铁生锈生成了新的物质（铁锈，主要成分是Fe₂O₃），属于化学变化。其他三项都没有新物质生成。</div>
+    <div class="quiz-feedback wrong-fb">❌ 不对。<strong>铁生锈</strong>生成了新物质（铁锈），属于化学变化。其他三项只是形状或状态的改变，没有新物质生成。</div>
+  </div>
+
+  <div class="quiz-question" data-correct="1">
+    <div class="quiz-q-text">5. 下列物质中，没有固定熔点的是：</div>
+    <ul class="quiz-options">
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 0)">A. 冰</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 1)">B. 玻璃</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 2)">C. 海波</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 3)">D. 铁</button></li>
+    </ul>
+    <div class="quiz-feedback correct-fb">✅ 正确！玻璃是非晶体，没有固定的熔点。冰、海波（硫代硫酸钠）、铁都是晶体，有固定的熔点。</div>
+    <div class="quiz-feedback wrong-fb">❌ 不对。<strong>玻璃</strong>是非晶体，没有固定熔点。晶体（冰、海波、铁）才有固定熔点。</div>
+  </div>
+
+  <div class="score-bar" id="scoreBar">
+    <div>🎉 测试完成！</div>
+    <div class="score-number" id="scoreNumber">0/5</div>
+    <div id="scoreMessage" style="margin-top:0.5rem;color:#666;"></div>
+  </div>
+</div>
+
+<nav>
+  <a href="0005-genetics.html">← 第5课：遗传与变异</a>
+  <a href="0007-force-motion.html">第7课：力与运动 →</a>
+</nav>
+
+</div>
+
+<script>
+let score = 0;
+let answered = 0;
+const total = 5;
+
+const explanations = [
+  // Q1
+  ["凝固和液化（放热）", "熔化和汽化（吸热）", "凝华和凝固（放热）", "液化和升华（一放一吸）"],
+  // Q2
+  ["沸腾在任何温度下都能发生", "沸腾只在液体表面发生", "沸腾时温度保持不变", "沸腾不需要吸热"],
+  // Q3
+  ["液化", "汽化", "升华", "凝华"],
+  // Q4
+  ["冰融化成水", "水蒸发成水蒸气", "玻璃破碎", "铁生锈"],
+  // Q5
+  ["冰", "玻璃", "海波", "铁"]
+];
+
+function checkAnswer(btn, choiceIndex) {
+  const question = btn.closest('.quiz-question');
+  if (question.classList.contains('answered')) return;
+  question.classList.add('answered');
+  answered++;
+
+  const correctIndex = parseInt(question.dataset.correct);
+  const buttons = question.querySelectorAll('.quiz-btn');
+  const feedback = question.querySelector('.quiz-feedback');
+
+  buttons.forEach(b => b.classList.add('disabled'));
+
+  if (choiceIndex === correctIndex) {
+    btn.classList.add('correct');
+    feedback.className = 'quiz-feedback show correct-fb';
+    feedback.textContent = '✅ 正确！' + explanations[answered - 1][correctIndex];
+    score++;
+  } else {
+    btn.classList.add('wrong');
+    buttons[correctIndex].classList.add('correct');
+    feedback.className = 'quiz-feedback show wrong-fb';
+    feedback.textContent = '❌ 不对。正确答案是：' + explanations[answered - 1][correctIndex];
+  }
+
+  if (answered === total) {
+    const bar = document.getElementById('scoreBar');
+    bar.classList.add('show');
+    document.getElementById('scoreNumber').textContent = score + '/' + total;
+    const msg = document.getElementById('scoreMessage');
+    if (score === total) msg.textContent = '🌟 太棒了！全部正确！';
+    else if (score >= 3) msg.textContent = '👍 不错！继续加油巩固薄弱环节。';
+    else msg.textContent = '💪 多复习几遍，下次一定能更好！';
+  }
+}
+</script>
+
+</body>
+</html>
