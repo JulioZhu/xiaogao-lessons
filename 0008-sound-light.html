@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第8课：声与光</title>
+<style>
+  :root {
+    --bg: #faf8f5; --text: #2c2c2c;
+    --accent: #6a1b9a; --accent-light: #f3e5f5; --border: #ce93d8;
+    --quiz-correct: #4caf50; --quiz-wrong: #e53935;
+    --callout-bg: #fff8e1; --callout-border: #ffc107;
+    --sound-bg: #e8eaf6; --sound-border: #9fa8da;
+    --light-bg: #fff3e0; --light-border: #ffb74d;
+    --wave-bg: #e0f2f1; --wave-border: #80cbc4;
+    --ray-bg: #fce4ec; --ray-border: #f48fb1;
+    --comparison-bg: #f1f8e9; --comparison-border: #aed581;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: "Noto Serif SC", "Source Han Serif CN", "SimSun", Georgia, serif;
+    background: var(--bg); color: var(--text); line-height: 1.9;
+    font-size: 17px; padding: 2rem 1rem;
+  }
+  .container { max-width: 720px; margin: 0 auto; }
+  header { border-bottom: 3px solid var(--accent); padding-bottom: 1.5rem; margin-bottom: 2rem; }
+  .lesson-meta { font-size: 14px; color: #666; margin-bottom: 0.5rem; font-family: "Noto Sans SC", "Microsoft YaHei", sans-serif; }
+  h1 { font-size: 28px; font-weight: 700; color: var(--accent); margin-bottom: 0.5rem; letter-spacing: 0.02em; }
+  h2 { font-size: 22px; font-weight: 700; color: var(--accent); margin-top: 2.5rem; margin-bottom: 1rem; padding-bottom: 0.3rem; border-bottom: 1px solid var(--border); }
+  h3 { font-size: 18px; font-weight: 700; color: #333; margin-top: 1.5rem; margin-bottom: 0.5rem; }
+  p { margin-bottom: 1rem; }
+  .mission-link { display: inline-block; margin-bottom: 1.5rem; font-size: 14px; color: var(--accent); text-decoration: none; font-family: "Noto Sans SC", "Microsoft YaHei", sans-serif; }
+  .mission-link:hover { text-decoration: underline; }
+  ol, ul { margin-left: 1.5rem; margin-bottom: 1rem; }
+  li { margin-bottom: 0.3rem; }
+  .callout { background: var(--callout-bg); border-left: 4px solid var(--callout-border); padding: 1rem 1.2rem; margin: 1.5rem 0; border-radius: 0 8px 8px 0; font-size: 15px; }
+  .callout-title { font-weight: 700; color: #e65100; margin-bottom: 0.3rem; font-family: "Noto Sans SC", sans-serif; }
+  .sound-box { background: var(--sound-bg); border: 2px solid var(--sound-border); border-radius: 12px; padding: 1.2rem 1.5rem; margin: 1.5rem 0; }
+  .sound-title { font-weight: 700; color: #283593; margin-bottom: 0.5rem; font-family: "Noto Sans SC", sans-serif; font-size: 16px; }
+  .light-box { background: var(--light-bg); border: 2px solid var(--light-border); border-radius: 12px; padding: 1.2rem 1.5rem; margin: 1.5rem 0; }
+  .light-title { font-weight: 700; color: #e65100; margin-bottom: 0.5rem; font-family: "Noto Sans SC", sans-serif; font-size: 16px; }
+  .wave-box { background: var(--wave-bg); border: 2px solid var(--wave-border); border-radius: 12px; padding: 1.2rem 1.5rem; margin: 1.5rem 0; }
+  .wave-title { font-weight: 700; color: #00695c; margin-bottom: 0.5rem; font-family: "Noto Sans SC", sans-serif; font-size: 16px; }
+  .ray-box { background: var(--ray-bg); border: 2px solid var(--ray-border); border-radius: 12px; padding: 1.2rem 1.5rem; margin: 1.5rem 0; }
+  .ray-title { font-weight: 700; color: #ad1457; margin-bottom: 0.5rem; font-family: "Noto Sans SC", sans-serif; font-size: 16px; }
+  .comparison-box { background: var(--comparison-bg); border: 2px solid var(--comparison-border); border-radius: 12px; padding: 1.2rem 1.5rem; margin: 1.5rem 0; }
+  .comparison-title { font-weight: 700; color: #2e7d32; margin-bottom: 0.5rem; font-family: "Noto Sans SC", sans-serif; }
+  .energy-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 14px; }
+  .energy-table th { background: var(--accent); color: white; padding: 0.6rem 0.8rem; text-align: left; font-weight: 600; font-size: 13px; }
+  .energy-table td { padding: 0.5rem 0.8rem; border-bottom: 1px solid #e0e0e0; vertical-align: top; }
+  .energy-table tr:nth-child(even) td { background: #f9f9f9; }
+  .energy-table tr:hover td { background: var(--accent-light); }
+  .highlight-box { background: #fff3e0; border: 2px solid #ffb74d; border-radius: 12px; padding: 1rem 1.2rem; margin: 1.5rem 0; }
+  .highlight-title { font-weight: 700; color: #e65100; margin-bottom: 0.3rem; font-family: "Noto Sans SC", sans-serif; }
+  .quiz-section { background: white; border: 2px solid var(--accent); border-radius: 12px; padding: 1.5rem; margin: 2rem 0; }
+  .quiz-title { font-size: 18px; font-weight: 700; color: var(--accent); margin-bottom: 1.2rem; font-family: "Noto Sans SC", sans-serif; }
+  .quiz-question { margin-bottom: 1.5rem; padding-bottom: 1.2rem; border-bottom: 1px dashed #ddd; }
+  .quiz-question:last-of-type { border-bottom: none; }
+  .quiz-q-text { font-weight: 600; margin-bottom: 0.8rem; font-size: 16px; }
+  .quiz-options { list-style: none; padding: 0; }
+  .quiz-options li { margin-bottom: 0.4rem; }
+  .quiz-btn { display: block; width: 100%; padding: 0.6rem 1rem; margin-bottom: 0.4rem; border: 2px solid #ddd; border-radius: 8px; background: white; cursor: pointer; font-size: 15px; font-family: "Noto Sans SC", "Microsoft YaHei", sans-serif; text-align: left; transition: all 0.2s; }
+  .quiz-btn:hover { border-color: var(--accent); background: var(--accent-light); }
+  .quiz-btn.correct { border-color: var(--quiz-correct); background: #e8f5e9; color: #1b5e20; font-weight: 600; }
+  .quiz-btn.wrong { border-color: var(--quiz-wrong); background: #ffebee; color: #b71c1c; }
+  .quiz-btn.disabled { pointer-events: none; opacity: 0.7; }
+  .quiz-feedback { margin-top: 0.5rem; padding: 0.5rem 0.8rem; border-radius: 6px; font-size: 14px; font-family: "Noto Sans SC", sans-serif; display: none; }
+  .quiz-feedback.show { display: block; }
+  .quiz-feedback.correct-fb { background: #e8f5e9; color: #2e7d32; border: 1px solid #a5d6a7; }
+  .quiz-feedback.wrong-fb { background: #ffebee; color: #c62828; border: 1px solid #ef9a9a; }
+  .score-bar { display: none; text-align: center; padding: 1rem; background: var(--accent-light); border-radius: 8px; margin-top: 1rem; font-family: "Noto Sans SC", sans-serif; }
+  .score-bar.show { display: block; }
+  .score-number { font-size: 32px; font-weight: 700; color: var(--accent); }
+  nav { margin-top: 3rem; padding-top: 1.5rem; border-top: 2px solid var(--border); display: flex; justify-content: space-between; font-family: "Noto Sans SC", sans-serif; }
+  nav a { color: var(--accent); text-decoration: none; padding: 0.5rem 1rem; border: 1px solid var(--border); border-radius: 8px; transition: all 0.2s; }
+  nav a:hover { background: var(--accent-light); text-decoration: none; }
+  .flow-box { background: white; border: 2px solid var(--border); border-radius: 12px; padding: 1.2rem 1.5rem; margin: 1.5rem 0; }
+  .flow-title { font-weight: 700; color: var(--accent); margin-bottom: 0.8rem; font-family: "Noto Sans SC", sans-serif; font-size: 16px; }
+  .flow-path { font-size: 15px; line-height: 2.4; text-align: center; }
+  .flow-node { display: inline-block; background: var(--accent-light); border: 2px solid var(--border); border-radius: 6px; padding: 0.25rem 0.6rem; font-weight: 600; font-size: 13px; margin: 0.15rem; }
+  .flow-arrow { color: var(--accent); font-weight: 700; margin: 0 0.2rem; }
+  .diagram-box { background: #f5f5f5; border: 2px solid #ccc; border-radius: 12px; padding: 1.5rem; margin: 1.5rem 0; text-align: center; font-family: "Noto Sans SC", sans-serif; }
+  .diagram-title { font-weight: 700; margin-bottom: 1rem; font-size: 16px; color: #333; }
+  @media print { body { font-size: 12pt; padding: 1cm; } .container { max-width: 100%; } .quiz-section { break-inside: avoid; } nav { display: none; } }
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <a class="mission-link" href="../MISSION.md">← 回到学习计划</a>
+  <div class="lesson-meta">小高备考 · 第8课 · 物质科学 · 建议用时：30分钟</div>
+  <h1>声与光</h1>
+  <p style="color:#666;font-size:14px;">声音和光是我们感知世界最重要的两种方式。声音是机械波，光是电磁波。</p>
+</header>
+
+<section>
+<h2>学习目标</h2>
+<p>学完本课，你应该能够：</p>
+<ol style="margin-left:1.5rem;margin-bottom:1rem;">
+  <li>理解声音的产生条件和传播方式</li>
+  <li>掌握声音的三个特性及其影响因素</li>
+  <li>了解声速的影响因素及常见介质中的声速</li>
+  <li>理解光的直线传播及其应用</li>
+  <li>掌握光的反射定律和平面镜成像特点</li>
+  <li>理解光的折射规律及透镜成像原理</li>
+  <li>了解光的色散和白光组成</li>
+</ol>
+</section>
+
+<section>
+<h2>一、声音的产生与传播</h2>
+
+<h3>1. 声音的产生</h3>
+<div class="sound-box">
+  <div class="sound-title">🔊 声音是由物体振动产生的</div>
+  <ul style="margin-left:1.5rem;margin-bottom:0.5rem;">
+    <li><strong>振动停止，发声停止</strong>（但声音可能还在传播）</li>
+    <li>正在发声的物体叫<strong>声源</strong></li>
+    <li>固体、液体、气体都可以作为声源</li>
+  </ul>
+</div>
+
+<div class="callout">
+  <div class="callout-title">💡 记忆要点</div>
+  <strong>声音产生于振动，振动停止发声停。但声音传播需要时间，所以振动停止后我们可能还能听到余音。</strong>
+</div>
+
+<h3>2. 声音的传播</h3>
+<div class="wave-box">
+  <div class="wave-title">📡 声音以声波的形式传播</div>
+  <ul style="margin-left:1.5rem;margin-bottom:0.5rem;">
+    <li><strong>传播需要介质</strong>：固体、液体、气体都可以传声</li>
+    <li><strong>真空不能传声</strong>：声音不能在真空中传播</li>
+    <li>声音在介质中以<strong>纵波</strong>（疏密波）的形式传播</li>
+  </ul>
+</div>
+
+<h3>3. 声速</h3>
+<table class="energy-table" style="width:100%;">
+  <thead>
+    <tr><th>介质类型</th><th>声速（约）</th><th>说明</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><strong>固体</strong>（钢铁）</td><td>约 5200 m/s</td><td>最快</td></tr>
+    <tr><td><strong>液体</strong>（水，15°C）</td><td>约 1450 m/s</td><td>居中</td></tr>
+    <tr><td><strong>气体</strong>（空气，15°C）</td><td>约 340 m/s</td><td>最慢</td></tr>
+  </tbody>
+</table>
+
+<div class="highlight-box">
+  <div class="highlight-title">📌 影响声速的因素</div>
+  <strong>①介质的种类</strong>：一般情况下，v<sub>固</sub> > v<sub>液</sub> > v<sub>气</sub><br>
+  <strong>②温度</strong>：在同种介质中，温度越高，声速越大<br>
+  <strong>③15°C空气中声速 = 340 m/s</strong>（考试常用值）
+</div>
+
+<div class="callout">
+  <div class="callout-title">⚠️ 考试高频考点</div>
+  <strong>"先看到闪电后听到雷声"</strong>：因为光速（3×10⁸ m/s）远大于声速（340 m/s），不是声音传播慢，而是光传播太快了！
+</div>
+</section>
+
+<section>
+<h2>二、声音的特性</h2>
+
+<h3>声音的三个特性</h3>
+<table class="energy-table" style="width:100%;">
+  <thead>
+    <tr><th>特性</th><th>定义</th><th>决定因素</th><th>单位</th><th>生活感受</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><strong>音调</strong></td><td>声音的高低</td><td><strong>频率</strong>（振动快慢）</td><td>赫兹(Hz)</td><td>女高音、男低音</td></tr>
+    <tr><td><strong>响度</strong></td><td>声音的强弱</td><td><strong>振幅</strong>（振动幅度）+ 距离</td><td>分贝(dB)</td><td>大声、小声</td></tr>
+    <tr><td><strong>音色</strong></td><td>声音的品质特色</td><td><strong>发声体材料和结构</strong></td><td>—</td><td>区分不同乐器</td></tr>
+  </tbody>
+</table>
+
+<h3>1. 音调与频率</h3>
+<div class="sound-box">
+  <div class="sound-title">🎵 音调</div>
+  <ul style="margin-left:1.5rem;margin-bottom:0.5rem;">
+    <li><strong>频率</strong>：物体每秒振动的次数，单位赫兹(Hz)</li>
+    <li><strong>频率越高，音调越高</strong>；频率越低，音调越低</li>
+    <li>人耳听觉范围：<strong>20 Hz ~ 20000 Hz</strong></li>
+    <li><strong>超声波</strong>：频率 > 20000 Hz（人耳听不到）</li>
+    <li><strong>次声波</strong>：频率 < 20 Hz（人耳听不到）</li>
+  </ul>
+</div>
+
+<h3>2. 响度与振幅</h3>
+<div class="sound-box">
+  <div class="sound-title">📢 响度</div>
+  <ul style="margin-left:1.5rem;margin-bottom:0.5rem;">
+    <li><strong>振幅</strong>：物体振动的幅度</li>
+    <li><strong>振幅越大，响度越大</strong></li>
+    <li>响度还跟<strong>距离声源的远近</strong>有关：距离越远，响度越小</li>
+    <li>响度还跟<strong>声音的分散程度</strong>有关</li>
+  </ul>
+</div>
+
+<div class="comparison-box">
+  <div class="comparison-title">🔑 音调 vs 响度（考试必考区分）</div>
+  <table style="width:100%;border-collapse:collapse;font-size:14px;margin-top:0.5rem;">
+    <tr style="border-bottom:1px solid #aed581;">
+      <td style="padding:0.5rem;font-weight:600;"><strong>区别</strong></td>
+      <td style="padding:0.5rem;"><strong>音调</strong></td>
+      <td style="padding:0.5rem;"><strong>响度</strong></td>
+    </tr>
+    <tr style="border-bottom:1px solid #aed581;background:#f5f5f5;">
+      <td style="padding:0.5rem;font-weight:600;">描述对象</td>
+      <td style="padding:0.5rem;">声音的高低</td>
+      <td style="padding:0.5rem;">声音的强弱</td>
+    </tr>
+    <tr>
+      <td style="padding:0.5rem;font-weight:600;">决定因素</td>
+      <td style="padding:0.5rem;">频率</td>
+      <td style="padding:0.5rem;">振幅</td>
+    </tr>
+  </table>
+</div>
+</section>
+
+<section>
+<h2>三、噪声与乐音</h2>
+
+<h3>1. 乐音与噪声的区别</h3>
+<table class="energy-table" style="width:100%;">
+  <thead>
+    <tr><th>比较项目</th><th>乐音</th><th>噪声</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><strong>物理学角度</strong></td><td>发声体做<strong>规则振动</strong>产生的声音</td><td>发声体做<strong>无规则振动</strong>产生的声音</td></tr>
+    <tr><td><strong>环保角度</strong></td><td>悦耳动听、令人愉悦的声音</td><td>妨碍人们正常休息、学习和工作的声音</td></tr>
+    <tr><td><strong>波形</strong></td><td>有规律的波形</td><td>杂乱无章的波形</td></tr>
+  </tbody>
+</table>
+
+<h3>2. 噪声的控制（三个环节）</h3>
+<div class="flow-box">
+  <div class="flow-title">🔇 控制噪声的三个途径</div>
+  <div class="flow-path">
+    <span class="flow-node">在声源处减弱</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-node">在传播过程中减弱</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-node">在人耳处减弱</span>
+  </div>
+</div>
+
+<table class="energy-table" style="width:100%;margin-top:1rem;">
+  <thead>
+    <tr><th>环节</th><th>具体措施</th><th>实例</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><strong>声源处</strong></td><td>消声</td><td>禁止鸣笛、安装消声器</td></tr>
+    <tr><td><strong>传播过程</strong></td><td>吸声/隔声</td><td>隔音墙、植树造林、关窗</td></tr>
+    <tr><td><strong>人耳处</strong></td><td>护声</td><td>戴耳塞、捂住耳朵</td></tr>
+  </tbody>
+</table>
+
+<h3>3. 声音的分贝等级</h3>
+<div class="highlight-box">
+  <div class="highlight-title">📌 常见分贝值</div>
+  <strong>0 dB</strong>：人刚能听到的最微弱的声音<br>
+  <strong>30~40 dB</strong>：较为理想的安静环境<br>
+  <strong>70 dB</strong>：干扰谈话，影响工作效率<br>
+  <strong>90 dB</strong>：长期生活在90dB以上噪声环境中，听力会受到严重影响<br>
+  <strong>150 dB</strong>：鼓膜破裂出血，双耳完全失去听力
+</div>
+</section>
+
+<section>
+<h2>四、光的直线传播</h2>
+
+<div class="light-box">
+  <div class="light-title">💡 光的传播</div>
+  <ul style="margin-left:1.5rem;margin-bottom:0.5rem;">
+    <li><strong>光源</strong>：自身能够发光的物体（太阳、点燃的蜡烛、LED灯等）</li>
+    <li><strong>光的传播速度</strong>：真空中最快，c = 3 × 10⁸ m/s = 300000 km/s</li>
+    <li>光在<strong>同种均匀介质</strong>中沿<strong>直线传播</strong></li>
+  </ul>
+</div>
+
+<h3>光沿直线传播的现象</h3>
+<table class="energy-table" style="width:100%;">
+  <thead>
+    <tr><th>现象</th><th>解释</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><strong>影子的形成</strong></td><td>光沿直线传播，遇到不透明物体，在物体后面形成光照不到的区域</td></tr>
+    <tr><td><strong>日食/月食</strong></td><td>日食：月球挡住太阳光；月食：地球挡住太阳光射向月球</td></tr>
+    <tr><td><strong>小孔成像</strong></td><td>成倒立的实像，像的形状与物体相同，与孔的形状无关</td></tr>
+    <tr><td><strong>激光准直</strong></td><td>利用光沿直线传播进行隧道掘进方向的校准</td></tr>
+  </tbody>
+</table>
+
+<div class="diagram-box">
+  <div class="diagram-title">🔍 小孔成像</div>
+  <div style="font-size:15px;line-height:2.2;">
+    物体发出的光通过小孔后，在屏上形成<strong>倒立的实像</strong><br>
+    像的大小取决于：物距（物体到小孔的距离）和像距（小孔到屏的距离）<br>
+    像距 &gt; 物距 → 放大像 &nbsp;&nbsp;|&nbsp;&nbsp; 像距 &lt; 物距 → 缩小像
+  </div>
+</div>
+</section>
+
+<section>
+<h2>五、光的反射</h2>
+
+<h3>1. 光的反射定律</h3>
+<div class="ray-box">
+  <div class="ray-title">🪞 反射定律</div>
+  <p><strong>反射光线、入射光线和法线在同一平面内；反射光线和入射光线分居法线两侧；反射角等于入射角。</strong></p>
+  <ul style="margin-left:1.5rem;margin-top:0.5rem;">
+    <li><strong>入射角</strong>：入射光线与法线的夹角（不是与镜面的夹角！）</li>
+    <li><strong>反射角</strong>：反射光线与法线的夹角</li>
+    <li><strong>法线</strong>：过入射点垂直于反射面的虚线</li>
+  </ul>
+</div>
+
+<div class="callout">
+  <div class="callout-title">⚠️ 考试高频陷阱</div>
+  <strong>入射角 = 0° 时，反射角也 = 0°</strong>，此时光线垂直入射镜面，原路返回。<br><br>
+  <strong>常说"反射角等于入射角"而不是反过来</strong>：因为先有入射才有反射，因果关系不能颠倒。
+</div>
+
+<h3>2. 镜面反射与漫反射</h3>
+<table class="energy-table" style="width:100%;">
+  <thead>
+    <tr><th>比较项目</th><th>镜面反射</th><th>漫反射</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><strong>反射面</strong></td><td>光滑（如镜子、平静水面）</td><td>粗糙（如纸张、墙面）</td></tr>
+    <tr><td><strong>反射光线</strong></td><td>平行入射 → 平行反射</td><td>平行入射 → 向各个方向反射</td></tr>
+    <tr><td><strong>是否遵守反射定律</strong></td><td>遵守</td><td>每一条光线都遵守</td></tr>
+    <tr><td><strong>实例</strong></td><td>照镜子、水面反光</td><td>能从各个方向看到书本</td></tr>
+  </tbody>
+</table>
+
+<h3>3. 平面镜成像</h3>
+<div class="ray-box">
+  <div class="ray-title">🪞 平面镜成像特点</div>
+  <ul style="margin-left:1.5rem;margin-bottom:0.5rem;">
+    <li>成<strong>正立、等大的虚像</strong></li>
+    <li>像和物到镜面的距离<strong>相等</strong></li>
+    <li>像和物的连线与镜面<strong>垂直</strong></li>
+    <li>像与物关于镜面对称（左右相反）</li>
+  </ul>
+</div>
+
+<div class="highlight-box">
+  <div class="highlight-title">📌 虚像 vs 实像</div>
+  <strong>虚像</strong>：不是实际光线会聚而成的，不能用光屏承接，只能用眼睛看到（如平面镜成像、水中倒影）<br>
+  <strong>实像</strong>：由实际光线会聚而成，能用光屏承接（如小孔成像、投影仪成像）
+</div>
+</section>
+
+<section>
+<h2>六、光的折射</h2>
+
+<h3>1. 光的折射规律</h3>
+<div class="light-box">
+  <div class="light-title">🌊 折射现象</div>
+  <ul style="margin-left:1.5rem;margin-bottom:0.5rem;">
+    <li>光从一种介质斜射入另一种介质时，传播方向会发生偏折</li>
+    <li><strong>折射光线、入射光线和法线在同一平面内</strong></li>
+    <li><strong>折射光线和入射光线分居法线两侧</strong></li>
+  </ul>
+</div>
+
+<h3>空气中的光 vs 水中的光</h3>
+<table class="energy-table" style="width:100%;">
+  <thead>
+    <tr><th>光从…射入…</th><th>入射角 vs 折射角</th><th>偏折方向</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><strong>空气 → 水/玻璃</strong></td><td>入射角 > 折射角</td><td>折射光线<strong>靠近</strong>法线</td></tr>
+    <tr><td><strong>水/玻璃 → 空气</strong></td><td>入射角 < 折射角</td><td>折射光线<strong>远离</strong>法线</td></tr>
+    <tr><td><strong>垂直入射</strong></td><td>入射角 = 折射角 = 0°</td><td>传播方向不变</td></tr>
+  </tbody>
+</table>
+
+<h3>2. 生活中的折射现象</h3>
+<table class="energy-table" style="width:100%;">
+  <thead>
+    <tr><th>现象</th><th>原理</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>池水看起来比实际浅</td><td>从水底射向空气的光发生折射，人眼逆着折射光线看，觉得池底升高了</td></tr>
+    <tr><td>筷子在水中"折断"</td><td>同上，光从水进入空气时发生折射</td></tr>
+    <tr><td>海市蜃楼</td><td>空气密度不均匀导致光折射（全反射）</td></tr>
+    <tr><td>彩虹</td><td>光的色散（折射+反射）</td></tr>
+  </tbody>
+</table>
+
+<div class="callout">
+  <div class="callout-title">💡 记忆口诀</div>
+  <strong>\"空大水小\"</strong>：光从空气斜射入水（或其他介质），空气中的角大（入射角 > 折射角）；光从水斜射入空气，水中的角小（折射角 < 入射角）。
+</div>
+</section>
+
+<section>
+<h2>七、透镜与凸透镜成像</h2>
+
+<h3>1. 透镜分类</h3>
+<table class="energy-table" style="width:100%;">
+  <thead>
+    <tr><th>类型</th><th>形状</th><th>对光的作用</th><th>焦点</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><strong>凸透镜</strong></td><td>中间厚、边缘薄</td><td><strong>会聚</strong>光线</td><td>实焦点（光实际会聚的点）</td></tr>
+    <tr><td><strong>凹透镜</strong></td><td>中间薄、边缘厚</td><td><strong>发散</strong>光线</td><td>虚焦点（光反向延长线的交点）</td></tr>
+  </tbody>
+</table>
+
+<h3>2. 凸透镜成像规律（考试核心！）</h3>
+<div class="light-box">
+  <div class="light-title">🔬 凸透镜成像公式：1/u + 1/v = 1/f</div>
+  <ul style="margin-left:1.5rem;margin-bottom:0.5rem;">
+    <li><strong>u</strong> = 物距（物体到透镜的距离）</li>
+    <li><strong>v</strong> = 像距（像到透镜的距离）</li>
+    <li><strong>f</strong> = 焦距（焦点到光心的距离）</li>
+  </ul>
+</div>
+
+<table class="energy-table" style="width:100%;margin-top:1rem;">
+  <thead>
+    <tr><th>物距 u</th><th>像的性质</th><th>像距 v</th><th>应用</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><strong>u > 2f</strong></td><td>倒立、缩小、实像</td><td>f < v < 2f</td><td>照相机</td></tr>
+    <tr><td><strong>u = 2f</strong></td><td>倒立、等大、实像</td><td>v = 2f</td><td>测焦距</td></tr>
+    <tr><td><strong>f < u < 2f</strong></td><td>倒立、放大、实像</td><td>v > 2f</td><td>投影仪/幻灯机</td></tr>
+    <tr><td><strong>u = f</strong></td><td>不成像（平行光）</td><td>—</td><td>探照灯</td></tr>
+    <tr><td><strong>u < f</strong></td><td>正立、放大、虚像</td><td>|v| > u</td><td>放大镜</td></tr>
+  </tbody>
+</table>
+
+<div class="callout">
+  <div class="callout-title">⚠️ 考试高频考点</div>
+  <strong>实像都是倒立的，虚像都是正立的</strong>。<br><br>
+  <strong>物近像远像变大</strong>：成实像时，物体靠近透镜 → 像远离透镜 → 像变大（照相机拍特写时镜头要靠近被摄物）<br><br>
+  <strong>一倍焦距分虚实，二倍焦距分大小</strong>：u=f 是实像和虚像的分界点；u=2f 是放大和缩小的分界点。
+</div>
+</section>
+
+<section>
+<h2>八、光的色散</h2>
+
+<div class="light-box">
+  <div class="light-title">🌈 光的色散</div>
+  <ul style="margin-left:1.5rem;margin-bottom:0.5rem;">
+    <li><strong>色散</strong>：白光通过棱镜后被分解为多种颜色的现象</li>
+    <li>牛顿首先发现：白光是由各种色光混合而成的复色光</li>
+    <li><strong>七色光</strong>：红、橙、黄、绿、蓝、靛、紫（ROYGBIV）</li>
+    <li>红光偏折最小，紫光偏折最大</li>
+  </ul>
+</div>
+
+<h3>色光的三原色 vs 颜料的三原色</h3>
+<div class="comparison-box">
+  <div class="comparison-title">🎨 三原色对比（考试必考区分）</div>
+  <table style="width:100%;border-collapse:collapse;font-size:14px;margin-top:0.5rem;">
+    <tr style="border-bottom:1px solid #aed581;background:#f5f5f5;">
+      <td style="padding:0.5rem;font-weight:600;"><strong></strong></td>
+      <td style="padding:0.5rem;font-weight:600;">色光的三原色</td>
+      <td style="padding:0.5rem;font-weight:600;">颜料的三原色</td>
+    </tr>
+    <tr style="border-bottom:1px solid #aed581;">
+      <td style="padding:0.5rem;font-weight:600;">三原色</td>
+      <td style="padding:0.5rem;"><strong>红、绿、蓝</strong>（RGB）</td>
+      <td style="padding:0.5rem;"><strong>红、黄、蓝</strong></td>
+    </tr>
+    <tr>
+      <td style="padding:0.5rem;font-weight:600;">混合结果</td>
+      <td style="padding:0.5rem;">三色等量混合 → <strong>白色</strong>光</td>
+      <td style="padding:0.5rem;">三色等量混合 → <strong>黑色</strong>（接近黑）</td>
+    </tr>
+    <tr style="border-bottom:1px solid #aed581;background:#f5f5f5;">
+      <td style="padding:0.5rem;font-weight:600;">类型</td>
+      <td style="padding:0.5rem;">光的混合（加色法）</td>
+      <td style="padding:0.5rem;">颜料混合（减色法）</td>
+    </tr>
+    <tr>
+      <td style="padding:0.5rem;font-weight:600;">应用</td>
+      <td style="padding:0.5rem;">电视机、电脑屏幕</td>
+      <td style="padding:0.5rem;">绘画、印刷</td>
+    </tr>
+  </table>
+</div>
+
+<h3>物体的颜色</h3>
+<div class="highlight-box">
+  <div class="highlight-title">📌 透明体和不透明体的颜色</div>
+  <strong>透明物体</strong>的颜色由它透过的色光决定（红色玻璃透过红光，吸收其他色光）<br>
+  <strong>不透明物体</strong>的颜色由它反射的色光决定（红花反射红光，吸收其他色光）<br>
+  <strong>白色</strong>物体反射所有色光；<strong>黑色</strong>物体吸收所有色光
+</div>
+</section>
+
+<section>
+<h2>九、声与光的对比总结</h2>
+
+<table class="energy-table" style="width:100%;">
+  <thead>
+    <tr><th>比较项目</th><th>声音</th><th>光</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><strong>本质</strong></td><td>机械波（需要介质）</td><td>电磁波（不需要介质）</td></tr>
+    <tr><td><strong>传播速度</strong></td><td>空气中约 340 m/s</td><td>真空中 3×10⁸ m/s</td></tr>
+    <tr><td><strong>真空传播</strong></td><td>不能</td><td>可以</td></tr>
+    <tr><td><strong>波的类型</strong></td><td>纵波</td><td>横波</td></tr>
+    <tr><td><strong>反射</strong></td><td>回声</td><td>镜面反射、漫反射</td></tr>
+    <tr><td><strong>折射</strong></td><td>声波的折射</td><td>光的折射、色散</td></tr>
+    <tr><td><strong>衍射</strong></td><td>容易（波长长）</td><td>不易（波长短）</td></tr>
+  </tbody>
+</table>
+</section>
+
+<section>
+<h2>十、易错点总结</h2>
+<table class="energy-table" style="width:100%;">
+  <thead>
+    <tr><th style="background:var(--accent);color:white;padding:0.6rem 0.8rem;text-align:left;">❌ 常见错误</th><th style="background:var(--accent);color:white;padding:0.6rem 0.8rem;text-align:left;">✅ 正确理解</th></tr>
+  </thead>
+  <tbody>
+    <tr><td style="padding:0.5rem 0.8rem;border-bottom:1px solid #e0e0e0;">声音在真空中也能传播</td><td style="padding:0.5rem 0.8rem;border-bottom:1px solid #e0e0e0;">声音需要介质，真空不能传声</td></tr>
+    <tr><td style="padding:0.5rem 0.8rem;border-bottom:1px solid #e0e0e0;">音调就是响度</td><td style="padding:0.5rem 0.8rem;border-bottom:1px solid #e0e0e0;">音调由频率决定，响度由振幅决定，两者不同</td></tr>
+    <tr><td style="padding:0.5rem 0.8rem;border-bottom:1px solid #e0e0e0;">漫反射不遵循反射定律</td><td style="padding:0.5rem 0.8rem;border-bottom:1px solid #e0e0e0;">漫反射的每一条光线都遵循反射定律</td></tr>
+    <tr><td style="padding:0.5rem 0.8rem;border-bottom:1px solid #e0e0e0;">入射角是入射光线与镜面的夹角</td><td style="padding:0.5rem 0.8rem;border-bottom:1px solid #e0e0e0;">入射角是入射光线与<strong>法线</strong>的夹角</td></tr>
+    <tr><td style="padding:0.5rem 0.8rem;border-bottom:1px solid #e0e0e0;">平面镜成实像</td><td style="padding:0.5rem 0.8rem;border-bottom:1px solid #e0e0e0;">平面镜成<strong>虚像</strong></td></tr>
+    <tr><td style="padding:0.5rem 0.8rem;border-bottom:1px solid #e0e0e0;">色光的三原色是红黄蓝</td><td style="padding:0.5rem 0.8rem;border-bottom:1px solid #e0e0e0;">色光三原色是<strong>红、绿、蓝</strong>；颜料三原色才是红黄蓝</td></tr>
+    <tr><td style="padding:0.5rem 0.8rem;">白色光是单色光</td><td style="padding:0.5rem 0.8rem;">白光是复色光，由七种色光混合而成</td></tr>
+    <tr><td style="padding:0.5rem 0.8rem;">凸透镜只能成实像</td><td style="padding:0.5rem 0.8rem;">u < f 时成正立放大的虚像（放大镜）</td></tr>
+  </tbody>
+</table>
+</section>
+
+<section>
+<h2>十一、与小学教学的联系</h2>
+<div class="callout">
+  <div class="callout-title">🏫 教学建议</div>
+  <strong>\"声音的产生实验\"</strong>：敲击音叉放入水中，观察水花飞溅，证明声音由振动产生。<br><br>
+  <strong>\"光的直线传播实验\"</>：用激光笔穿过有烟雾的透明盒子，观察光路，验证光沿直线传播。<br><br>
+  <strong>\"制作潜望镜\"</strong>：用两面平面镜和纸盒制作潜望镜，理解光的反射原理。<br><br>
+  <strong>\"三棱镜色散实验\"</strong>：用三棱镜将白光分解为七色光谱，直观展示光的色散。
+</div>
+</section>
+
+<section>
+<h2>📖 推荐阅读</h2>
+<p>人教版初中物理八年级上册第二章——声现象；第四章——光现象；第五章——透镜及其应用。</p>
+<p>🔗 <a href="https://www.pep.com.cn/jyk/djscwl/" target="_blank">人民教育出版社 — 初中物理教材</a></p>
+<p>参考：第7课力与运动 → <a href="0007-force-motion.html">第7课</a> · 第9课电的基础 → <a href="0009-electricity.html">第9课</a></p>
+</section>
+
+<section>
+<h2>✏️ 自我检测</h2>
+<p>请先独立思考，再点击选项查看答案和解析。</p>
+</section>
+
+<div class="quiz-section">
+  <div class="quiz-title">📝 课堂练习</div>
+
+  <div class="quiz-question" data-correct="2">
+    <div class="quiz-q-text">1. 下列关于声音的说法正确的是：</div>
+    <ul class="quiz-options">
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 0)">A. 声音可以在真空中传播</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 1)">B. 只要物体振动，我们就能听到声音</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 2)">C. 声音在固体中传播速度通常比在空气中快</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 3)">D. 声音在空气中的传播速度是3×10⁸ m/s</button></li>
+    </ul>
+    <div class="quiz-feedback correct-fb">✅ 正确！声音在固体中传播最快，液体次之，气体最慢。3×10⁸ m/s是光速。</div>
+    <div class="quiz-feedback wrong-fb">❌ 不对。声音需要介质传播，固体中最快（一般 > 液体 > 气体），空气中约340 m/s，真空中不能传声。</div>
+  </div>
+
+  <div class="quiz-question" data-correct="1">
+    <div class="quiz-q-text">2. 关于音调与响度，下列说法正确的是：</div>
+    <ul class="quiz-options">
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 0)">A. 音调高的声音响度一定大</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 1)">B. 音调由频率决定，响度由振幅决定</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 2)">C. 振幅越大，音调越高</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 3)">D. 频率越高，响度越大</button></li>
+    </ul>
+    <div class="quiz-feedback correct-fb">✅ 正确！音调取决于频率（振动快慢），响度取决于振幅（振动幅度），两者是独立的。</div>
+    <div class="quiz-feedback wrong-fb">❌ 不对。音调由频率决定，响度由振幅决定，两者没有必然联系。</div>
+  </div>
+
+  <div class="quiz-question" data-correct="3">
+    <div class="quiz-q-text">3. 下列现象中，属于光的折射的是：</div>
+    <ul class="quiz-options">
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 0)">A. 平静水面映出岸边的树</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 1)">B. 小孔成像</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 2)">C. 手影游戏</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 3)">D. 筷子在水面处"折断"</button></li>
+    </ul>
+    <div class="quiz-feedback correct-fb">✅ 正确！筷子在水中"折断"是光从水进入空气时发生折射造成的。A是反射，B和C是直线传播。</div>
+    <div class="quiz-feedback wrong-fb">❌ 不对。水面倒影是反射，小孔成像和手影是直线传播，筷子"折断"才是折射。</div>
+  </div>
+
+  <div class="quiz-question" data-correct="0">
+    <div class="quiz-q-text">4. 凸透镜成像时，当 u > 2f 时，所成的像是：</div>
+    <ul class="quiz-options">
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 0)">A. 倒立、缩小的实像</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 1)">B. 倒立、放大的实像</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 2)">C. 正立、放大的虚像</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 3)">D. 倒立、等大的实像</button></li>
+    </ul>
+    <div class="quiz-feedback correct-fb">✅ 正确！u > 2f 时成倒立缩小的实像，应用于照相机。f < v < 2f。</div>
+    <div class="quiz-feedback wrong-fb">❌ 不对。u > 2f → 倒立缩小实像（照相机原理）；f < u < 2f → 倒立放大实像（投影仪）；u < f → 正立放大虚像（放大镜）。</div>
+  </div>
+
+  <div class="quiz-question" data-correct="2">
+    <div class="quiz-q-text">5. 关于光的色散，下列说法错误的是：</div>
+    <ul class="quiz-options">
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 0)">A. 白光是复色光</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 1)">B. 红光在棱镜中偏折最小</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 2)">C. 色光的三原色是红黄蓝</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 3)">D. 彩虹是光的色散现象</button></li>
+    </ul>
+    <div class="quiz-feedback correct-fb">✅ 正确！色光的三原色是红、绿、蓝，不是红黄蓝。红黄蓝是颜料的三原色。</div>
+    <div class="quiz-feedback wrong-fb">❌ 不对。色光三原色是<strong>红、绿、蓝</strong>（RGB），颜料三原色才是红黄蓝。</div>
+  </div>
+
+  <div class="score-bar" id="scoreBar">
+    <div>🎉 测试完成！</div>
+    <div class="score-number" id="scoreNumber">0/5</div>
+    <div id="scoreMessage" style="margin-top:0.5rem;color:#666;"></div>
+  </div>
+</div>
+
+<nav>
+  <a href="0007-force-motion.html">← 第7课：力与运动</a>
+  <a href="0009-electricity.html">第9课：电的基础 →</a>
+</nav>
+
+</div>
+
+<script>
+let score = 0;
+let answered = 0;
+const total = 5;
+
+const explanations = [
+  // Q1
+  ["声音可以在真空中传播", "只要物体振动，我们就能听到声音", "声音在固体中传播速度通常比在空气中快", "声音在空气中的传播速度是3×10⁸ m/s"],
+  // Q2
+  ["音调高的声音响度一定大", "音调由频率决定，响度由振幅决定", "振幅越大，音调越高", "频率越高，响度越大"],
+  // Q3
+  ["平静水面映出岸边的树（反射）", "小孔成像（直线传播）", "手影游戏（直线传播）", "筷子在水面处'折断'（折射）"],
+  // Q4
+  ["倒立、缩小的实像", "倒立、放大的实像", "正立、放大的虚像", "倒立、等大的实像"],
+  // Q5
+  ["白光是复色光", "红光在棱镜中偏折最小", "色光的三原色是红黄蓝", "彩虹是光的色散现象"]
+];
+
+function checkAnswer(btn, choiceIndex) {
+  const question = btn.closest('.quiz-question');
+  if (question.classList.contains('answered')) return;
+  question.classList.add('answered');
+  answered++;
+
+  const correctIndex = parseInt(question.dataset.correct);
+  const buttons = question.querySelectorAll('.quiz-btn');
+  const feedback = question.querySelector('.quiz-feedback');
+
+  buttons.forEach(b => b.classList.add('disabled'));
+
+  if (choiceIndex === correctIndex) {
+    btn.classList.add('correct');
+    feedback.className = 'quiz-feedback show correct-fb';
+    feedback.textContent = '✅ 正确！' + explanations[answered - 1][correctIndex];
+    score++;
+  } else {
+    btn.classList.add('wrong');
+    buttons[correctIndex].classList.add('correct');
+    feedback.className = 'quiz-feedback show wrong-fb';
+    feedback.textContent = '❌ 不对。正确答案是：' + explanations[answered - 1][correctIndex];
+  }
+
+  if (answered === total) {
+    const bar = document.getElementById('scoreBar');
+    bar.classList.add('show');
+    document.getElementById('scoreNumber').textContent = score + '/' + total;
+    const msg = document.getElementById('scoreMessage');
+    if (score === total) msg.textContent = '🌟 太棒了！全部正确！';
+    else if (score >= 3) msg.textContent = '👍 不错！继续加油巩固薄弱环节。';
+    else msg.textContent = '💪 多复习几遍，下次一定能更好！';
+  }
+}
+</script>
+
+</body>
+</html>
