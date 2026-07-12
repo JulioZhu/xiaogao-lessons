@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第11课：地球的运动</title>
+<style>
+  :root {
+    --bg: #faf8f5; --text: #2c2c2c;
+    --accent: #1565c0; --accent-light: #e3f2fd; --border: #90caf9;
+    --quiz-correct: #4caf50; --quiz-wrong: #e53935;
+    --callout-bg: #fff8e1; --callout-border: #ffc107;
+    --rotation-bg: #e8eaf6; --rotation-border: #9fa8da;
+    --revolution-bg: #e0f7fa; --revolution-border: #80deea;
+    --season-bg: #f3e5f5; --season-border: #ce93d8;
+    --daynight-bg: #e8f5e9; --daynight-border: #a5d6a7;
+    --zone-bg: #fff3e0; --zone-border: #ffcc80;
+    --data-table-header: #1565c0;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: "Noto Serif SC", "Source Han Serif CN", "SimSun", Georgia, serif;
+    background: var(--bg); color: var(--text); line-height: 1.9;
+    font-size: 17px; padding: 2rem 1rem;
+  }
+  .container { max-width: 720px; margin: 0 auto; }
+  header { border-bottom: 3px solid var(--accent); padding-bottom: 1.5rem; margin-bottom: 2rem; }
+  .lesson-meta { font-size: 14px; color: #666; margin-bottom: 0.5rem; font-family: "Noto Sans SC", "Microsoft YaHei", sans-serif; }
+  h1 { font-size: 28px; font-weight: 700; color: var(--accent); margin-bottom: 0.5rem; letter-spacing: 0.02em; }
+  h2 { font-size: 22px; font-weight: 700; color: var(--accent); margin-top: 2.5rem; margin-bottom: 1rem; padding-bottom: 0.3rem; border-bottom: 1px solid var(--border); }
+  h3 { font-size: 18px; font-weight: 700; color: #333; margin-top: 1.5rem; margin-bottom: 0.5rem; }
+  p { margin-bottom: 1rem; }
+  .mission-link { display: inline-block; margin-bottom: 1.5rem; font-size: 14px; color: var(--accent); text-decoration: none; font-family: "Noto Sans SC", "Microsoft YaHei", sans-serif; }
+  .mission-link:hover { text-decoration: underline; }
+  ol, ul { margin-left: 1.5rem; margin-bottom: 1rem; }
+  li { margin-bottom: 0.3rem; }
+
+  .callout {
+    background: var(--callout-bg); border-left: 4px solid var(--callout-border);
+    padding: 1rem 1.2rem; margin: 1.5rem 0; border-radius: 0 8px 8px 0; font-size: 15px;
+  }
+  .callout-title { font-weight: 700; color: #e65100; margin-bottom: 0.3rem; font-family: "Noto Sans SC", sans-serif; }
+
+  .box {
+    border-radius: 12px; padding: 1.2rem 1.5rem; margin: 1.5rem 0;
+  }
+  .box-title { font-weight: 700; margin-bottom: 0.5rem; font-family: "Noto Sans SC", sans-serif; font-size: 16px; }
+
+  .rotation-box {
+    background: var(--rotation-bg); border: 2px solid var(--rotation-border);
+  }
+  .rotation-box .box-title { color: #283593; }
+
+  .revolution-box {
+    background: var(--revolution-bg); border: 2px solid var(--revolution-border);
+  }
+  .revolution-box .box-title { color: #00838f; }
+
+  .season-box {
+    background: var(--season-bg); border: 2px solid var(--season-border);
+  }
+  .season-box .box-title { color: #6a1b9a; }
+
+  .daynight-box {
+    background: var(--daynight-bg); border: 2px solid var(--daynight-border);
+  }
+  .daynight-box .box-title { color: #2e7d32; }
+
+  .zone-box {
+    background: var(--zone-bg); border: 2px solid var(--zone-border);
+  }
+  .zone-box .box-title { color: #e65100; }
+
+  .diagram-box {
+    background: #f5f5f5; border: 2px solid #ccc; border-radius: 12px;
+    padding: 1.5rem; margin: 1.5rem 0; text-align: center;
+    font-family: "Noto Sans SC", sans-serif;
+  }
+  .diagram-title { font-weight: 700; margin-bottom: 1rem; font-size: 16px; color: #333; }
+
+  .data-table {
+    width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 14px;
+  }
+  .data-table th {
+    background: var(--data-table-header); color: white; padding: 0.6rem 0.8rem;
+    text-align: left; font-weight: 600; font-size: 13px;
+  }
+  .data-table td {
+    padding: 0.5rem 0.8rem; border-bottom: 1px solid #e0e0e0; vertical-align: top;
+  }
+  .data-table tr:nth-child(even) td { background: #f9f9f9; }
+  .data-table tr:hover td { background: var(--accent-light); }
+
+  .formula-box {
+    background: var(--rotation-bg); border: 2px solid var(--rotation-border);
+    border-radius: 12px; padding: 1.2rem 1.5rem; margin: 1.5rem 0;
+    text-align: center; font-family: "Noto Sans SC", "Microsoft YaHei", monospace, sans-serif;
+  }
+  .formula { font-size: 22px; font-weight: 700; color: #1565c0; margin: 0.5rem 0; }
+  .formula-note { font-size: 14px; color: #666; }
+
+  /* Quiz */
+  .quiz-section {
+    background: white; border: 2px solid var(--accent);
+    border-radius: 12px; padding: 1.5rem; margin: 2rem 0;
+  }
+  .quiz-title {
+    font-size: 18px; font-weight: 700; color: var(--accent);
+    margin-bottom: 1.2rem; font-family: "Noto Sans SC", sans-serif;
+  }
+  .quiz-question { margin-bottom: 1.5rem; padding-bottom: 1.2rem; border-bottom: 1px dashed #ddd; }
+  .quiz-question:last-of-type { border-bottom: none; }
+  .quiz-q-text { font-weight: 600; margin-bottom: 0.8rem; font-size: 16px; }
+  .quiz-options { list-style: none; padding: 0; }
+  .quiz-options li { margin-bottom: 0.4rem; }
+  .quiz-btn {
+    display: block; width: 100%; padding: 0.6rem 1rem; margin-bottom: 0.4rem;
+    border: 2px solid #ddd; border-radius: 8px; background: white;
+    cursor: pointer; font-size: 15px; font-family: "Noto Sans SC", "Microsoft YaHei", sans-serif;
+    text-align: left; transition: all 0.2s;
+  }
+  .quiz-btn:hover { border-color: var(--accent); background: var(--accent-light); }
+  .quiz-btn.correct { border-color: var(--quiz-correct); background: #e8f5e9; color: #1b5e20; font-weight: 600; }
+  .quiz-btn.wrong { border-color: var(--quiz-wrong); background: #ffebee; color: #b71c1c; }
+  .quiz-btn.disabled { pointer-events: none; opacity: 0.7; }
+  .quiz-feedback {
+    margin-top: 0.5rem; padding: 0.5rem 0.8rem; border-radius: 6px;
+    font-size: 14px; font-family: "Noto Sans SC", sans-serif; display: none;
+  }
+  .quiz-feedback.show { display: block; }
+  .quiz-feedback.correct-fb { background: #e8f5e9; color: #2e7d32; border: 1px solid #a5d6a7; }
+  .quiz-feedback.wrong-fb { background: #ffebee; color: #c62828; border: 1px solid #ef9a9a; }
+  .score-bar {
+    display: none; text-align: center; padding: 1rem;
+    background: var(--accent-light); border-radius: 8px; margin-top: 1rem;
+    font-family: "Noto Sans SC", sans-serif;
+  }
+  .score-bar.show { display: block; }
+  .score-number { font-size: 32px; font-weight: 700; color: var(--accent); }
+
+  /* Navigation */
+  nav {
+    margin-top: 3rem; padding-top: 1.5rem; border-top: 2px solid var(--border);
+    display: flex; justify-content: space-between; font-family: "Noto Sans SC", sans-serif;
+  }
+  nav a {
+    color: var(--accent); text-decoration: none; padding: 0.5rem 1rem;
+    border: 1px solid var(--border); border-radius: 8px; transition: all 0.2s;
+  }
+  nav a:hover { background: var(--accent-light); text-decoration: none; }
+
+  @media print {
+    body { font-size: 12pt; padding: 1cm; }
+    .container { max-width: 100%; }
+    .quiz-section { break-inside: avoid; }
+    nav { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <a class="mission-link" href="../MISSION.md">← 回到学习计划</a>
+  <div class="lesson-meta">小高备考 · 第11课 · 地球与宇宙科学 · 建议用时：30分钟</div>
+  <h1>地球的运动</h1>
+  <p style="color:#666;font-size:14px;">地球在太空中一刻不停地在运动。自转产生昼夜交替，公转带来四季变化——这两个基本运动是理解地球上几乎所有自然现象的钥匙。</p>
+</header>
+
+<section>
+<h2>学习目标</h2>
+<p>学完本课，你应该能够：</p>
+<ol style="margin-left:1.5rem;margin-bottom:1rem;">
+  <li>说出地球自转的方向、周期和产生的地理现象</li>
+  <li>说出地球公转的方向、周期、轨道特征和产生的地理现象</li>
+  <li>理解黄赤交角的概念及其意义</li>
+  <li>解释四季形成的原因</li>
+  <li>理解五带的划分及各地特点</li>
+  <li>区分自转和公转的相关现象</li>
+</ol>
+</section>
+
+<section>
+<h2>一、地球的自转</h2>
+
+<div class="rotation-box">
+  <div class="box-title">🌍 地球自转的基本特征</div>
+  <table style="width:100%;border-collapse:collapse;font-size:14px;margin-top:0.5rem;">
+    <tr style="border-bottom:1px solid #9fa8da;background:#f5f5f5;"><td style="padding:0.5rem;font-weight:700;width:120px;">绕转中心</td><td style="padding:0.5rem;">地轴</td></tr>
+    <tr style="border-bottom:1px solid #9fa8da;"><td style="padding:0.5rem;font-weight:700;">方向</td><td style="padding:0.5rem;">自西向东（从北极上空看为<strong>逆时针</strong>，从南极上空看为<strong>顺时针</strong>）</td></tr>
+    <tr style="border-bottom:1px solid #9fa8da;background:#f5f5f5;"><td style="padding:0.5rem;font-weight:700;">周期</td><td style="padding:0.5rem;"><strong>23小时56分4秒</strong>（恒星日，真正周期）；日常用的是<strong>24小时</strong>（太阳日）</td></tr>
+    <tr><td style="padding:0.5rem;font-weight:700;">速度</td><td style="padding:0.5rem;">角速度：除两极外，各地约为 <strong>15°/小时</strong><br>线速度：赤道最大（约1670km/h），向两极递减，两极为0</td></tr>
+  </table>
+</div>
+
+<h3>1. 自转产生的地理现象</h3>
+
+<div class="daynight-box">
+  <div class="box-title">🌓 现象一：昼夜交替</div>
+  <p>地球是一个不透明的球体，太阳同一时刻只能照亮地球的一半。</p>
+  <ul style="margin-left:1.5rem;margin-top:0.5rem;">
+    <li>被照亮的一半叫<strong>昼半球</strong></li>
+    <li>未被照亮的一半叫<strong>夜半球</strong></li>
+    <li>昼半球和夜半球的分界线叫<strong>晨昏线</strong>（圈）</li>
+  </ul>
+  <p style="margin-top:0.5rem;"><strong>昼夜交替的周期是一个太阳日（24小时）</strong>，这与我们日常生活密切相关。</p>
+</div>
+
+<div class="callout">
+  <div class="callout-title">⚠️ 注意区分</div>
+  <strong>昼夜现象</strong>存在的原因是地球不透明 + 有阳光照射（即使地球不自转也有昼夜）；<br>
+  <strong>昼夜交替</strong>的原因是地球<strong>自转</strong>。
+</div>
+
+<div class="rotation-box">
+  <div class="box-title">🕐 现象二：地方时差异</div>
+  <p>由于地球自西向东自转，同纬度地区<strong>东边比西边先看到日出</strong>。</p>
+  <ul style="margin-left:1.5rem;margin-top:0.5rem;">
+    <li>经度每相差 <strong>15°</strong>，地方时相差 <strong>1小时</strong></li>
+    <li>经度每相差 <strong>1°</strong>，地方时相差 <strong>4分钟</strong></li>
+    <li><strong>"东早西晚"</strong>——东边的地点比西边的地点时间更早</li>
+  </ul>
+</div>
+
+<div class="diagram-box">
+  <div class="diagram-title">📐 地方时计算示例</div>
+  <div style="font-size:15px;line-height:2.4;text-align:left;padding:0 1rem;">
+    已知：北京（东经120°）的地方时为12:00<br>
+    求：乌鲁木齐（东经87°）的地方时<br><br>
+    <strong>第一步</strong>：计算经度差 = 120° - 87° = 33°<br>
+    <strong>第二步</strong>：计算时间差 = 33 × 4分钟 = 132分钟 = 2小时12分<br>
+    <strong>第三步</strong>：乌鲁木齐在西边，时间更晚 → 12:00 - 2:12 = <span style="font-size:18px;font-weight:700;color:#1565c0;">9:48</span>
+  </div>
+</div>
+
+<div class="rotation-box">
+  <div class="box-title">↩️ 现象三：沿地表水平运动物体的偏移</div>
+  <p>受<strong>地转偏向力</strong>（科里奥利力）影响：</p>
+  <ul style="margin-left:1.5rem;margin-top:0.5rem;">
+    <li><strong>北半球</strong>：向运动方向的<strong>右侧</strong>偏</li>
+    <li><strong>南半球</strong>：向运动方向的<strong>左侧</strong>偏</li>
+    <li><strong>赤道上</strong>：不发生偏转</li>
+    <li>偏转幅度随纬度升高而增大</li>
+  </ul>
+</div>
+
+<div class="callout">
+  <div class="callout-title">💡 记忆技巧</div>
+  <strong>"北右南左赤道无"</strong><br>
+  实际应用：北半球河流右岸侵蚀更严重（如长江入沙洲多靠近左岸）；台风北半球逆时针旋转。
+</div>
+</section>
+
+<section>
+<h2>二、地球的公转</h2>
+
+<div class="revolution-box">
+  <div class="box-title">🌞 地球公转的基本特征</div>
+  <table style="width:100%;border-collapse:collapse;font-size:14px;margin-top:0.5rem;">
+    <tr style="border-bottom:1px solid #80deea;background:#f5f5f5;"><td style="padding:0.5rem;font-weight:700;width:120px;">绕转中心</td><td style="padding:0.5rem;"><strong>太阳</strong></td></tr>
+    <tr style="border-bottom:1px solid #80deea;"><td style="padding:0.5rem;font-weight:700;">方向</td><td style="padding:0.5rem;">自西向东（与自转方向一致）</td></tr>
+    <tr style="border-bottom:1px solid #80deea;background:#f5f5f5;"><td style="padding:0.5rem;font-weight:700;">周期</td><td style="padding:0.5rem;"><strong>365天6时9分10秒</strong>（恒星年，真正公转周期）</td></tr>
+    <tr style="border-bottom:1px solid #80deea;"><td style="padding:0.5rem;font-weight:700;">轨道</td><td style="padding:0.5rem;">近似正圆的<strong>椭圆</strong>，太阳位于其中一个焦点上</td></tr>
+    <tr><td style="padding:0.5rem;font-weight:700;">近日点/远日点</td><td style="padding:0.5rem;">近日点：约<strong>1月初</strong>（离太阳最近，约1.471亿千米）<br>远日点：约<strong>7月初</strong>（离太阳最远，约1.521亿千米）</td></tr>
+  </table>
+</div>
+
+<div class="callout">
+  <div class="callout-title">💡 有趣的事实</div>
+  北半球冬季时地球其实在<strong>近日点</strong>附近！这说明<strong>四季变化不是因为距离太阳远近</strong>，而是因为<strong>黄赤交角</strong>导致的太阳高度角和日照时长变化。
+</div>
+
+<h3>1. 黄赤交角</h3>
+
+<div class="formula-box">
+  <div class="formula-note">关键角度</div>
+  <div class="formula">黄赤交角 = 23°26′</div>
+  <p class="formula-note">黄道平面（公转轨道面）与赤道平面的夹角</p>
+</div>
+
+<div class="revolution-box">
+  <div class="box-title">📐 黄赤交角的意义</div>
+  <p>因为黄赤交角的存在，太阳直射点在南北回归线之间往返移动：</p>
+  <ul style="margin-left:1.5rem;margin-top:0.5rem;">
+    <li>太阳直射点的移动范围：<strong>北纬23°26′（北回归线）</strong> 至 <strong>南纬23°26′（南回归线）</strong></li>
+    <li>回归线的纬度 = 黄赤交角的度数</li>
+    <li>如果没有黄赤交角（为0°），太阳直射点将永远在赤道上</li>
+  </ul>
+</div>
+
+<h3>2. 太阳直射点的回归运动</h3>
+
+<div class="diagram-box">
+  <div class="diagram-title">📅 二分二至日与太阳直射点位置</div>
+  <div style="font-size:15px;line-height:2.6;text-align:left;padding:0 1rem;">
+    <strong>春分</strong>（3月21日前后）：直射<strong>赤道</strong>，全球昼夜平分<br>
+    <strong>夏至</strong>（6月22日前后）：直射<strong>北回归线</strong>，北半球昼最长夜最短<br>
+    <strong>秋分</strong>（9月23日前后）：直射<strong>赤道</strong>，全球昼夜平分<br>
+    <strong>冬至</strong>（12月22日前后）：直射<strong>南回归线</strong>，北半球昼最短夜最长
+  </div>
+</div>
+
+<div class="diagram-box">
+  <div class="diagram-title">↕️ 太阳直射点移动规律</div>
+  <div style="font-size:15px;line-height:2.6;text-align:left;padding:0 1rem;">
+    3月21日（赤道）→ 6月22日（北回归线）→ 9月23日（赤道）→ 12月22日（南回归线）→ 次年3月21日（赤道）<br><br>
+    <strong>北半球夏季</strong>（6-8月）：直射点在北半球，向北移再向南移<br>
+    <strong>北半球冬季</strong>（12-2月）：直射点在南半球，向南移再向北移
+  </div>
+</div>
+</section>
+
+<section>
+<h2>三、地球公转产生的地理现象</h2>
+
+<h3>1. 正午太阳高度的变化</h3>
+
+<div class="season-box">
+  <div class="box-title">☀️ 正午太阳高度角</div>
+  <p>正午太阳高度角（H）是指正午时太阳光线与地平面的夹角。</p>
+  <ul style="margin-left:1.5rem;margin-top:0.5rem;">
+    <li>同一时刻，正午太阳高度角从<strong>太阳直射点所在纬度</strong>向南北两侧递减</li>
+    <li>计算公式：<strong>H = 90° - |当地纬度 - 直射点纬度|</strong></li>
+    <li>夏至日：北回归线以北达最大值，南半球达最小值</li>
+    <li>冬至日：南回归线以南达最大值，北半球达最小值</li>
+  </ul>
+</div>
+
+<h3>2. 昼夜长短的变化</h3>
+
+<div class="daynight-box">
+  <div class="box-title">🌓 昼夜长短变化规律</div>
+  <table class="data-table">
+    <thead>
+      <tr><th>节气</th><th>直射点位置</th><th>昼夜分布规律</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>春分/秋分</strong></td><td>赤道</td><td>全球昼夜等长（各12小时）</td></tr>
+      <tr><td><strong>夏至</strong></td><td>北回归线</td><td>北半球昼最长夜最短，北极圈以内出现<strong>极昼</strong>；南半球相反</td></tr>
+      <tr><td><strong>冬至</strong></td><td>南回归线</td><td>北半球昼最短夜最长，北极圈以内出现<strong>极夜</strong>；南半球相反</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="callout">
+  <div class="callout-title">💡 记忆口诀</div>
+  <strong>"夏半年北半球昼长夜短，冬半年北半球昼短夜长"<br>
+  夏至昼最长，冬至夜最长；春秋分，昼夜平分。</strong>
+</div>
+
+<h3>3. 四季的形成</h3>
+
+<div class="season-box">
+  <div class="box-title">🍂 四季的形成机制</div>
+  <p>四季的根本原因是：<strong>黄赤交角 → 太阳直射点回归运动 → 正午太阳高度和昼夜长短的季节变化 → 热量收支的季节差异 → 四季更替</strong></p>
+  <p style="margin-top:0.5rem;"><strong>天文四季划分：</strong></p>
+  <ul style="margin-left:1.5rem;margin-top:0.3rem;">
+    <li>夏季：一年中正午太阳高度最大、白昼最长的季节</li>
+    <li>冬季：一年中正午太阳高度最小、白昼最短的季节</li>
+    <li>春秋季：夏冬之间的过渡季节</li>
+  </ul>
+  <p style="margin-top:0.5rem;"><strong>我国传统四季划分（二十四节气）：</strong></p>
+  <ul style="margin-left:1.5rem;margin-top:0.3rem;">
+    <li>立春、雨水、惊蛰、春分、清明、谷雨 → <strong>春季</strong></li>
+    <li>立夏、小满、芒种、夏至、小暑、大暑 → <strong>夏季</strong></li>
+    <li>立秋、处暑、白露、秋分、寒露、霜降 → <strong>秋季</strong></li>
+    <li>立冬、小雪、大雪、冬至、小寒、大寒 → <strong>冬季</strong></li>
+  </ul>
+</div>
+
+<h3>4. 五带的划分</h3>
+
+<div class="zone-box">
+  <div class="box-title">🌐 五带</div>
+  <table class="data-table">
+    <thead>
+      <tr><th>温度带</th><th>范围</th><th>太阳直射</th><th>极昼极夜</th><th>热量特征</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>热带</strong></td><td>23°26′N ~ 23°26′S</td><td style="color:#4caf50;">有直射</td><td>无</td><td>全年高温</td></tr>
+      <tr><td><strong>北温带</strong></td><td>23°26′N ~ 66°34′N</td><td style="color:#e53935;">无</td><td>无</td><td>四季分明</td></tr>
+      <tr><td><strong>北寒带</strong></td><td>66°34′N ~ 90°N</td><td style="color:#e53935;">无</td><td>有</td><td>终年寒冷</td></tr>
+      <tr><td><strong>南温带</strong></td><td>23°26′S ~ 66°34′S</td><td style="color:#e53935;">无</td><td>无</td><td>四季分明</td></tr>
+      <tr><td><strong>南寒带</strong></td><td>66°34′S ~ 90°S</td><td style="color:#e53935;">无</td><td>有</td><td>终年寒冷</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="callout">
+  <div class="callout-title">💡 关键边界</div>
+  <strong>回归线（23°26′）</strong> = 热带与温带的分界线 = 有无太阳直射的分界线<br>
+  <strong>极圈（66°34′）</strong> = 温带与寒带的分界线 = 有无极昼极夜的分界线<br>
+  两条线之和 = <strong>90°</strong>（互余关系）
+</div>
+</section>
+
+<section>
+<h2>四、自转与公转对比总结</h2>
+
+<table class="data-table">
+  <thead>
+    <tr><th>比较项目</th><th>自转</th><th>公转</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><strong>绕转中心</strong></td><td>地轴</td><td>太阳</td></tr>
+    <tr><td><strong>方向</strong></td><td>自西向东</td><td>自西向东</td></tr>
+    <tr><td><strong>周期</strong></td><td>23时56分4秒（恒星日）</td><td>365天6时9分10秒（恒星年）</td></tr>
+    <tr><td><strong>产生的现象</strong></td><td>昼夜交替、地方时差异、物体水平运动偏转</td><td>四季更替、正午太阳高度变化、昼夜长短变化、五带划分</td></tr>
+    <tr><td><strong>速度</strong></td><td>角速度15°/h（两极除外），线速度赤道最大</td><td>近日点快、远日点慢（开普勒第二定律）</td></tr>
+  </tbody>
+</table>
+</section>
+
+<section>
+<h2>五、易错点总结</h2>
+
+<div class="callout">
+  <div class="callout-title">❌ 常见错误</div>
+  <table style="width:100%;border-collapse:collapse;font-size:14px;margin-top:0.5rem;">
+    <tr style="border-bottom:1px solid #ffc107;"><td style="padding:0.4rem 0;"><strong>错误1</strong></td><td style="padding:0.4rem;">认为四季变化是因为日地距离变化 → <strong>错！</strong>四季由黄赤交角引起</td></tr>
+    <tr style="border-bottom:1px solid #ffc107;background:#fff8e1;"><td style="padding:0.4rem 0;"><strong>错误2</strong></td><td style="padding:0.4rem;">混淆恒星日和太阳日 → 恒星日是真正周期（23h56m4s），太阳日是日常用的（24h）</td></tr>
+    <tr style="border-bottom:1px solid #ffc107;"><td style="padding:0.4rem 0;"><strong>错误3</strong></td><td style="padding:0.4rem;">认为赤道上有昼夜长短变化 → <strong>错！</strong>赤道全年昼夜平分</td></tr>
+    <tr style="border-bottom:1px solid #ffc107;background:#fff8e1;"><td style="padding:0.4rem 0;"><strong>错误4</strong></td><td style="padding:0.4rem;">混淆晨线和昏线 → 顺着自转方向，由夜入昼为<strong>晨线</strong>，由昼入夜为<strong>昏线</strong></td></tr>
+    <tr style="border-bottom:1px solid #ffc107;"><td style="padding:0.4rem 0;"><strong>错误5</strong></td><td style="padding:0.4rem;">认为南半球夏季在6-8月 → <strong>错！</strong>南北半球季节相反</td></tr>
+    <tr><td style="padding:0.4rem 0;"><strong>错误6</strong></td><td style="padding:0.4rem;">认为极圈纬度 = 回归线纬度 → <strong>错！</strong>极圈=90°-回归线=66°34′</td></tr>
+  </table>
+</div>
+</section>
+
+<section>
+<h2>六、与小学教学的联系</h2>
+
+<div class="callout">
+  <div class="callout-title">🏫 小学科学课程标准相关要点</div>
+  <ul style="margin-left:1.5rem;margin-top:0.5rem;">
+    <li>小学5-6年级要求学生知道地球自转产生昼夜交替</li>
+    <li>能举例说明地球公转产生四季变化</li>
+    <li>通过模拟实验认识日食和月食成因（涉及日、地、月位置关系）</li>
+    <li>了解北极星"不动"的秘密（地球自转轴指向北极星附近）</li>
+  </ul>
+  <p style="margin-top:0.5rem;"><strong>作为高级教师候选人</strong>，你需要比小学教学要求更深一层——不仅要"知道"，还要能解释"为什么"，并能用准确的科学语言表述。</p>
+</div>
+</section>
+
+<section>
+<h2>七、随堂练习</h2>
+<p>请先独立思考，再点击选项查看答案和解析。</p>
+</section>
+
+<!-- Quiz Section -->
+<section class="quiz-section">
+  <div class="quiz-title">📝 课堂小测验（共8题）</div>
+
+  <div class="quiz-question" data-correct="C">
+    <div class="quiz-q-text">1. 地球自转产生的地理现象是：</div>
+    <ul class="quiz-options">
+      <li><button class="quiz-btn" data-value="A" onclick="checkAnswer(this)">A. 四季更替</button></li>
+      <li><button class="quiz-btn" data-value="B" onclick="checkAnswer(this)">B. 昼夜长短变化</button></li>
+      <li><button class="quiz-btn" data-value="C" onclick="checkAnswer(this)">C. 昼夜交替</button></li>
+      <li><button class="quiz-btn" data-value="D" onclick="checkAnswer(this)">D. 五带划分</button></li>
+    </ul>
+    <div class="quiz-feedback correct-fb" id="fb-1-correct">✅ 正确！昼夜交替是地球自转产生的现象。四季更替、昼夜长短变化、五带划分都是公转产生的。</div>
+    <div class="quiz-feedback wrong-fb" id="fb-1-wrong">❌ 不对哦。四季更替、昼夜长短变化、五带划分都是地球<strong>公转</strong>产生的现象。昼夜交替是自转产生的。</div>
+  </div>
+
+  <div class="quiz-question" data-correct="B">
+    <div class="quiz-q-text">2. 当北京（东经120°）时间为14:00时，东京（东经140°）的地方时大约是：</div>
+    <ul class="quiz-options">
+      <li><button class="quiz-btn" data-value="A" onclick="checkAnswer(this)">A. 12:40</button></li>
+      <li><button class="quiz-btn" data-value="B" onclick="checkAnswer(this)">B. 15:20</button></li>
+      <li><button class="quiz-btn" data-value="C" onclick="checkAnswer(this)">C. 14:00</button></li>
+      <li><button class="quiz-btn" data-value="D" onclick="checkAnswer(this)">D. 16:40</button></li>
+    </ul>
+    <div class="quiz-feedback correct-fb" id="fb-2-correct">✅ 正确！经度差=20°，时间差=80分钟=1小时20分。东京在东边，时间更早：14:00+1:20=15:20。</div>
+    <div class="quiz-feedback wrong-fb" id="fb-2-wrong">❌ 再算算。经度差=140°-120°=20°，每1°=4分钟，所以时间差=80分钟。东京在东边，加80分钟=15:20。</div>
+  </div>
+
+  <div class="quiz-question" data-correct="A">
+    <div class="quiz-q-text">3. 地球公转至近日点时，北半球处于：</div>
+    <ul class="quiz-options">
+      <li><button class="quiz-btn" data-value="A" onclick="checkAnswer(this)">A. 冬季</button></li>
+      <li><button class="quiz-btn" data-value="B" onclick="checkAnswer(this)">B. 夏季</button></li>
+      <li><button class="quiz-btn" data-value="C" onclick="checkAnswer(this)">C. 春季</button></li>
+      <li><button class="quiz-btn" data-value="D" onclick="checkAnswer(this)">D. 秋季</button></li>
+    </ul>
+    <div class="quiz-feedback correct-fb" id="fb-3-correct">✅ 正确！近日点约在1月初，此时北半球处于冬季。这正好说明四季不是由日地距离决定的。</div>
+    <div class="quiz-feedback wrong-fb" id="fb-3-wrong">❌ 近日点在1月初，此时北半球是冬季。记住：四季由黄赤交角决定，不是日地距离！</div>
+  </div>
+
+  <div class="quiz-question" data-correct="C">
+    <div class="quiz-q-text">4. 夏至日时，太阳直射：</div>
+    <ul class="quiz-options">
+      <li><button class="quiz-btn" data-value="A" onclick="checkAnswer(this)">A. 赤道</button></li>
+      <li><button class="quiz-btn" data-value="B" onclick="checkAnswer(this)">B. 南回归线</button></li>
+      <li><button class="quiz-btn" data-value="C" onclick="checkAnswer(this)">C. 北回归线</button></li>
+      <li><button class="quiz-btn" data-value="D" onclick="checkAnswer(this)">D. 北极圈</button></li>
+    </ul>
+    <div class="quiz-feedback correct-fb" id="fb-4-correct">✅ 正确！夏至日（6月22日前后），太阳直射北回归线（23°26′N），北半球昼最长夜最短。</div>
+    <div class="quiz-feedback wrong-fb" id="fb-4-wrong">❌ 夏至日太阳直射北回归线。赤道是春分/秋分，南回归线是冬至，北极圈不是直射范围。</div>
+  </div>
+
+  <div class="quiz-question" data-correct="B">
+    <div class="quiz-q-text">5. 北半球某地，物体沿地表水平运动向右偏，该地位于：</div>
+    <ul class="quiz-options">
+      <li><button class="quiz-btn" data-value="A" onclick="checkAnswer(this)">A. 南半球</button></li>
+      <li><button class="quiz-btn" data-value="B" onclick="checkAnswer(this)">B. 北半球</button></li>
+      <li><button class="quiz-btn" data-value="C" onclick="checkAnswer(this)">C. 赤道上</button></li>
+      <li><button class="quiz-btn" data-value="D" onclick="checkAnswer(this)">D. 无法判断</button></li>
+    </ul>
+    <div class="quiz-feedback correct-fb" id="fb-5-correct">✅ 正确！北半球地转偏向力使物体向右偏，南半球向左偏，赤道不偏。</div>
+    <div class="quiz-feedback wrong-fb" id="fb-5-wrong">❌ 地转偏向力规律：北半球右偏，南半球左偏，赤道不偏。题目说向右偏，所以在北半球。</div>
+  </div>
+
+  <div class="quiz-question" data-correct="D">
+    <div class="quiz-q-text">6. 下列有关地球自转和公转的说法，正确的是：</div>
+    <ul class="quiz-options">
+      <li><button class="quiz-btn" data-value="A" onclick="checkAnswer(this)">A. 自转和公转方向相反</button></li>
+      <li><button class="quiz-btn" data-value="B" onclick="checkAnswer(this)">B. 自转产生四季变化</button></li>
+      <li><button class="quiz-btn" data-value="C" onclick="checkAnswer(this)">C. 公转周期是一天</button></li>
+      <li><button class="quiz-btn" data-value="D" onclick="checkAnswer(this)">D. 自转和公转方向都是自西向东</button></li>
+    </ul>
+    <div class="quiz-feedback correct-fb" id="fb-6-correct">✅ 正确！自转和公转方向相同，都是自西向东。自转周期约一天，公转周期约一年。</div>
+    <div class="quiz-feedback wrong-fb" id="fb-6-wrong">❌ 逐项分析：A错（方向相同）、B错（四季是公转产生）、C错（公转周期是一年）、D对。</div>
+  </div>
+
+  <div class="quiz-question" data-correct="A">
+    <div class="quiz-q-text">7. 上海（约北纬31°）位于五带中的：</div>
+    <ul class="quiz-options">
+      <li><button class="quiz-btn" data-value="A" onclick="checkAnswer(this)">A. 北温带</button></li>
+      <li><button class="quiz-btn" data-value="B" onclick="checkAnswer(this)">B. 热带</button></li>
+      <li><button class="quiz-btn" data-value="C" onclick="checkAnswer(this)">C. 北寒带</button></li>
+      <li><button class="quiz-btn" data-value="D" onclick="checkAnswer(this)">D. 南温带</button></li>
+    </ul>
+    <div class="quiz-feedback correct-fb" id="fb-7-correct">✅ 正确！北纬31°在23°26′N~66°34′N之间，属于北温带。四季分明，无直射无极昼极夜。</div>
+    <div class="quiz-feedback wrong-fb" id="fb-7-wrong">❌ 五带划分：热带（0°~23°26′）、北温带（23°26′N~66°34′N）、北寒带（66°34′N~90°N）。31°N在北温带。</div>
+  </div>
+
+  <div class="quiz-question" data-correct="C">
+    <div class="quiz-q-text">8. 关于黄赤交角，下列说法错误的是：</div>
+    <ul class="quiz-options">
+      <li><button class="quiz-btn" data-value="A" onclick="checkAnswer(this)">A. 目前约为23°26′</button></li>
+      <li><button class="quiz-btn" data-value="B" onclick="checkAnswer(this)">B. 决定了太阳直射点的移动范围</button></li>
+      <li><button class="quiz-btn" data-value="C" onclick="checkAnswer(this)">C. 是地轴与公转轨道面的夹角</button></li>
+      <li><button class="quiz-btn" data-value="D" onclick="checkAnswer(this)">D. 是四季形成的根本原因之一</button></li>
+    </ul>
+    <div class="quiz-feedback correct-fb" id="fb-8-correct">✅ 正确！黄赤交角是赤道面与黄道面（公转轨道面）的夹角，不是地轴与轨道面的夹角（那是66°34′）。</div>
+    <div class="quiz-feedback wrong-fb" id="fb-8-wrong">❌ 黄赤交角=赤道面与黄道面的夹角=23°26′。地轴与轨道面的夹角=90°-23°26′=66°34′。C说法错误。</div>
+  </div>
+
+  <div class="score-bar" id="score-bar">
+    <div>你的得分</div>
+    <div class="score-number" id="score-number"></div>
+    <div id="score-comment"></div>
+  </div>
+</section>
+
+<script>
+let answered = 0;
+const total = document.querySelectorAll('.quiz-question').length;
+
+function checkAnswer(btn) {
+  const question = btn.closest('.quiz-question');
+  if (question.classList.contains('answered')) return;
+  question.classList.add('answered');
+  answered++;
+
+  const correct = question.getAttribute('data-correct');
+  const selected = btn.getAttribute('data-value');
+  const qIndex = Array.from(document.querySelectorAll('.quiz-question')).indexOf(question) + 1;
+
+  // Disable all buttons in this question
+  question.querySelectorAll('.quiz-btn').forEach(b => {
+    b.classList.add('disabled');
+    if (b.getAttribute('data-value') === correct) {
+      b.classList.add('correct');
+    }
+  });
+
+  if (selected === correct) {
+    btn.classList.add('correct');
+    document.getElementById('fb-' + qIndex + '-correct').classList.add('show');
+  } else {
+    btn.classList.add('wrong');
+    document.getElementById('fb-' + qIndex + '-wrong').classList.add('show');
+  }
+
+  // Show score if all answered
+  if (answered === total) {
+    let score = 0;
+    document.querySelectorAll('.quiz-question.answered').forEach(q => {
+      const correct = q.getAttribute('data-correct');
+      const selectedBtn = q.querySelector('.quiz-btn.correct:not(.wrong)');
+      if (selectedBtn && selectedBtn.getAttribute('data-value') === correct) score++;
+    });
+    // Recalculate properly
+    score = 0;
+    document.querySelectorAll('.quiz-question.answered').forEach(q => {
+      const correct = q.getAttribute('data-correct');
+      q.querySelectorAll('.quiz-btn').forEach(b => {
+        if (b.classList.contains('correct') && !b.classList.contains('wrong')) {
+          // This button is marked correct and wasn't wrong — but we need to check if user picked it
+        }
+      });
+    });
+    // Simpler: count questions where correct feedback is shown
+    score = document.querySelectorAll('.quiz-feedback.correct-fb.show').length;
+
+    const bar = document.getElementById('score-bar');
+    const num = document.getElementById('score-number');
+    const comment = document.getElementById('score-comment');
+    num.textContent = score + '/' + total;
+    if (score === total) {
+      comment.textContent = '满分！你对地球运动的理解非常扎实 🎉';
+    } else if (score >= total * 0.75) {
+      comment.textContent = '很好！再复习一下错题对应的知识点 💪';
+    } else if (score >= total * 0.5) {
+      comment.textContent = '基础不错，建议重新阅读相关章节 📖';
+    } else {
+      comment.textContent = '别灰心，重新学习本课内容后再试一次！🌟';
+    }
+    bar.classList.add('show');
+  }
+}
+</script>
+
+<!-- Navigation -->
+<nav>
+  <a href="0010-chemical-equations.html">← 第10课：化学方程式</a>
+  <a href="0012-weather-climate.html">第12课：天气与气候 →</a>
+</nav>
+
+</div>
+</body>
+</html>
