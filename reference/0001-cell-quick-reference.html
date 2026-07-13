@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>细胞结构速查表</title>
+<style>
+  :root { --bg: #faf8f5; --text: #2c2c2c; --accent: #2e7d32; --border: #c8e6c9; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: "Noto Serif SC", "SimSun", Georgia, serif; background: var(--bg); color: var(--text); line-height: 1.8; padding: 2rem 1rem; font-size: 16px; }
+  .container { max-width: 720px; margin: 0 auto; }
+  h1 { font-size: 24px; color: var(--accent); border-bottom: 3px solid var(--accent); padding-bottom: 0.5rem; margin-bottom: 1.5rem; }
+  h2 { font-size: 18px; color: var(--accent); margin-top: 1.5rem; margin-bottom: 0.8rem; }
+  table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 14px; }
+  th { background: var(--accent); color: white; padding: 0.5rem; text-align: left; }
+  td { padding: 0.4rem 0.5rem; border-bottom: 1px solid #ddd; }
+  tr:nth-child(even) td { background: #f5f5f5; }
+  .tag { display: inline-block; background: var(--accent-light); color: var(--accent); padding: 1px 8px; border-radius: 10px; font-size: 12px; font-weight: 600; margin-right: 4px; }
+  .tag.dongwu { background: #e3f2fd; color: #1565c0; }
+  .tag.zhiwu { background: #e8f5e9; color: #2e7d32; }
+  .tag.tongyou { background: #fff3e0; color: #e65100; }
+  .mnemonic { background: #fff8e1; border-left: 4px solid #ffc107; padding: 0.8rem 1rem; margin: 1rem 0; border-radius: 0 8px 8px 0; font-size: 14px; }
+  @media print { body { padding: 1cm; font-size: 11pt; } }
+</style>
+</head>
+<body>
+<div class="container">
+<h1>📋 细胞结构速查表</h1>
+
+<h2>一、细胞基本结构</h2>
+<table>
+  <tr><th>结构</th><th>动植物共有？</th><th>一句话功能</th></tr>
+  <tr><td>细胞膜</td><td><span class="tag tongyou">共有</span></td><td>保护细胞，控制物质进出</td></tr>
+  <tr><td>细胞质</td><td><span class="tag tongyou">共有</span></td><td>细胞器悬浮的液体环境</td></tr>
+  <tr><td>细胞核</td><td><span class="tag tongyou">共有</span></td><td>遗传信息库，控制中心</td></tr>
+  <tr><td>细胞壁</td><td><span class="tag zhiwu">植物特有</span></td><td>支持和保护（纤维素+果胶）</td></tr>
+</table>
+
+<h2>二、细胞器速记</h2>
+<table>
+  <tr><th>细胞器</th><th>膜结构</th><th>动植物</th><th>功能关键词</th><th>比喻</th></tr>
+  <tr><td>线粒体</td><td>双层膜</td><td><span class="tag tongyou">都有</span></td><td>有氧呼吸，供能</td><td>⚡ 发电厂</td></tr>
+  <tr><td>叶绿体</td><td>双层膜</td><td><span class="tag zhiwu">植物</span></td><td>光合作用</td><td>☀️ 太阳能板</td></tr>
+  <tr><td>内质网</td><td>单层膜</td><td><span class="tag tongyou">都有</span></td><td>加工运输，脂质合成</td><td>🏭 加工厂+物流</td></tr>
+  <tr><td>高尔基体</td><td>单层膜</td><td><span class="tag tongyou">都有</span></td><td>分拣、包装、分泌</td><td>📮 邮局</td></tr>
+  <tr><td>核糖体</td><td>无膜</td><td><span class="tag tongyou">都有</span></td><td>合成蛋白质</td><td>🔧 装配线</td></tr>
+  <tr><td>溶酶体</td><td>单层膜</td><td><span class="tag dongwu">动物为主</span></td><td>分解废物，消化病菌</td><td>♻️ 回收站</td></tr>
+  <tr><td>液泡</td><td>单层膜</td><td><span class="tag zhiwu">植物明显</span></td><td>储存，调节渗透压</td><td>🏺 大水缸</td></tr>
+  <tr><td>中心体</td><td>无膜</td><td><span class="tag dongwu">动物+低等植物</span></td><td>细胞分裂</td><td>🔄 纺锤体 organizer</td></tr>
+</table>
+
+<h2>三、必背口诀</h2>
+<div class="mnemonic">
+  <strong>动植物细胞区别：</strong><br>
+  动有核膜质中线，植有壁叶液<br>
+  共有一套膜质核，线粒核糖体相伴<br>
+  内高溶酶各有用，分工合作保平安
+</div>
+
+<div class="mnemonic">
+  <strong>细胞器功能记忆：</strong><br>
+  线粒供能叶光合，内质加工高分拣<br>
+  核糖造蛋溶清废，液泡储水调渗透
+</div>
+
+<h2>四、考试高频考点</h2>
+<table>
+  <tr><th>考点</th><th>要点</th></tr>
+  <tr><td>细胞学说</td><td>施莱登+施旺，1838-1839，三点结论</td></tr>
+  <tr><td>原核vs真核</td><td>有无核膜包被的细胞核（细菌=原核，动植物=真核）</td></tr>
+  <tr><td>结构适应功能</td><td>线粒体嵴增大面积、红细胞无核多装血红蛋白</td></tr>
+  <tr><td>选择透过性</td><td>细胞膜的功能特性，活细胞才具有</td></tr>
+</table>
+</div>
+</body>
+</html>

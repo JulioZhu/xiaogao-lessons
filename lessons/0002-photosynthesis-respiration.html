@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第2课：光合作用与呼吸作用</title>
+<style>
+  :root {
+    --bg: #faf8f5; --text: #2c2c2c;
+    --accent: #2e7d32; --accent-light: #e8f5e9; --border: #c8e6c9;
+    --quiz-correct: #4caf50; --quiz-wrong: #e53935;
+    --callout-bg: #fff8e1; --callout-border: #ffc107;
+    --reaction-bg: #f1f8e9; --reaction-border: #aed581;
+    --comparison-bg: #e3f2fd; --comparison-border: #90caf9;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: "Noto Serif SC", "Source Han Serif CN", "SimSun", Georgia, serif;
+    background: var(--bg); color: var(--text); line-height: 1.9;
+    font-size: 17px; padding: 2rem 1rem;
+  }
+  .container { max-width: 720px; margin: 0 auto; }
+  header { border-bottom: 3px solid var(--accent); padding-bottom: 1.5rem; margin-bottom: 2rem; }
+  .lesson-meta { font-size: 14px; color: #666; margin-bottom: 0.5rem; font-family: "Noto Sans SC", "Microsoft YaHei", sans-serif; }
+  h1 { font-size: 28px; font-weight: 700; color: var(--accent); margin-bottom: 0.5rem; letter-spacing: 0.02em; }
+  h2 { font-size: 22px; font-weight: 700; color: var(--accent); margin-top: 2.5rem; margin-bottom: 1rem; padding-bottom: 0.3rem; border-bottom: 1px solid var(--border); }
+  h3 { font-size: 18px; font-weight: 700; color: #333; margin-top: 1.5rem; margin-bottom: 0.5rem; }
+  p { margin-bottom: 1rem; }
+  .mission-link { display: inline-block; margin-bottom: 1.5rem; font-size: 14px; color: var(--accent); text-decoration: none; font-family: "Noto Sans SC", "Microsoft YaHei", sans-serif; }
+  .mission-link:hover { text-decoration: underline; }
+  ol, ul { margin-left: 1.5rem; margin-bottom: 1rem; }
+  li { margin-bottom: 0.3rem; }
+  .callout { background: var(--callout-bg); border-left: 4px solid var(--callout-border); padding: 1rem 1.2rem; margin: 1.5rem 0; border-radius: 0 8px 8px 0; font-size: 15px; }
+  .callout-title { font-weight: 700; color: #e65100; margin-bottom: 0.3rem; font-family: "Noto Sans SC", sans-serif; }
+  .reaction-box { background: var(--reaction-bg); border: 2px solid var(--reaction-border); border-radius: 12px; padding: 1.2rem 1.5rem; margin: 1.5rem 0; text-align: center; font-family: "Noto Sans SC", "Microsoft YaHei", monospace, sans-serif; font-size: 15px; line-height: 2.2; }
+  .reaction-title { font-weight: 700; color: var(--accent); margin-bottom: 0.5rem; font-size: 16px; }
+  .comparison-box { background: var(--comparison-bg); border: 2px solid var(--comparison-border); border-radius: 12px; padding: 1.2rem 1.5rem; margin: 1.5rem 0; }
+  .comparison-title { font-weight: 700; color: #1565c0; margin-bottom: 0.5rem; font-family: "Noto Sans SC", sans-serif; }
+  .organelle-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 15px; }
+  .organelle-table th { background: var(--accent); color: white; padding: 0.7rem 1rem; text-align: left; font-weight: 600; }
+  .organelle-table td { padding: 0.6rem 1rem; border-bottom: 1px solid #e0e0e0; vertical-align: top; }
+  .organelle-table tr:nth-child(even) td { background: #f9f9f9; }
+  .organelle-table tr:hover td { background: var(--accent-light); }
+  .quiz-section { background: white; border: 2px solid var(--accent); border-radius: 12px; padding: 1.5rem; margin: 2rem 0; }
+  .quiz-title { font-size: 18px; font-weight: 700; color: var(--accent); margin-bottom: 1.2rem; font-family: "Noto Sans SC", sans-serif; }
+  .quiz-question { margin-bottom: 1.5rem; padding-bottom: 1.2rem; border-bottom: 1px dashed #ddd; }
+  .quiz-question:last-of-type { border-bottom: none; }
+  .quiz-q-text { font-weight: 600; margin-bottom: 0.8rem; font-size: 16px; }
+  .quiz-options { list-style: none; padding: 0; }
+  .quiz-options li { margin-bottom: 0.4rem; }
+  .quiz-btn { display: block; width: 100%; padding: 0.6rem 1rem; margin-bottom: 0.4rem; border: 2px solid #ddd; border-radius: 8px; background: white; cursor: pointer; font-size: 15px; font-family: "Noto Sans SC", "Microsoft YaHei", sans-serif; text-align: left; transition: all 0.2s; }
+  .quiz-btn:hover { border-color: var(--accent); background: var(--accent-light); }
+  .quiz-btn.correct { border-color: var(--quiz-correct); background: #e8f5e9; color: #1b5e20; font-weight: 600; }
+  .quiz-btn.wrong { border-color: var(--quiz-wrong); background: #ffebee; color: #b71c1c; }
+  .quiz-btn.disabled { pointer-events: none; opacity: 0.7; }
+  .quiz-feedback { margin-top: 0.5rem; padding: 0.5rem 0.8rem; border-radius: 6px; font-size: 14px; font-family: "Noto Sans SC", sans-serif; display: none; }
+  .quiz-feedback.show { display: block; }
+  .quiz-feedback.correct-fb { background: #e8f5e9; color: #2e7d32; border: 1px solid #a5d6a7; }
+  .quiz-feedback.wrong-fb { background: #ffebee; color: #c62828; border: 1px solid #ef9a9a; }
+  .score-bar { display: none; text-align: center; padding: 1rem; background: var(--accent-light); border-radius: 8px; margin-top: 1rem; font-family: "Noto Sans SC", sans-serif; }
+  .score-bar.show { display: block; }
+  .score-number { font-size: 32px; font-weight: 700; color: var(--accent); }
+  nav { margin-top: 3rem; padding-top: 1.5rem; border-top: 2px solid var(--border); display: flex; justify-content: space-between; font-family: "Noto Sans SC", sans-serif; }
+  nav a { color: var(--accent); text-decoration: none; padding: 0.5rem 1rem; border: 1px solid var(--border); border-radius: 8px; transition: all 0.2s; }
+  nav a:hover { background: var(--accent-light); text-decoration: none; }
+  @media print { body { font-size: 12pt; padding: 1cm; } .container { max-width: 100%; } .quiz-section { break-inside: avoid; } nav { display: none; } }
+  .process-diagram { background: white; border: 2px solid var(--border); border-radius: 12px; padding: 1.5rem; margin: 1.5rem 0; }
+  .process-row { display: flex; align-items: center; justify-content: center; gap: 0.5rem; flex-wrap: wrap; margin: 0.8rem 0; font-size: 15px; }
+  .process-item { background: var(--accent-light); border: 1px solid var(--border); border-radius: 8px; padding: 0.4rem 0.8rem; font-weight: 600; font-family: "Noto Sans SC", sans-serif; }
+  .process-arrow { color: var(--accent); font-size: 20px; font-weight: 700; }
+  .process-stage { background: var(--accent); color: white; border-radius: 8px; padding: 0.3rem 0.8rem; font-size: 13px; font-family: "Noto Sans SC", sans-serif; font-weight: 600; }
+  .highlight-box { background: #fce4ec; border: 2px solid #f48fb1; border-radius: 12px; padding: 1rem 1.2rem; margin: 1.5rem 0; }
+  .highlight-title { font-weight: 700; color: #c62828; margin-bottom: 0.3rem; font-family: "Noto Sans SC", sans-serif; }
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <a class="mission-link" href="../MISSION.md">← 回到学习计划</a>
+  <div class="lesson-meta">小高备考 · 第2课 · 生命科学 · 建议用时：20分钟</div>
+  <h1>光合作用与呼吸作用</h1>
+  <p style="color:#666;font-size:14px;">这两个过程是地球上所有生命活动的能量基础。</p>
+</header>
+
+<section>
+<h2>学习目标</h2>
+<p>学完本课，你应该能够：</p>
+<ol style="margin-left:1.5rem;margin-bottom:1rem;">
+  <li>写出光合作用和有氧呼吸的反应式</li>
+  <li>描述光合作用的两个阶段及其场所</li>
+  <li>理解呼吸作用的三个阶段</li>
+  <li>对比分析光合作用与呼吸作用的异同</li>
+  <li>解释影响光合速率和呼吸速率的因素</li>
+</ol>
+</section>
+
+<section>
+<h2>一、光合作用——生命的能量之源</h2>
+<p>光合作用是绿色植物、藻类和某些细菌利用<strong>光能</strong>，将<strong>二氧化碳和水</strong>转化为<strong>有机物（主要是葡萄糖）</strong>并释放<strong>氧气</strong>的过程。它是地球上几乎所有生命能量的最终来源。</p>
+
+<div class="reaction-box">
+  <div class="reaction-title">☀️ 光合作用总反应式</div>
+  6CO₂ + 12H₂O ──[光能, 叶绿体]──&gt; C₆H₁₂O₆ + 6O₂ + 6H₂O
+</div>
+
+<p>光合作用在<strong>叶绿体</strong>中进行，分为两个阶段：</p>
+
+<h3>1. 光反应（光依赖反应）</h3>
+<div class="process-diagram">
+  <div style="text-align:center;margin-bottom:0.5rem;"><span class="process-stage">场所：类囊体薄膜</span></div>
+  <div class="process-row">
+    <span class="process-item">H₂O</span>
+    <span class="process-arrow">→</span>
+    <span class="process-item">O₂↑</span>
+    <span class="process-arrow">+</span>
+    <span class="process-item">[H]</span>
+    <span class="process-arrow">+</span>
+    <span class="process-item">ATP</span>
+  </div>
+  <p style="text-align:center;font-size:13px;color:#666;margin-top:0.5rem;">需要光、色素、酶</p>
+</div>
+
+<p>光反应的要点：</p>
+<ul style="margin-left:1.5rem;margin-bottom:1rem;">
+  <li><strong>水的光解</strong>：2H₂O → 4[H] + O₂（氧气来源于水，不是 CO₂！考试高频考点）</li>
+  <li><strong>ATP 的合成</strong>：ADP + Pi + 能量 → ATP（光能转化为 ATP 中活跃的化学能）</li>
+  <li><strong>NADPH 的生成</strong>：[H] 作为还原剂，参与暗反应</li>
+</ul>
+
+<h3>2. 暗反应（碳反应 / Calvin 循环）</h3>
+<div class="process-diagram">
+  <div style="text-align:center;margin-bottom:0.5rem;"><span class="process-stage">场所：叶绿体基质</span></div>
+  <div class="process-row">
+    <span class="process-item">CO₂</span>
+    <span class="process-arrow">+</span>
+    <span class="process-item">C₅</span>
+    <span class="process-arrow">→</span>
+    <span class="process-item">2C₃</span>
+  </div>
+  <div class="process-row" style="margin-top:0.5rem;">
+    <span class="process-item">C₃</span>
+    <span class="process-arrow">──[ATP, [H]]──&gt;</span>
+    <span class="process-item">C₆H₁₂O₆</span>
+    <span class="process-arrow">+</span>
+    <span class="process-item">C₅再生</span>
+  </div>
+  <p style="text-align:center;font-size:13px;color:#666;margin-top:0.5rem;">不需要光，但需要光反应的产物</p>
+</div>
+
+<p>暗反应包含两个关键步骤：</p>
+<ol style="margin-left:1.5rem;margin-bottom:1rem;">
+  <li><strong>CO₂ 的固定</strong>：CO₂ + C₅ → 2C₃（由 RuBisCO 酶催化，是地球上含量最丰富的蛋白质）</li>
+  <li><strong>C₃ 的还原</strong>：C₃ 接受 ATP 提供的能量和 [H]，被还原为糖类，同时再生 C₅</li>
+</ol>
+
+<div class="callout">
+  <div class="callout-title">🔑 关键理解</div>
+  <strong>"暗反应"不等于"不需要光"</strong>——暗反应本身不消耗光能，但它需要光反应产生的 ATP 和 [H]。所以在黑暗中，暗反应会因为缺乏 ATP 和 [H] 而很快停止。<br><br>
+  更准确的说法是<strong>"碳反应"</strong>，因为它的核心是把 CO₂ 转化为有机物。
+</div>
+</section>
+
+<section>
+<h2>二、呼吸作用——能量的释放者</h2>
+<p>呼吸作用是细胞将<strong>有机物（主要是葡萄糖）</strong>氧化分解，释放<strong>能量</strong>并生成 <strong>ATP</strong> 的过程。所有活细胞时刻都在进行呼吸作用。</p>
+
+<div class="reaction-box">
+  <div class="reaction-title">🫁 有氧呼吸总反应式</div>
+  C₆H₁₂O₆ + 6O₂ ──[酶]──&gt; 6CO₂ + 6H₂O + 大量能量（约 38ATP）
+</div>
+
+<h3>三个阶段</h3>
+
+<table class="organelle-table">
+  <thead>
+    <tr>
+      <th>阶段</th>
+      <th>场所</th>
+      <th>主要反应</th>
+      <th>产物</th>
+      <th>能量</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>第一阶段</strong><br>糖酵解</td>
+      <td>细胞质基质</td>
+      <td>C₆H₁₂O₆ → 2丙酮酸 + [H]</td>
+      <td>丙酮酸、[H]</td>
+      <td>少量（2ATP）</td>
+    </tr>
+    <tr>
+      <td><strong>第二阶段</strong><br>三羧酸循环</td>
+      <td>线粒体基质</td>
+      <td>丙酮酸 + H₂O → CO₂ + [H]</td>
+      <td>CO₂、[H]</td>
+      <td>少量（2ATP）</td>
+    </tr>
+    <tr>
+      <td><strong>第三阶段</strong><br>电子传递链</td>
+      <td>线粒体内膜</td>
+      <td>[H] + O₂ → H₂O</td>
+      <td>H₂O</td>
+      <td>大量（34ATP）</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="callout">
+  <div class="callout-title">💡 记忆口诀</div>
+  「一糖二丙三水，能量逐步释放」<br>
+  第一阶段在胞质，葡萄糖变丙酮酸；<br>
+  第二阶段在线粒基质，丙酮酸变二氧化碳；<br>
+  第三阶段在线粒内膜，氢氧结合生成水，能量最多在这里！
+</div>
+
+<h3>无氧呼吸</h3>
+<p>当氧气不足时，细胞可以进行<strong>无氧呼吸</strong>（发酵）：</p>
+
+<div class="reaction-box">
+  <div class="reaction-title">🔬 无氧呼吸</div>
+  C₆H₁₂O₆ ──[酶]──&gt; 2C₂H₅OH（酒精）+ 2CO₂ + 少量能量（2ATP）<br>
+  或<br>
+  C₆H₁₂O₆ ──[酶]──&gt; 2C₃H₆O₃（乳酸）+ 少量能量（2ATP）
+</div>
+
+<p>常见类型：</p>
+<ul style="margin-left:1.5rem;margin-bottom:1rem;">
+  <li><strong>酒精发酵</strong>：酵母菌、植物根部缺氧时（如水稻田）</li>
+  <li><strong>乳酸发酵</strong>：乳酸菌、动物肌肉细胞剧烈运动时</li>
+</ul>
+
+<div class="highlight-box">
+  <div class="highlight-title">⚠️ 考试高频陷阱</div>
+  <strong>无氧呼吸只在第一阶段释放能量！</strong>第二阶段（丙酮酸转化为酒精或乳酸）不产生 ATP。所以无氧呼吸总共只产生 2ATP，远少于有氧呼吸的 38ATP。
+</div>
+</section>
+
+<section>
+<h2>三、光合作用 vs 呼吸作用——对比分析</h2>
+
+<table class="organelle-table">
+  <thead>
+    <tr>
+      <th>比较项目</th>
+      <th>光合作用</th>
+      <th>呼吸作用</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>发生部位</td><td>含叶绿体的细胞</td><td>所有活细胞</td></tr>
+    <tr><td>发生条件</td><td>需要光</td><td>有光无光均可</td></tr>
+    <tr><td>物质变化</td><td>合成有机物（CO₂→有机物）</td><td>分解有机物（有机物→CO₂）</td></tr>
+    <tr><td>能量变化</td><td>光能→化学能（储能）</td><td>化学能→ATP+热能（放能）</td></tr>
+    <tr><td>气体交换</td><td>吸收 CO₂，释放 O₂</td><td>吸收 O₂，释放 CO₂</td></tr>
+    <tr><td>实质</td><td>合成有机物，储存能量</td><td>分解有机物，释放能量</td></tr>
+  </tbody>
+</table>
+
+<div class="comparison-box">
+  <div class="comparison-title">🔗 两者的关系</div>
+  光合作用和呼吸作用是<strong>相互依存、对立统一</strong>的关系：<br><br>
+  <strong>对立</strong>：一个合成有机物，一个分解有机物；一个吸 CO₂ 放 O₂，一个相反。<br><br>
+  <strong>依存</strong>：光合作用产生的有机物和 O₂ 是呼吸作用的原料；呼吸作用产生的 CO₂ 和 ATP 可为光合作用所用。<br><br>
+  在白天，植物<strong>同时进行</strong>光合作用和呼吸作用。当光合速率 &gt; 呼吸速率时，表现为吸收 CO₂、释放 O₂。
+</div>
+</section>
+
+<section>
+<h2>四、影响光合速率的因素</h2>
+
+<h3>1. 光照强度</h3>
+<p>在一定范围内，光合速率随光照强度增加而<strong>加快</strong>。达到<strong>光饱和点</strong>后不再增加。</p>
+<div class="callout">
+  <div class="callout-title">📊 三个关键点</div>
+  <strong>呼吸点</strong>：光照为零，只进行呼吸作用，释放 CO₂<br>
+  <strong>光补偿点</strong>：光合速率 = 呼吸速率，净光合为零<br>
+  <strong>光饱和点</strong>：光合速率达到最大，再增加光照也不再提高
+</div>
+
+<h3>2. CO₂ 浓度</h3>
+<p>CO₂ 是光合作用的原料。在一定范围内，光合速率随 CO₂ 浓度增加而加快。达到<strong>CO₂ 饱和点</strong>后不再增加。</p>
+
+<h3>3. 温度</h3>
+<p>温度通过影响酶的活性来影响光合速率。大多数植物在 <strong>25~30°C</strong> 时光合速率最高。温度过高或过低都会降低酶活性。</p>
+
+<h3>4. 水分</h3>
+<p>水是光合作用的原料之一。缺水会导致气孔关闭，减少 CO₂ 进入，从而降低光合速率。</p>
+
+<div class="callout">
+  <div class="callout-title">🌱 农业生产中的应用</div>
+  增加光照强度、提高 CO₂ 浓度（施用有机肥、通风）、合理灌溉、适当升温（温室大棚）——这些都是为了提高光合效率，增加农作物产量。
+</div>
+</section>
+
+<section>
+<h2>五、易错点总结</h2>
+
+<table class="organelle-table">
+  <thead>
+    <tr>
+      <th>❌ 常见错误</th>
+      <th>✅ 正确理解</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>光合作用释放的 O₂ 来自 CO₂</td>
+      <td>O₂ 全部来自水的分解（同位素标记实验证明）</td>
+    </tr>
+    <tr>
+      <td>暗反应不需要光</td>
+      <td>暗反应不需要光能直接参与，但需要光反应产物（ATP 和 [H]），间接依赖光</td>
+    </tr>
+    <tr>
+      <td>植物白天只进行光合作用</td>
+      <td>白天同时进行光合和呼吸，只是光合速率通常更大</td>
+    </tr>
+    <tr>
+      <td>无氧呼吸第二阶段也产能</td>
+      <td>只有糖酵解阶段产 ATP，丙酮酸转化阶段不产 ATP</td>
+    </tr>
+    <tr>
+      <td>呼吸作用就是"喘气"</td>
+      <td>呼吸作用是细胞内的化学反应，"喘气"（肺通气）只是为呼吸作用提供 O₂</td>
+    </tr>
+    <tr>
+      <td>所有植物细胞都能光合作用</td>
+      <td>只有含叶绿体的细胞才能，如根细胞不能</td>
+    </tr>
+  </tbody>
+</table>
+</section>
+
+<section>
+<h2>六、与小学教学的联系</h2>
+<p>作为小学科学教师，你需要向学生解释这些概念。以下是教学建议：</p>
+
+<div class="callout">
+  <div class="callout-title">🏫 教学建议</div>
+  <strong>光合作用</strong>：可以用"植物是小厨师，阳光是炉火，CO₂和水是食材，做出食物（糖）并放出氧气"来比喻。让学生观察植物在光照和黑暗中的生长差异。<br><br>
+  <strong>呼吸作用</strong>：强调"所有活着的生物都要呼吸"——不仅是动物，植物也要呼吸！可以做种子萌发实验，用温度计测量萌发种子释放的热量来证明呼吸作用产生能量。
+</div>
+</section>
+
+<section>
+<h2>📖 推荐阅读</h2>
+<p>人教版高中生物必修一《分子与细胞》第五章——细胞的能量供应和利用。</p>
+<p>🔗 <a href="https://www.pep.com.cn/gzs/wsws/xkb/xxfb/" target="_blank">人民教育出版社 — 高中生物教材</a></p>
+<p>参考：第1课细胞速查表 — <a href="../reference/0001-cell-quick-reference.html">细胞结构速查表</a></p>
+</section>
+
+<section>
+<h2>✏️ 自我检测</h2>
+<p>请先独立思考，再点击选项查看答案和解析。</p>
+</section>
+
+<div class="quiz-section">
+  <div class="quiz-title">📝 课堂练习</div>
+
+  <div class="quiz-question" data-correct="2">
+    <div class="quiz-q-text">1. 光合作用释放的氧气来源于：</div>
+    <ul class="quiz-options">
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 0)">A. 二氧化碳</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 1)">B. 葡萄糖</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 2)">C. 水</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 3)">D. 叶绿素</button></li>
+    </ul>
+    <div class="quiz-feedback correct-fb">✅ 正确！O₂ 全部来自水的光解。1941 年鲁宾和卡门用同位素¹⁸O 标记实验证明了这一点。</div>
+    <div class="quiz-feedback wrong-fb">❌ 不对。光合作用释放的 O₂ 来自<strong>水（H₂O）</strong>的光解，不是 CO₂。这是考试高频考点！</div>
+  </div>
+
+  <div class="quiz-question" data-correct="3">
+    <div class="quiz-q-text">2. 有氧呼吸产生 ATP 最多的阶段是：</div>
+    <ul class="quiz-options">
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 0)">A. 第一阶段（糖酵解）</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 1)">B. 第二阶段（三羧酸循环）</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 2)">C. 第一和第二阶段一样多</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 3)">D. 第三阶段（电子传递链）</button></li>
+    </ul>
+    <div class="quiz-feedback correct-fb">✅ 正确！第三阶段在线粒体内膜上进行，[H] 与 O₂ 结合生成水，释放大量能量，产生约 34 个 ATP。</div>
+    <div class="quiz-feedback wrong-fb">❌ 不对。第三阶段（电子传递链）产生约 34 个 ATP，占总量的 90% 以上。第一、二阶段各只产生 2 个 ATP。</div>
+  </div>
+
+  <div class="quiz-question" data-correct="1">
+    <div class="quiz-q-text">3. 下列关于"暗反应"的说法正确的是：</div>
+    <ul class="quiz-options">
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 0)">A. 暗反应只能在黑暗中进行</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 1)">B. 暗反应需要光反应提供的 ATP 和 [H]</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 2)">C. 暗反应不消耗能量</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 3)">D. 暗反应在线粒体中进行</button></li>
+    </ul>
+    <div class="quiz-feedback correct-fb">✅ 正确！暗反应（碳反应）在叶绿体基质中进行，虽然不直接需要光，但需要光反应产生的 ATP 和 [H] 作为能量和还原剂。</div>
+    <div class="quiz-feedback wrong-fb">❌ 不对。暗反应在<strong>叶绿体基质</strong>中进行，需要光反应提供的 ATP 和 [H]，在白天和黑夜都可以进行（只要有 ATP 和 [H] 供应）。</div>
+  </div>
+
+  <div class="quiz-question" data-correct="0">
+    <div class="quiz-q-text">4. 植物根部细胞在缺氧条件下主要进行：</div>
+    <ul class="quiz-options">
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 0)">A. 酒精发酵（无氧呼吸）</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 1)">B. 乳酸发酵</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 2)">C. 有氧呼吸</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 3)">D. 不进行呼吸作用</button></li>
+    </ul>
+    <div class="quiz-feedback correct-fb">✅ 正确！大多数植物细胞（包括根部）在缺氧时进行酒精发酵，产生酒精和 CO₂。这也是农田积水会导致根系腐烂的原因。</div>
+    <div class="quiz-feedback wrong-fb">❌ 不对。植物细胞（包括根部）缺氧时主要进行<strong>酒精发酵</strong>，产生酒精和 CO₂。动物肌肉细胞缺氧时才进行乳酸发酵。</div>
+  </div>
+
+  <div class="quiz-question" data-correct="2">
+    <div class="quiz-q-text">5. 在光补偿点时，植物的状态是：</div>
+    <ul class="quiz-options">
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 0)">A. 不进行光合作用</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 1)">B. 光合作用最强</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 2)">C. 光合速率等于呼吸速率</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 3)">D. 只进行呼吸作用</button></li>
+    </ul>
+    <div class="quiz-feedback correct-fb">✅ 正确！光补偿点是光合速率恰好等于呼吸速率时的光照强度。此时植物净光合为零，不积累有机物也不消耗有机物。</div>
+    <div class="quiz-feedback wrong-fb">❌ 不对。光补偿点的定义是<strong>光合速率 = 呼吸速率</strong>。此时植物既在进行光合作用也在进行呼吸作用，两者速率相等。</div>
+  </div>
+
+  <div class="score-bar" id="scoreBar">
+    <div class="score-number" id="scoreNumber"></div>
+    <div>答对 / 5</div>
+  </div>
+</div>
+
+<nav>
+  <a href="0001-cell-structure.html">← 第1课：细胞结构与功能</a>
+  <a href="0003-human-digestive.html">第3课：人体消化系统 →</a>
+</nav>
+
+</div>
+
+<script>
+let totalCorrect = 0;
+let totalAnswered = 0;
+const totalQuestions = 5;
+
+function checkAnswer(btn, selectedIndex) {
+  const questionDiv = btn.closest('.quiz-question');
+  const correctIndex = parseInt(questionDiv.dataset.correct);
+  const buttons = questionDiv.querySelectorAll('.quiz-btn');
+  const feedbackCorrect = questionDiv.querySelector('.quiz-feedback.correct-fb');
+  const feedbackWrong = questionDiv.querySelector('.quiz-feedback.wrong-fb');
+
+  // Disable all buttons in this question
+  buttons.forEach(b => {
+    b.classList.add('disabled');
+    b.style.pointerEvents = 'none';
+  });
+
+  // Mark correct and wrong answers
+  buttons[correctIndex].classList.add('correct');
+  if (selectedIndex !== correctIndex) {
+    btn.classList.add('wrong');
+  }
+
+  // Show feedback
+  if (selectedIndex === correctIndex) {
+    feedbackCorrect.classList.add('show');
+    totalCorrect++;
+  } else {
+    feedbackWrong.classList.add('show');
+  }
+  totalAnswered++;
+
+  // Show score when all answered
+  if (totalAnswered >= totalQuestions) {
+    const scoreBar = document.getElementById('scoreBar');
+    const scoreNumber = document.getElementById('scoreNumber');
+    scoreNumber.textContent = totalCorrect;
+    scoreBar.classList.add('show');
+  }
+}
+</script>
+
+</body>
+</html>

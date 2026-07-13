@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第3课：人体消化系统</title>
+<style>
+  :root {
+    --bg: #faf8f5; --text: #2c2c2c;
+    --accent: #c62828; --accent-light: #ffebee; --border: #ef9a9a;
+    --quiz-correct: #4caf50; --quiz-wrong: #e53935;
+    --callout-bg: #fff8e1; --callout-border: #ffc107;
+    --digestion-bg: #fce4ec; --digestion-border: #f48fb1;
+    --enzyme-bg: #e8eaf6; --enzyme-border: #9fa8da;
+    --comparison-bg: #e3f2fd; --comparison-border: #90caf9;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: "Noto Serif SC", "Source Han Serif CN", "SimSun", Georgia, serif;
+    background: var(--bg); color: var(--text); line-height: 1.9;
+    font-size: 17px; padding: 2rem 1rem;
+  }
+  .container { max-width: 720px; margin: 0 auto; }
+  header { border-bottom: 3px solid var(--accent); padding-bottom: 1.5rem; margin-bottom: 2rem; }
+  .lesson-meta { font-size: 14px; color: #666; margin-bottom: 0.5rem; font-family: "Noto Sans SC", "Microsoft YaHei", sans-serif; }
+  h1 { font-size: 28px; font-weight: 700; color: var(--accent); margin-bottom: 0.5rem; letter-spacing: 0.02em; }
+  h2 { font-size: 22px; font-weight: 700; color: var(--accent); margin-top: 2.5rem; margin-bottom: 1rem; padding-bottom: 0.3rem; border-bottom: 1px solid var(--border); }
+  h3 { font-size: 18px; font-weight: 700; color: #333; margin-top: 1.5rem; margin-bottom: 0.5rem; }
+  p { margin-bottom: 1rem; }
+  .mission-link { display: inline-block; margin-bottom: 1.5rem; font-size: 14px; color: var(--accent); text-decoration: none; font-family: "Noto Sans SC", "Microsoft YaHei", sans-serif; }
+  .mission-link:hover { text-decoration: underline; }
+  ol, ul { margin-left: 1.5rem; margin-bottom: 1rem; }
+  li { margin-bottom: 0.3rem; }
+  .callout { background: var(--callout-bg); border-left: 4px solid var(--callout-border); padding: 1rem 1.2rem; margin: 1.5rem 0; border-radius: 0 8px 8px 0; font-size: 15px; }
+  .callout-title { font-weight: 700; color: #e65100; margin-bottom: 0.3rem; font-family: "Noto Sans SC", sans-serif; }
+  .digestion-path { background: var(--digestion-bg); border: 2px solid var(--digestion-border); border-radius: 12px; padding: 1.5rem; margin: 1.5rem 0; }
+  .digestion-path-title { font-weight: 700; color: #c62828; margin-bottom: 0.8rem; font-family: "Noto Sans SC", sans-serif; font-size: 16px; }
+  .path-row { display: flex; align-items: center; justify-content: center; gap: 0.4rem; flex-wrap: wrap; margin: 0.6rem 0; font-size: 15px; }
+  .path-item { background: white; border: 2px solid var(--digestion-border); border-radius: 8px; padding: 0.35rem 0.7rem; font-weight: 600; font-family: "Noto Sans SC", sans-serif; }
+  .path-arrow { color: var(--accent); font-size: 18px; font-weight: 700; }
+  .path-detail { font-size: 13px; color: #666; margin-top: 0.3rem; text-align: center; font-family: "Noto Sans SC", sans-serif; }
+  .enzyme-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 14px; }
+  .enzyme-table th { background: var(--accent); color: white; padding: 0.6rem 0.8rem; text-align: left; font-weight: 600; font-size: 13px; }
+  .enzyme-table td { padding: 0.5rem 0.8rem; border-bottom: 1px solid #e0e0e0; vertical-align: top; }
+  .enzyme-table tr:nth-child(even) td { background: #f9f9f9; }
+  .enzyme-table tr:hover td { background: #fce4ec; }
+  .quiz-section { background: white; border: 2px solid var(--accent); border-radius: 12px; padding: 1.5rem; margin: 2rem 0; }
+  .quiz-title { font-size: 18px; font-weight: 700; color: var(--accent); margin-bottom: 1.2rem; font-family: "Noto Sans SC", sans-serif; }
+  .quiz-question { margin-bottom: 1.5rem; padding-bottom: 1.2rem; border-bottom: 1px dashed #ddd; }
+  .quiz-question:last-of-type { border-bottom: none; }
+  .quiz-q-text { font-weight: 600; margin-bottom: 0.8rem; font-size: 16px; }
+  .quiz-options { list-style: none; padding: 0; }
+  .quiz-options li { margin-bottom: 0.4rem; }
+  .quiz-btn { display: block; width: 100%; padding: 0.6rem 1rem; margin-bottom: 0.4rem; border: 2px solid #ddd; border-radius: 8px; background: white; cursor: pointer; font-size: 15px; font-family: "Noto Sans SC", "Microsoft YaHei", sans-serif; text-align: left; transition: all 0.2s; }
+  .quiz-btn:hover { border-color: var(--accent); background: var(--accent-light); }
+  .quiz-btn.correct { border-color: var(--quiz-correct); background: #e8f5e9; color: #1b5e20; font-weight: 600; }
+  .quiz-btn.wrong { border-color: var(--quiz-wrong); background: #ffebee; color: #b71c1c; }
+  .quiz-btn.disabled { pointer-events: none; opacity: 0.7; }
+  .quiz-feedback { margin-top: 0.5rem; padding: 0.5rem 0.8rem; border-radius: 6px; font-size: 14px; font-family: "Noto Sans SC", sans-serif; display: none; }
+  .quiz-feedback.show { display: block; }
+  .quiz-feedback.correct-fb { background: #e8f5e9; color: #2e7d32; border: 1px solid #a5d6a7; }
+  .quiz-feedback.wrong-fb { background: #ffebee; color: #c62828; border: 1px solid #ef9a9a; }
+  .score-bar { display: none; text-align: center; padding: 1rem; background: var(--accent-light); border-radius: 8px; margin-top: 1rem; font-family: "Noto Sans SC", sans-serif; }
+  .score-bar.show { display: block; }
+  .score-number { font-size: 32px; font-weight: 700; color: var(--accent); }
+  nav { margin-top: 3rem; padding-top: 1.5rem; border-top: 2px solid var(--border); display: flex; justify-content: space-between; font-family: "Noto Sans SC", sans-serif; }
+  nav a { color: var(--accent); text-decoration: none; padding: 0.5rem 1rem; border: 1px solid var(--border); border-radius: 8px; transition: all 0.2s; }
+  nav a:hover { background: var(--accent-light); text-decoration: none; }
+  .absorption-box { background: var(--enzyme-bg); border: 2px solid var(--enzyme-border); border-radius: 12px; padding: 1.2rem 1.5rem; margin: 1.5rem 0; }
+  .absorption-title { font-weight: 700; color: #283593; margin-bottom: 0.5rem; font-family: "Noto Sans SC", sans-serif; }
+  .highlight-box { background: #fff3e0; border: 2px solid #ffb74d; border-radius: 12px; padding: 1rem 1.2rem; margin: 1.5rem 0; }
+  .highlight-title { font-weight: 700; color: #e65100; margin-bottom: 0.3rem; font-family: "Noto Sans SC", sans-serif; }
+  @media print { body { font-size: 12pt; padding: 1cm; } .container { max-width: 100%; } .quiz-section { break-inside: avoid; } nav { display: none; } }
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <a class="mission-link" href="../MISSION.md">← 回到学习计划</a>
+  <div class="lesson-meta">小高备考 · 第3课 · 生命科学 · 建议用时：20分钟</div>
+  <h1>人体消化系统</h1>
+  <p style="color:#666;font-size:14px;">从植物转向动物——学习人体如何获取能量。</p>
+</header>
+
+<section>
+<h2>学习目标</h2>
+<p>学完本课，你应该能够：</p>
+<ol style="margin-left:1.5rem;margin-bottom:1rem;">
+  <li>说出消化系统的组成（消化道 + 消化腺）</li>
+  <li>描述食物的消化过程及各器官的功能</li>
+  <li>列举主要消化酶及其作用底物和产物</li>
+  <li>理解小肠是消化吸收的主要场所</li>
+  <li>解释营养物质的吸收途径</li>
+</ol>
+</section>
+
+<section>
+<h2>一、消化系统的组成</h2>
+<p>消化系统由<strong>消化道</strong>和<strong>消化腺</strong>两部分组成。</p>
+
+<h3>1. 消化道（食物经过的通道）</h3>
+<div class="digestion-path">
+  <div class="digestion-path-title">🍽️ 食物之旅</div>
+  <div class="path-row">
+    <span class="path-item">口腔</span>
+    <span class="path-arrow">→</span>
+    <span class="path-item">咽</span>
+    <span class="path-arrow">→</span>
+    <span class="path-item">食道</span>
+    <span class="path-arrow">→</span>
+    <span class="path-item">胃</span>
+    <span class="path-arrow">→</span>
+    <span class="path-item">小肠</span>
+    <span class="path-arrow">→</span>
+    <span class="path-item">大肠</span>
+    <span class="path-arrow">→</span>
+    <span class="path-item">肛门</span>
+  </div>
+</div>
+
+<h3>2. 消化腺（分泌消化液的腺体）</h3>
+<table class="enzyme-table">
+  <thead>
+    <tr>
+      <th>消化腺</th>
+      <th>位置</th>
+      <th>分泌的消化液</th>
+      <th>主要功能</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>唾液腺</strong></td>
+      <td>口腔周围</td>
+      <td>唾液（含唾液淀粉酶）</td>
+      <td>初步消化淀粉</td>
+    </tr>
+    <tr>
+      <td><strong>胃腺</strong></td>
+      <td>胃壁</td>
+      <td>胃液（含盐酸、胃蛋白酶）</td>
+      <td>初步消化蛋白质</td>
+    </tr>
+    <tr>
+      <td><strong>肝脏</strong></td>
+      <td>腹腔右上部（人体最大腺体）</td>
+      <td>胆汁（不含消化酶！）</td>
+      <td>乳化脂肪</td>
+    </tr>
+    <tr>
+      <td><strong>胰腺</strong></td>
+      <td>胃下方</td>
+      <td>胰液（含多种消化酶）</td>
+      <td>消化三大营养物质</td>
+    </tr>
+    <tr>
+      <td><strong>肠腺</strong></td>
+      <td>小肠壁</td>
+      <td>肠液（含多种消化酶）</td>
+      <td>彻底消化营养物质</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="callout">
+  <div class="callout-title">⚠️ 高频考点</div>
+  <strong>胆汁不含消化酶</strong>，但能将脂肪乳化成微小的脂肪微粒，增大与消化酶的接触面积，属于<strong>物理性消化</strong>。这是考试常考的陷阱题！
+</div>
+</section>
+
+<section>
+<h2>二、三大营养物质的消化过程</h2>
+
+<h3>1. 淀粉（糖类）的消化</h3>
+<div class="digestion-path">
+  <div class="path-row">
+    <span class="path-item">淀粉</span>
+    <span class="path-arrow">──[唾液淀粉酶]──&gt;</span>
+    <span class="path-item">麦芽糖</span>
+    <span class="path-arrow">──[肠液/胰液中的酶]──&gt;</span>
+    <span class="path-item">葡萄糖</span>
+  </div>
+  <div class="path-detail">口腔开始消化 → 小肠彻底消化</div>
+</div>
+
+<h3>2. 蛋白质的消化</h3>
+<div class="digestion-path">
+  <div class="path-row">
+    <span class="path-item">蛋白质</span>
+    <span class="path-arrow">──[胃蛋白酶]──&gt;</span>
+    <span class="path-item">多肽</span>
+    <span class="path-arrow">──[肠液/胰液中的酶]──&gt;</span>
+    <span class="path-item">氨基酸</span>
+  </div>
+  <div class="path-detail">胃开始消化 → 小肠彻底消化</div>
+</div>
+
+<h3>3. 脂肪的消化</h3>
+<div class="digestion-path">
+  <div class="path-row">
+    <span class="path-item">脂肪</span>
+    <span class="path-arrow">──[胆汁乳化]──&gt;</span>
+    <span class="path-item">脂肪微粒</span>
+    <span class="path-arrow">──[肠液/胰液中的酶]──&gt;</span>
+    <span class="path-item">甘油 + 脂肪酸</span>
+  </div>
+  <div class="path-detail">仅在小肠消化（需要胆汁乳化）</div>
+</div>
+
+<table class="enzyme-table">
+  <thead>
+    <tr>
+      <th>营养物质</th>
+      <th>起始消化部位</th>
+      <th>彻底消化部位</th>
+      <th>最终产物</th>
+      <th>参与的消化液</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>淀粉</td><td>口腔</td><td>小肠</td><td>葡萄糖</td><td>唾液、胰液、肠液</td></tr>
+    <tr><td>蛋白质</td><td>胃</td><td>小肠</td><td>氨基酸</td><td>胃液、胰液、肠液</td></tr>
+    <tr><td>脂肪</td><td>小肠</td><td>小肠</td><td>甘油 + 脂肪酸</td><td>胆汁、胰液、肠液</td></tr>
+  </tbody>
+</table>
+
+<div class="highlight-box">
+  <div class="highlight-title">🔑 关键理解</div>
+  <strong>三大营养物质都是在小肠中被彻底消化的</strong>。小肠内有三种消化液（胆汁、胰液、肠液），是消化的"主战场"。
+</div>
+</section>
+
+<section>
+<h2>三、营养物质的吸收</h2>
+<p>消化后的营养物质通过消化道壁进入<strong>血液循环</strong>的过程叫吸收。</p>
+
+<div class="absorption-box">
+  <div class="absorption-title">🎯 小肠为什么是吸收的主要场所？</div>
+  <p><strong>四大适应特点：</strong></p>
+  <ol style="margin-left:1.5rem;margin-top:0.5rem;">
+    <li><strong>长</strong>：小肠长约 5~6 米，吸收面积大</li>
+    <li><strong>皱襞和绒毛</strong>：小肠内壁有环形皱襞，皱襞上有小肠绒毛，使吸收面积增大约 600 倍（可达 200 平方米）</li>
+    <li><strong>薄</strong>：小肠绒毛壁和毛细血管壁都很薄，只由一层上皮细胞构成</li>
+    <li><strong>密</strong>：小肠绒毛内有丰富的毛细血管和毛细淋巴管</li>
+  </ol>
+</div>
+
+<h3>吸收途径</h3>
+<table class="enzyme-table">
+  <thead>
+    <tr>
+      <th>营养物质</th>
+      <th>吸收部位</th>
+      <th>进入的血管</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>葡萄糖、氨基酸</td><td>小肠</td><td>毛细血管 → 门静脉 → 肝脏</td></tr>
+    <tr><td>甘油、脂肪酸</td><td>小肠</td><td>毛细淋巴管 → 淋巴循环 → 血液</td></tr>
+    <tr><td>水、无机盐、维生素</td><td>小肠（主要）、大肠（部分水）</td><td>毛细血管</td></tr>
+  </tbody>
+</table>
+
+<div class="callout">
+  <div class="callout-title">📌 注意</div>
+  <strong>大部分脂肪（甘油和脂肪酸）先进入毛细淋巴管</strong>，经淋巴循环最后才进入血液。这就是为什么高脂饮食后血液中会出现乳糜微粒。
+</div>
+</section>
+
+<section>
+<h2>四、胃的特殊功能</h2>
+<p>胃不仅是暂时储存食物的器官，还有重要的消化功能：</p>
+
+<ul style="margin-left:1.5rem;margin-bottom:1rem;">
+  <li><strong>胃酸（盐酸）</strong>：杀菌、激活胃蛋白酶原、使蛋白质变性便于消化</li>
+  <li><strong>胃蛋白酶</strong>：初步分解蛋白质为多肽（注意：不是完全分解为氨基酸）</li>
+  <li><strong>胃的蠕动</strong>：将食物与胃液混合形成食糜，推向小肠</li>
+</ul>
+
+<div class="highlight-box">
+  <div class="highlight-title">⚠️ 考试高频陷阱</div>
+  胃<strong>几乎不吸收</strong>营养物质！只能吸收少量的水、无机盐和酒精。这是很多同学容易搞混的点。
+</div>
+</section>
+
+<section>
+<h2>五、易错点总结</h2>
+
+<table class="organelle-table">
+  <thead>
+    <tr>
+      <th>❌ 常见错误</th>
+      <th>✅ 正确理解</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>胆汁含有消化酶</td><td>胆汁不含消化酶，只能乳化脂肪（物理性消化）</td></tr>
+    <tr><td>淀粉在胃中被消化</td><td>淀粉在口腔开始消化，胃中不消化淀粉</td></tr>
+    <tr><td>胃能吸收大量营养</td><td>胃几乎不吸收，只有少量水和酒精</td></tr>
+    <tr><td>脂肪在大肠被消化</td><td>脂肪仅在小肠被消化</td></tr>
+    <tr><td>蛋白质在胃中被彻底消化</td><td>胃中只是初步消化为多肽，在小肠才被彻底消化为氨基酸</td></tr>
+    <tr><td>脂肪吸收直接进入血液</td><td>脂肪先经淋巴循环，再进入血液</td></tr>
+  </tbody>
+</table>
+</section>
+
+<section>
+<h2>六、与小学教学的联系</h2>
+<p>作为小学科学教师，你需要向学生讲解消化系统的基本知识。以下是教学建议：</p>
+
+<div class="callout">
+  <div class="callout-title">🏫 教学建议</div>
+  <strong>食物旅行记</strong>：让学生扮演"一颗花生"，沿着消化道"旅行"，在每个器官描述发生了什么变化。这种角色扮演能帮助学生深刻理解消化过程。<br><br>
+  <strong>小实验</strong>：用塑料袋装淀粉糊和唾液，放在37°C温水中，用碘液检验淀粉是否被分解。这个实验直观展示了唾液淀粉酶的作用。<br><br>
+  <strong>健康饮食教育</strong>：结合消化系统，教育学生细嚼慢咽、规律饮食、不吃过期食物等良好习惯。
+</div>
+</section>
+
+<section>
+<h2>📖 推荐阅读</h2>
+<p>人教版初中生物学七年级下册第四章——人体内物质的运输和代谢废物的排出。</p>
+<p>🔗 <a href="https://www.pep.com.cn/gzs/swsw/" target="_blank">人民教育出版社 — 初中生物教材</a></p>
+<p>参考：第1课细胞结构 → <a href="0001-cell-structure.html">第1课</a> · 第2课光合作用 → <a href="0002-photosynthesis-respiration.html">第2课</a></p>
+</section>
+
+<section>
+<h2>✏️ 自我检测</h2>
+<p>请先独立思考，再点击选项查看答案和解析。</p>
+</section>
+
+<div class="quiz-section">
+  <div class="quiz-title">📝 课堂练习</div>
+
+  <div class="quiz-question" data-correct="1">
+    <div class="quiz-q-text">1. 下列哪种消化液不含消化酶？</div>
+    <ul class="quiz-options">
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 0)">A. 唾液</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 1)">B. 胆汁</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 2)">C. 胃液</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 3)">D. 胰液</button></li>
+    </ul>
+    <div class="quiz-feedback correct-fb">✅ 正确！胆汁由肝脏分泌，储存在胆囊中，不含任何消化酶，但能乳化脂肪。</div>
+    <div class="quiz-feedback wrong-fb">❌ 不对。<strong>胆汁</strong>是唯一不含消化酶的消化液，它的作用是乳化脂肪。</div>
+  </div>
+
+  <div class="quiz-question" data-correct="2">
+    <div class="quiz-q-text">2. 淀粉消化的最终产物是：</div>
+    <ul class="quiz-options">
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 0)">A. 蔗糖</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 1)">B. 麦芽糖</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 2)">C. 葡萄糖</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 3)">D. 氨基酸</button></li>
+    </ul>
+    <div class="quiz-feedback correct-fb">✅ 正确！淀粉 → 麦芽糖 → 葡萄糖。葡萄糖是最简单的糖，可以直接被吸收进入血液。</div>
+    <div class="quiz-feedback wrong-fb">❌ 不对。淀粉的最终消化产物是<strong>葡萄糖</strong>。麦芽糖只是中间产物。</div>
+  </div>
+
+  <div class="quiz-question" data-correct="0">
+    <div class="quiz-q-text">3. 蛋白质消化的起始部位是：</div>
+    <ul class="quiz-options">
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 0)">A. 胃</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 1)">B. 口腔</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 2)">C. 小肠</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 3)">D. 食道</button></li>
+    </ul>
+    <div class="quiz-feedback correct-fb">✅ 正确！蛋白质在胃中由胃蛋白酶开始消化，在小肠中被彻底分解为氨基酸。</div>
+    <div class="quiz-feedback wrong-fb">❌ 不对。蛋白质消化的起始部位是<strong>胃</strong>（口腔消化淀粉，小肠消化脂肪）。</div>
+  </div>
+
+  <div class="quiz-question" data-correct="3">
+    <div class="quiz-q-text">4. 脂肪消化的最终产物是：</div>
+    <ul class="quiz-options">
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 0)">A. 葡萄糖和氨基酸</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 1)">B. 麦芽糖和甘油</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 2)">C. 氨基酸和脂肪酸</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 3)">D. 甘油和脂肪酸</button></li>
+    </ul>
+    <div class="quiz-feedback correct-fb">✅ 正确！脂肪 → 脂肪微粒 → 甘油 + 脂肪酸。甘油和脂肪酸在小肠绒毛中被吸收。</div>
+    <div class="quiz-feedback wrong-fb">❌ 不对。脂肪的最终产物是<strong>甘油和脂肪酸</strong>。</div>
+  </div>
+
+  <div class="quiz-question" data-correct="1">
+    <div class="quiz-q-text">5. 下列哪项不是小肠适于吸收的结构特点？</div>
+    <ul class="quiz-options">
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 0)">A. 小肠很长（5~6米）</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 1)">B. 小肠内有胆汁、胰液、肠液</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 2)">C. 小肠内壁有皱襞和绒毛</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 3)">D. 绒毛壁和毛细血管壁很薄</button></li>
+    </ul>
+    <div class="quiz-feedback correct-fb">✅ 正确！胆汁、胰液、肠液是消化液，与<strong>消化</strong>有关，与<strong>吸收</strong>无关。吸收的结构特点是长度、皱襞绒毛、壁薄和血管丰富。</div>
+    <div class="quiz-feedback wrong-fb">❌ 不对。选项B说的是消化液，与<strong>消化</strong>功能有关，不是吸收的结构特点。</div>
+  </div>
+
+  <div class="score-bar" id="scoreBar">
+    <div class="score-number" id="scoreNumber"></div>
+    <div>答对 / 5</div>
+  </div>
+</div>
+
+<nav>
+  <a href="0002-photosynthesis-respiration.html">← 第2课：光合作用与呼吸作用</a>
+  <a href="0004-human-circulatory.html">第4课：人体循环系统 →</a>
+</nav>
+
+</div>
+
+<script>
+let totalCorrect = 0;
+let totalAnswered = 0;
+const totalQuestions = 5;
+
+function checkAnswer(btn, selectedIndex) {
+  const questionDiv = btn.closest('.quiz-question');
+  const correctIndex = parseInt(questionDiv.dataset.correct);
+  const buttons = questionDiv.querySelectorAll('.quiz-btn');
+  const feedbackCorrect = questionDiv.querySelector('.quiz-feedback.correct-fb');
+  const feedbackWrong = questionDiv.querySelector('.quiz-feedback.wrong-fb');
+
+  buttons.forEach(b => {
+    b.classList.add('disabled');
+    b.style.pointerEvents = 'none';
+  });
+
+  buttons[correctIndex].classList.add('correct');
+  if (selectedIndex !== correctIndex) {
+    btn.classList.add('wrong');
+  }
+
+  if (selectedIndex === correctIndex) {
+    feedbackCorrect.classList.add('show');
+    totalCorrect++;
+  } else {
+    feedbackWrong.classList.add('show');
+  }
+  totalAnswered++;
+
+  if (totalAnswered >= totalQuestions) {
+    const scoreBar = document.getElementById('scoreBar');
+    const scoreNumber = document.getElementById('scoreNumber');
+    scoreNumber.textContent = totalCorrect;
+    scoreBar.classList.add('show');
+  }
+}
+</script>
+
+</body>
+</html>

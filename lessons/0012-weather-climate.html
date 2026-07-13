@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第12课：天气与气候</title>
+<style>
+  :root {
+    --bg: #faf8f5; --text: #2c2c2c;
+    --accent: #0277bd; --accent-light: #e1f5fe; --border: #81d4fa;
+    --quiz-correct: #4caf50; --quiz-wrong: #e53935;
+    --callout-bg: #fff8e1; --callout-border: #ffc107;
+    --temp-box: #fce4ec; --temp-border: #f48fb1;
+    --pressure-box: #e8eaf6; --pressure-border: #9fa8da;
+    --wind-box: #e0f7fa; --wind-border: #80deea;
+    --cloud-box: #f3e5f5; --cloud-border: #ce93d8;
+    --climate-box: #e8f5e9; --climate-border: #a5d6a7;
+    --data-table-header: #0277bd;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: "Noto Serif SC", "Source Han Serif CN", "SimSun", Georgia, serif;
+    background: var(--bg); color: var(--text); line-height: 1.9;
+    font-size: 17px; padding: 2rem 1rem;
+  }
+  .container { max-width: 720px; margin: 0 auto; }
+  header { border-bottom: 3px solid var(--accent); padding-bottom: 1.5rem; margin-bottom: 2rem; }
+  .lesson-meta { font-size: 14px; color: #666; margin-bottom: 0.5rem; font-family: "Noto Sans SC", "Microsoft YaHei", sans-serif; }
+  h1 { font-size: 28px; font-weight: 700; color: var(--accent); margin-bottom: 0.5rem; letter-spacing: 0.02em; }
+  h2 { font-size: 22px; font-weight: 700; color: var(--accent); margin-top: 2.5rem; margin-bottom: 1rem; padding-bottom: 0.3rem; border-bottom: 1px solid var(--border); }
+  h3 { font-size: 18px; font-weight: 700; color: #333; margin-top: 1.5rem; margin-bottom: 0.5rem; }
+  p { margin-bottom: 1rem; }
+  .mission-link { display: inline-block; margin-bottom: 1.5rem; font-size: 14px; color: var(--accent); text-decoration: none; font-family: "Noto Sans SC", "Microsoft YaHei", sans-serif; }
+  .mission-link:hover { text-decoration: underline; }
+  ol, ul { margin-left: 1.5rem; margin-bottom: 1rem; }
+  li { margin-bottom: 0.3rem; }
+
+  .callout {
+    background: var(--callout-bg); border-left: 4px solid var(--callout-border);
+    padding: 1rem 1.2rem; margin: 1.5rem 0; border-radius: 0 8px 8px 0; font-size: 15px;
+  }
+  .callout-title { font-weight: 700; color: #e65100; margin-bottom: 0.3rem; font-family: "Noto Sans SC", sans-serif; }
+
+  .box {
+    border-radius: 12px; padding: 1.2rem 1.5rem; margin: 1.5rem 0;
+  }
+  .box-title { font-weight: 700; margin-bottom: 0.5rem; font-family: "Noto Sans SC", sans-serif; font-size: 16px; }
+
+  .temp-box {
+    background: var(--temp-box); border: 2px solid var(--temp-border);
+  }
+  .temp-box .box-title { color: #c2185b; }
+
+  .pressure-box {
+    background: var(--pressure-box); border: 2px solid var(--pressure-border);
+  }
+  .pressure-box .box-title { color: #283593; }
+
+  .wind-box {
+    background: var(--wind-box); border: 2px solid var(--wind-border);
+  }
+  .wind-box .box-title { color: #00838f; }
+
+  .cloud-box {
+    background: var(--cloud-box); border: 2px solid var(--cloud-border);
+  }
+  .cloud-box .box-title { color: #6a1b9a; }
+
+  .climate-box {
+    background: var(--climate-box); border: 2px solid var(--climate-border);
+  }
+  .climate-box .box-title { color: #2e7d32; }
+
+  .diagram-box {
+    background: #f5f5f5; border: 2px solid #ccc; border-radius: 12px;
+    padding: 1.5rem; margin: 1.5rem 0; text-align: center;
+    font-family: "Noto Sans SC", sans-serif;
+  }
+  .diagram-title { font-weight: 700; margin-bottom: 1rem; font-size: 16px; color: #333; }
+
+  .data-table {
+    width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 14px;
+  }
+  .data-table th {
+    background: var(--data-table-header); color: white; padding: 0.6rem 0.8rem;
+    text-align: left; font-weight: 600; font-size: 13px;
+  }
+  .data-table td {
+    padding: 0.5rem 0.8rem; border-bottom: 1px solid #e0e0e0; vertical-align: top;
+  }
+  .data-table tr:nth-child(even) td { background: #f9f9f9; }
+  .data-table tr:hover td { background: var(--accent-light); }
+
+  /* Quiz */
+  .quiz-section {
+    background: white; border: 2px solid var(--accent);
+    border-radius: 12px; padding: 1.5rem; margin: 2rem 0;
+  }
+  .quiz-title {
+    font-size: 18px; font-weight: 700; color: var(--accent);
+    margin-bottom: 1.2rem; font-family: "Noto Sans SC", sans-serif;
+  }
+  .quiz-question { margin-bottom: 1.5rem; padding-bottom: 1.2rem; border-bottom: 1px dashed #ddd; }
+  .quiz-question:last-of-type { border-bottom: none; }
+  .quiz-q-text { font-weight: 600; margin-bottom: 0.8rem; font-size: 16px; }
+  .quiz-options { list-style: none; padding: 0; }
+  .quiz-options li { margin-bottom: 0.4rem; }
+  .quiz-btn {
+    display: block; width: 100%; padding: 0.6rem 1rem; margin-bottom: 0.4rem;
+    border: 2px solid #ddd; border-radius: 8px; background: white;
+    cursor: pointer; font-size: 15px; font-family: "Noto Sans SC", "Microsoft YaHei", sans-serif;
+    text-align: left; transition: all 0.2s;
+  }
+  .quiz-btn:hover { border-color: var(--accent); background: var(--accent-light); }
+  .quiz-btn.correct { border-color: var(--quiz-correct); background: #e8f5e9; color: #1b5e20; font-weight: 600; }
+  .quiz-btn.wrong { border-color: var(--quiz-wrong); background: #ffebee; color: #b71c1c; }
+  .quiz-btn.disabled { pointer-events: none; opacity: 0.7; }
+  .quiz-feedback {
+    margin-top: 0.5rem; padding: 0.5rem 0.8rem; border-radius: 6px;
+    font-size: 14px; font-family: "Noto Sans SC", sans-serif; display: none;
+  }
+  .quiz-feedback.show { display: block; }
+  .quiz-feedback.correct-fb { background: #e8f5e9; color: #2e7d32; border: 1px solid #a5d6a7; }
+  .quiz-feedback.wrong-fb { background: #ffebee; color: #c62828; border: 1px solid #ef9a9a; }
+  .score-bar {
+    display: none; text-align: center; padding: 1rem;
+    background: var(--accent-light); border-radius: 8px; margin-top: 1rem;
+    font-family: "Noto Sans SC", sans-serif;
+  }
+  .score-bar.show { display: block; }
+  .score-number { font-size: 32px; font-weight: 700; color: var(--accent); }
+
+  /* Navigation */
+  nav {
+    margin-top: 3rem; padding-top: 1.5rem; border-top: 2px solid var(--border);
+    display: flex; justify-content: space-between; font-family: "Noto Sans SC", sans-serif;
+  }
+  nav a {
+    color: var(--accent); text-decoration: none; padding: 0.5rem 1rem;
+    border: 1px solid var(--border); border-radius: 8px; transition: all 0.2s;
+  }
+  nav a:hover { background: var(--accent-light); text-decoration: none; }
+
+  @media print {
+    body { font-size: 12pt; padding: 1cm; }
+    .container { max-width: 100%; }
+    .quiz-section { break-inside: avoid; }
+    nav { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <a class="mission-link" href="../MISSION.md">← 回到学习计划</a>
+  <div class="lesson-meta">小高备考 · 第12课 · 地球与宇宙科学 · 建议用时：30分钟</div>
+  <h1>天气与气候</h1>
+  <p style="color:#666;font-size:14px;">天气和气候与我们息息相关——天气预报说的是"天气"，而"昆明四季如春"说的是"气候"。虽然只有一字之差，但它们背后的科学原理却大不相同。理解大气环流和气候类型，是掌握地球与宇宙科学领域的关键一环。</p>
+</header>
+
+<section>
+<h2>学习目标</h2>
+<p>学完本课，你应该能够：</p>
+<ol style="margin-left:1.5rem;margin-bottom:1rem;">
+  <li>准确区分"天气"和"气候"两个概念</li>
+  <li>说出气温的定义、测量方法和日较差/年较差的计算</li>
+  <li>理解等温线的含义及判读方法</li>
+  <li>掌握降水的三种主要类型及其形成条件</li>
+  <li>描述大气环流的三个圈层及其对应气压带和风带</li>
+  <li>说出世界主要气候类型的特征、分布及成因</li>
+  <li>理解影响气候的主要因素</li>
+</ol>
+</section>
+
+<section>
+<h2>一、天气 vs 气候</h2>
+
+<div class="callout">
+  <div class="callout-title">⚡ 核心区别</div>
+  <table class="data-table" style="margin-top:0.5rem;">
+    <thead><tr><th>比较项</th><th>天气</th><th>气候</th></tr></thead>
+    <tbody>
+      <tr><td><strong>时间尺度</strong></td><td>短时间内（几分钟到几天）</td><td>长时间（多年平均，通常30年统计）</td></tr>
+      <tr><td><strong>变化性</strong></td><td>多变，不稳定</td><td>相对稳定</td></tr>
+      <tr><td><strong>描述内容</strong></td><td>阴晴、风雨、冷热等具体状况</td><td>某地多年的平均大气状况</td></tr>
+      <tr><td><strong>例子</strong></td><td>"今天上海小雨转多云，气温18-22℃"</td><td>"上海属亚热带季风气候，夏季高温多雨，冬季温和少雨"</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="diagram-box">
+  <div class="diagram-title">🧠 记忆口诀</div>
+  <div style="font-size:15px;line-height:2.4;text-align:left;padding:0 1rem;">
+    <strong>天气</strong> = 今天的"心情"（短暂、多变）<br>
+    <strong>气候</strong> = 一个人的"性格"（长期、稳定）<br><br>
+    "夜来风雨声，花落知多少" → <strong>天气</strong><br>
+    "昆明四季如春" → <strong>气候</strong>
+  </div>
+</div>
+</section>
+
+<section>
+<h2>二、气温</h2>
+
+<h3>1. 气温的定义与测量</h3>
+
+<div class="temp-box">
+  <div class="box-title">🌡️ 基本概念</div>
+  <p><strong>气温</strong>（Air Temperature）是指空气的温度，单位通常为摄氏度（℃）。</p>
+  <ul style="margin-left:1.5rem;margin-top:0.5rem;">
+    <li>测量工具：<strong>温度计</strong>（通常放在百叶箱中，避免阳光直射和地面辐射影响）</li>
+    <li>百叶箱高度：距地面 <strong>1.5米</strong></li>
+    <li>观测时间：通常每天观测 <strong>4次</strong>（8时、14时、20时、2时）</li>
+  </ul>
+</div>
+
+<h3>2. 气温的日变化与年变化</h3>
+
+<div class="temp-box">
+  <div class="box-title">📈 日变化</div>
+  <table class="data-table">
+    <thead><tr><th>指标</th><th>说明</th></tr></thead>
+    <tbody>
+      <tr><td><strong>日最高气温</strong></td><td>通常出现在 <strong>午后14时左右</strong>（不是正午12时，因为地面需要时间加热大气）</td></tr>
+      <tr><td><strong>日最低气温</strong></td><td>通常出现在 <strong>日出前后</strong></td></tr>
+      <tr><td><strong>日较差</strong></td><td>日最高温 − 日最低温。内陆地区日较差大，沿海地区日较差小</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="diagram-box">
+  <div class="diagram-title">📊 气温日变化曲线示意</div>
+  <div style="font-size:15px;line-height:2.6;text-align:left;padding:0 1rem;">
+    02时（最低）→ 06时（升温）→ 12时（继续升温）→ <strong>14时（最高）</strong> → 18时（降温）→ 20时（继续降温）→ 次日02时（最低）<br><br>
+    <strong>关键理解</strong>：气温变化的能量来源是 <strong>地面辐射</strong>，不是太阳直接加热空气。<br>
+    太阳 → 加热地面 → 地面辐射 → 加热大气（"大地是天空的暖气片"）
+  </div>
+</div>
+
+<div class="temp-box">
+  <div class="box-title">📅 年变化</div>
+  <table class="data-table">
+    <thead><tr><th>半球</th><th>陆地最高月</th><th>陆地最低月</th><th>海洋最高月</th><th>海洋最低月</th></tr></thead>
+    <tbody>
+      <tr><td><strong>北半球</strong></td><td><strong>7月</strong></td><td><strong>1月</strong></td><td><strong>8月</strong></td><td><strong>2月</strong></td></tr>
+      <tr><td><strong>南半球</strong></td><td><strong>1月</strong></td><td><strong>7月</strong></td><td><strong>2月</strong></td><td><strong>8月</strong></td></tr>
+    </tbody>
+  </table>
+  <p style="margin-top:0.5rem;"><strong>年较差</strong> = 最热月平均气温 − 最冷月平均气温。纬度越高、距海越远，年较差越大。</p>
+</div>
+
+<div class="callout">
+  <div class="callout-title">💡 为什么陆地比海洋升温快、降温也快？</div>
+  因为水的 <strong>比热容</strong> 比陆地大得多。同样吸收1焦耳的热量，水温升高幅度远小于陆地。这就是沿海地区温差小、内陆温差大的原因。
+</div>
+
+<h3>3. 等温线</h3>
+
+<div class="temp-box">
+  <div class="box-title">🗺️ 等温线图判读</div>
+  <p><strong>等温线</strong>：在同一幅图上，把气温相同各点连接成的平滑曲线。</p>
+  <ul style="margin-left:1.5rem;margin-top:0.5rem;">
+    <li>等温线密集 → 温差大</li>
+    <li>等温线稀疏 → 温差小</li>
+    <li>等温线闭合 → 可能是高温中心或低温中心</li>
+    <li>等温线与纬线平行 → 说明受纬度影响显著</li>
+  </ul>
+</div>
+
+<div class="diagram-box">
+  <div class="diagram-title">🔑 等温线判读口诀</div>
+  <div style="font-size:15px;line-height:2.4;text-align:left;padding:0 1rem;">
+    <strong>"凸高为低，凸低为高"</strong><br><br>
+    等温线向高值方向凸出 → 该处气温比同纬度低（可能是山地/寒流）<br>
+    等温线向低值方向凸出 → 该处气温比同纬度高（可能是盆地/暖流）
+  </div>
+</div>
+</section>
+
+<section>
+<h2>三、降水</h2>
+
+<div class="cloud-box">
+  <div class="box-title">🌧️ 降水形成的两个基本条件</div>
+  <ol style="margin-left:1.5rem;margin-top:0.5rem;">
+    <li>空气中含有足够的水汽和凝结核（尘埃等微粒）</li>
+    <li>空气温度下降到水汽能够凝结出来的程度（冷却过程）</li>
+  </ol>
+</div>
+
+<h3>1. 降水的三种主要类型</h3>
+
+<table class="data-table">
+  <thead>
+    <tr><th>类型</th><th>形成过程</th><th>主要分布</th><th>典型地区</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>对流雨</strong><br><small>（Convective Rain）</small></td>
+      <td>近地面空气强烈受热 → 强烈上升 → 冷却凝结 → 降水<br><small>特点：强度大、历时短、范围小，常伴有雷电</small></td>
+      <td>赤道附近地区、夏季的中纬度大陆</td>
+      <td>亚马逊平原、我国南方夏季午后雷阵雨</td>
+    </tr>
+    <tr>
+      <td><strong>地形雨</strong><br><small>（Orographic Rain）</small></td>
+      <td>湿润气流遇山脉阻挡 → 被迫抬升 → 冷却凝结 → 降水<br><small>迎风坡多雨，背风坡少雨（焚风效应）</small></td>
+      <td>山地迎风坡</td>
+      <td>喜马拉雅山南坡、台湾火烧寮（中国雨极）</td>
+    </tr>
+    <tr>
+      <td><strong>锋面雨</strong><br><small>（Frontal Rain）</small></td>
+      <td>冷暖气团相遇 → 暖气团被迫抬升 → 冷却凝结 → 降水<br><small>特点：范围广、历时长，是我国东部地区主要的降水形式</small></td>
+      <td>中纬度地区</td>
+      <td>我国东部季风区的梅雨、华北雨季</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="diagram-box">
+  <div class="diagram-title">⛰️ 地形雨示意图</div>
+  <div style="font-size:15px;line-height:2.6;text-align:left;padding:0 1rem;">
+    <strong>迎风坡</strong>：湿润气流 → 上升 → 冷却 → 凝结 → <span style="color:#1565c0;font-weight:700;">多雨</span><br>
+    <strong>背风坡</strong>：气流下沉 → 增温 → 干燥 → <span style="color:#e65100;font-weight:700;">少雨（焚风效应）</span><br><br>
+    <strong>关键公式</strong>：每上升100米，气温约下降 <strong>0.6℃</strong>（干绝热递减率）<br>
+    例：山脚20℃，海拔2000米处 = 20 - 20×0.6 = <strong>8℃</strong>
+  </div>
+</div>
+
+<div class="cloud-box">
+  <div class="box-title">📊 世界降水量分布规律</div>
+  <ul style="margin-left:1.5rem;margin-top:0.5rem;">
+    <li><strong>赤道附近</strong>：降水丰富（年均2000mm以上），因受热上升，多对流雨</li>
+    <li><strong>两极地区</strong>：降水稀少（年均200mm以下），因寒冷下沉，难以凝结</li>
+    <li><strong>中纬度沿海</strong>：降水较多，受海洋水汽影响</li>
+    <li><strong>中纬度内陆</strong>：降水较少，远离海洋</li>
+    <li><strong>大陆西岸</strong>：南北纬30°-40°之间地中海气候区冬季多雨；副热带地区少雨</li>
+  </ul>
+</div>
+</section>
+
+<section>
+<h2>四、大气环流与气压带、风带</h2>
+
+<div class="pressure-box">
+  <div class="box-title">🌀 大气环流：全球性的有规律的大气运动</div>
+  <p>大气环流是形成各地气候的基础。它包括 <strong>气压带</strong>、<strong>风带</strong> 和 <strong>季风</strong> 三部分。</p>
+</div>
+
+<h3>1. 三圈环流与气压带</h3>
+
+<div class="pressure-box">
+  <div class="box-title">🌐 七个气压带（从赤道到极地）</div>
+  <table class="data-table">
+    <thead><tr><th>序号</th><th>气压带名称</th><th>纬度位置</th><th>气流运动</th><th>干湿特征</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td><strong>赤道低气压带</strong></td><td>0°附近</td><td>受热上升</td><td>湿润（多雨）</td></tr>
+      <tr><td>2</td><td><strong>副热带高气压带</strong></td><td>南北纬20°-30°</td><td>堆积下沉</td><td>干燥（少雨）</td></tr>
+      <tr><td>3</td><td><strong>副极地低气压带</strong></td><td>南北纬60°附近</td><td>冷暖气团交汇上升</td><td>湿润（多雨）</td></tr>
+      <tr><td>4</td><td><strong>极地高气压带</strong></td><td>南北纬80°-90°</td><td>冷却下沉</td><td>干燥（少雨）</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<h3>2. 六个风带</h3>
+
+<div class="wind-box">
+  <div class="box-title">💨 风带（由气压带之间的水平气压梯度力驱动）</div>
+  <table class="data-table">
+    <thead><tr><th>风带名称</th><th>从→到</th><th>北半球风向</th><th>南半球风向</th></tr></thead>
+    <tbody>
+      <tr><td><strong>信风带</strong></td><td>副热带高压 → 赤道低压</td><td>东北信风</td><td>东南信风</td></tr>
+      <tr><td><strong>西风带</strong></td><td>副热带高压 → 副极地低压</td><td>西南风</td><td>西北风</td></tr>
+      <tr><td><strong>极地东风带</strong></td><td>极地高压 → 副极地低压</td><td>东北风</td><td>东南风</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="callout">
+  <div class="callout-title">💡 记忆技巧</div>
+  <strong>"高气压带 → 干燥少雨；低气压带 → 湿润多雨"<br>
+  "信风吹向赤道 → 干燥（但在迎风坡可带来降水）<br>
+  西风带从海洋吹来 → 温和湿润（尤其大陆西岸）"</strong>
+</div>
+
+<h3>3. 气压带和风带的季节性移动</h3>
+
+<div class="pressure-box">
+  <div class="box-title">📅 移动规律</div>
+  <ul style="margin-left:1.5rem;margin-top:0.5rem;">
+    <li>随太阳直射点的移动而移动</li>
+    <li>北半球夏季（7月）：整体向<strong>北</strong>移约5-10个纬度</li>
+    <li>北半球冬季（1月）：整体向<strong>南</strong>移约5-10个纬度</li>
+    <li>移动幅度：约 <strong>5-10个纬度</strong></li>
+  </ul>
+</div>
+
+<div class="diagram-box">
+  <div class="diagram-title">🔑 地中海气候的形成关键</div>
+  <div style="font-size:15px;line-height:2.4;text-align:left;padding:0 1rem;">
+    地中海气候（南北纬30°-40°大陆西岸）：<br><br>
+    <strong>夏季</strong>：受<strong>副热带高压</strong>控制 → 炎热干燥<br>
+    <strong>冬季</strong>：受<strong>西风带</strong>控制 → 温和多雨<br><br>
+    这是因为气压带风带随季节<strong>南北移动</strong>，导致同一地区在不同季节受不同气压带/风带控制。
+  </div>
+</div>
+</section>
+
+<section>
+<h2>五、世界主要气候类型</h2>
+
+<div class="climate-box">
+  <div class="box-title">🌍 气候分类的核心依据</div>
+  <p>气候类型的判断遵循 <strong>"以温定带、以水定型"</strong> 的原则：</p>
+  <ul style="margin-left:1.5rem;margin-top:0.5rem;">
+    <li><strong>以温定带</strong>：根据最冷月均温确定温度带</li>
+    <li><strong>以水定型</strong>：根据降水季节分配确定具体气候类型</li>
+  </ul>
+</div>
+
+<h3>1. 温度带判定标准</h3>
+
+<table class="data-table">
+  <thead><tr><th>温度带</th><th>最冷月均温</th><th>代表气候类型</th></tr></thead>
+  <tbody>
+    <tr><td><strong>热带</strong></td><td>> 15℃</td><td>热带雨林、热带草原、热带季风、热带沙漠气候</td></tr>
+    <tr><td><strong>亚热带</strong></td><td>0℃ ~ 15℃</td><td>亚热带季风、地中海气候</td></tr>
+    <tr><td><strong>温带</strong></td><td>< 0℃（但最冷月 > -15℃）</td><td>温带季风、温带海洋性、温带大陆性气候</td></tr>
+    <tr><td><strong>寒带</strong></td><td>全年 < 0℃</td><td>苔原、冰原气候</td></tr>
+  </tbody>
+</table>
+
+<h3>2. 世界主要气候类型速查表</h3>
+
+<table class="data-table">
+  <thead>
+    <tr><th>气候类型</th><th>分布规律</th><th>气温特征</th><th>降水特征</th><th>典型植被</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>热带雨林气候</strong></td>
+      <td>赤道附近（0°-10°）</td>
+      <td>全年高温（>25℃）</td>
+      <td>全年多雨（>2000mm）</td>
+      <td>热带雨林</td>
+    </tr>
+    <tr>
+      <td><strong>热带草原气候</strong></td>
+      <td>热带雨林南北两侧（10°-20°）</td>
+      <td>全年高温</td>
+      <td>干湿季分明</td>
+      <td>热带草原</td>
+    </tr>
+    <tr>
+      <td><strong>热带季风气候</strong></td>
+      <td>亚洲南部（10°-25°）</td>
+      <td>全年高温</td>
+      <td>旱雨季分明，雨季集中</td>
+      <td>热带季雨林</td>
+    </tr>
+    <tr>
+      <td><strong>热带沙漠气候</strong></td>
+      <td>南北回归线附近大陆西岸和内陆</td>
+      <td>全年高温</td>
+      <td>全年少雨（<250mm）</td>
+      <td>荒漠</td>
+    </tr>
+    <tr>
+      <td><strong>亚热带季风气候</strong></td>
+      <td>南北纬25°-35°大陆东岸</td>
+      <td>夏季高温，冬季温和（>0℃）</td>
+      <td>夏季多雨，冬季少雨</td>
+      <td>亚热带常绿阔叶林</td>
+    </tr>
+    <tr>
+      <td><strong>地中海气候</strong></td>
+      <td>南北纬30°-40°大陆西岸</td>
+      <td>夏季炎热，冬季温和</td>
+      <td><strong>夏季干燥、冬季多雨</strong>（雨热不同期）</td>
+      <td>亚热带常绿硬叶林</td>
+    </tr>
+    <tr>
+      <td><strong>温带季风气候</strong></td>
+      <td>北纬35°-55°大陆东岸（东亚特有）</td>
+      <td>夏季高温，冬季寒冷（<0℃）</td>
+      <td>夏季多雨，冬季干燥</td>
+      <td>温带落叶阔叶林</td>
+    </tr>
+    <tr>
+      <td><strong>温带海洋性气候</strong></td>
+      <td>南北纬40°-60°大陆西岸</td>
+      <td>全年温和（冬无严寒、夏无酷暑）</td>
+      <td>全年湿润，降水均匀</td>
+      <td>温带落叶阔叶林</td>
+    </tr>
+    <tr>
+      <td><strong>温带大陆性气候</strong></td>
+      <td>温带大陆内部</td>
+      <td>冬冷夏热，年较差大</td>
+      <td>全年少雨</td>
+      <td>草原、荒漠</td></tr>
+    <tr>
+      <td><strong>高原山地气候</strong></td>
+      <td>高山高原地区</td>
+      <td>随海拔升高而降低</td>
+      <td>因地形而异</td>
+      <td>垂直变化明显</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="callout">
+  <div class="callout-title">💡 考试高频对比</div>
+  <strong>亚热带季风 vs 温带季风：</strong>最冷月均温是否低于0℃<br>
+  <strong>亚热带季风 vs 地中海气候：</strong>雨热是否同期（季风=同期，地中海=不同期）<br>
+  <strong>温带海洋性 vs 温带季风：</strong>降水是否均匀（海洋性=均匀，季风=夏季集中）<br>
+  <strong>热带草原 vs 热带季风：</strong>降水量级不同，季风更多（年降水1500-2000mm vs 750-1000mm）
+</div>
+</section>
+
+<section>
+<h2>六、影响气候的主要因素</h2>
+
+<table class="data-table">
+  <thead><tr><th>因素</th><th>影响方式</th><th>实例</th></tr></thead>
+  <tbody>
+    <tr>
+      <td><strong>纬度位置</strong></td>
+      <td>决定太阳辐射量，是气候形成的基本因素<br>低纬热、高纬冷</td>
+      <td>赤道炎热、两极寒冷</td>
+    </tr>
+    <tr>
+      <td><strong>海陆位置</strong></td>
+      <td>距海远近影响降水和温差<br>沿海湿润温差小，内陆干燥温差大</td>
+      <td>上海（沿海）vs 乌鲁木齐（内陆）</td>
+    </tr>
+    <tr>
+      <td><strong>地形</strong></td>
+      <td>海拔升高气温降低（每100m降0.6℃）<br>迎风坡多雨、背风坡少雨</td>
+      <td>青藏高原寒冷；喜马拉雅山南坡多雨</td>
+    </tr>
+    <tr>
+      <td><strong>洋流</strong></td>
+      <td>暖流增温增湿；寒流降温减湿</td>
+      <td>西欧温带海洋性气候延伸至北极圈内（北大西洋暖流）；秘鲁寒流使沿岸形成沙漠</td>
+    </tr>
+    <tr>
+      <td><strong>大气环流</strong></td>
+      <td>气压带和风带控制决定干湿状况</td>
+      <td>西风带控制→湿润；副高控制→干燥</td>
+    </tr>
+  </tbody>
+</table>
+</section>
+
+<section>
+<h2>七、中国的气候特征</h2>
+
+<div class="climate-box">
+  <div class="box-title">🇨🇳 中国气候的主要特点</div>
+  <ol style="margin-left:1.5rem;margin-top:0.5rem;">
+    <li><strong>季风气候显著</strong>：东部大部分地区属季风气候（热带/亚热带/温带季风）</li>
+    <li><strong>雨热同期</strong>：夏季高温多雨，有利于农作物生长</li>
+    <li><strong>气候复杂多样</strong：除季风气候外，还有温带大陆性气候和高原山地气候</li>
+    <li><strong>大陆性气候分布广</strong>：西北内陆地区冬冷夏热，年较差大</li>
+  </ol>
+</div>
+
+<h3>1. 温度带划分（中国）</h3>
+
+<table class="data-table">
+  <thead><tr><th>温度带</th><th>积温</th><th>分布地区</th><th>主要作物</th></tr></thead>
+  <tbody>
+    <tr><td><strong>热带</strong></td><td>> 8000℃</td><td>海南、云南南部、台湾南部</td><td>橡胶、椰子</td></tr>
+    <tr><td><strong>亚热带</strong></td><td>4500-8000℃</td><td>秦岭-淮河以南</td><td>水稻、柑橘</td></tr>
+    <tr><td><strong>暖温带</strong></td><td>3400-4500℃</td><td>秦岭-淮河以北，长城以南</td><td>小麦、苹果</td></tr>
+    <tr><td><strong>中温带</strong></td><td>1600-3400℃</td><td>东北、内蒙古</td><td>春小麦、大豆</td></tr>
+    <tr><td><strong>寒温带</strong></td><td>< 1600℃</td><td>黑龙江北部、大兴安岭</td><td>早熟马铃薯</td></tr>
+    <tr><td><strong>高原气候区</strong></td><td>—</td><td>青藏高原</td><td>青稞、牦牛</td></tr>
+  </tbody>
+</table>
+
+<div class="callout">
+  <div class="callout-title">🗺️ 重要地理界线</div>
+  <strong>秦岭-淮河一线</strong>（约800mm等降水量线、1月0℃等温线）：<br>
+  以南：亚热带季风气候，水田农业<br>
+  以北：暖温带季风气候，旱地农业
+</div>
+</section>
+
+<section>
+<h2>八、易错点总结</h2>
+
+<div class="callout">
+  <div class="callout-title">❌ 常见错误</div>
+  <table style="width:100%;border-collapse:collapse;font-size:14px;margin-top:0.5rem;">
+    <tr style="border-bottom:1px solid #ffc107;"><td style="padding:0.4rem 0;"><strong>错误1</strong></td><td style="padding:0.4rem;">认为最高气温出现在正午12时 → <strong>错！</strong>出现在午后14时左右（地面加热大气需要时间）</td></tr>
+    <tr style="border-bottom:1px solid #ffc107;background:#fff8e1;"><td style="padding:0.4rem 0;"><strong>错误2</strong></td><td style="padding:0.4rem;">混淆地中海气候和亚热带季风气候 → 地中海：雨热不同期（夏干冬雨）；季风：雨热同期（夏雨）</td></tr>
+    <tr style="border-bottom:1px solid #ffc107;"><td style="padding:0.4rem 0;"><strong>错误3</strong></td><td style="padding:0.4rem;">认为赤道地区都多雨 → 错！东非高原虽在赤道附近但因海拔高形成热带草原气候</td></tr>
+    <tr style="border-bottom:1px solid #ffc107;background:#fff8e1;"><td style="padding:0.4rem 0;"><strong>错误4</strong></td><td style="padding:0.4rem;">混淆信风和季风 → 信风是行星风带（常年），季风是季节性反转的风</td></tr>
+    <tr style="border-bottom:1px solid #ffc107;"><td style="padding:0.4rem 0;"><strong>错误5</strong></td><td style="padding:0.4rem;">认为所有大陆西岸都是地中海气候 → 错！30°-40°才是，副热带地区（20°-30°）是沙漠气候</td></tr>
+    <tr><td style="padding:0.4rem 0;"><strong>错误6</strong></td><td style="padding:0.4rem;">认为寒流经过的地区一定寒冷 → 错！寒流主要影响降水（减湿），如撒哈拉沙漠延伸到西海岸（本格拉寒流）</td></tr>
+  </table>
+</div>
+</section>
+
+<section>
+<h2>九、与小学教学的联系</h2>
+
+<div class="callout">
+  <div class="callout-title">🏫 小学科学课程标准相关要点</div>
+  <ul style="margin-left:1.5rem;margin-top:0.5rem;">
+    <li>小学4-6年级要求学生能描述天气现象（阴晴、风雨、冷热等）</li>
+    <li>能用简单表格统计气温数据，绘制气温变化图</li>
+    <li>知道降水形式（雨、雪、冰雹等）</li>
+    <li>了解本地的气候特点</li>
+    <li>通过实验认识云的形成（模拟降雨）</li>
+  </ul>
+  <p style="margin-top:0.5rem;"><strong>作为高级教师候选人</strong>，你需要比小学教学要求更深一层——不仅要"描述"天气现象，还要能解释其背后的<strong>大气环流机制</strong>和<strong>气候成因</strong>。</p>
+</div>
+</section>
+
+<section>
+<h2>十、随堂练习</h2>
+<p>请先独立思考，再点击选项查看答案和解析。</p>
+</section>
+
+<!-- Quiz Section -->
+<section class="quiz-section">
+  <div class="quiz-title">📝 课堂小测验（共8题）</div>
+
+  <div class="quiz-question" data-correct="B">
+    <div class="quiz-q-text">1. 下列关于天气和气候的说法，正确的是：</div>
+    <ul class="quiz-options">
+      <li><button class="quiz-btn" data-value="A" onclick="checkAnswer(this)">A. 天气和气候是一样的概念</button></li>
+      <li><button class="quiz-btn" data-value="B" onclick="checkAnswer(this)">B. 天气是短时间的大气状况，气候是长期的平均状态</button></li>
+      <li><button class="quiz-btn" data-value="C" onclick="checkAnswer(this)">C. 气候是多变的，天气是稳定的</button></li>
+      <li><button class="quiz-btn" data-value="D" onclick="checkAnswer(this)">D. 天气和气候都只能用温度来描述</button></li>
+    </ul>
+    <div class="quiz-feedback correct-fb" id="fb-1-correct">✅ 正确！天气指短时间（几分钟到几天）的大气状况，多变；气候指多年（通常30年）的平均大气状况，相对稳定。</div>
+    <div class="quiz-feedback wrong-fb" id="fb-1-wrong">❌ 再想想。天气是短期的、多变的；气候是长期的、稳定的。B是正确答案。</div>
+  </div>
+
+  <div class="quiz-question" data-correct="C">
+    <div class="quiz-q-text">2. 一天中，气温最高值通常出现在：</div>
+    <ul class="quiz-options">
+      <li><button class="quiz-btn" data-value="A" onclick="checkAnswer(this)">A. 正午12时</button></li>
+      <li><button class="quiz-btn" data-value="B" onclick="checkAnswer(this)">B. 上午10时</button></li>
+      <li><button class="quiz-btn" data-value="C" onclick="checkAnswer(this)">C. 午后14时左右</button></li>
+      <li><button class="quiz-btn" data-value="D" onclick="checkAnswer(this)">D. 下午16时</button></li>
+    </ul>
+    <div class="quiz-feedback correct-fb" id="fb-2-correct">✅ 正确！虽然正午12时太阳辐射最强，但地面需要时间吸收热量再辐射给大气，所以气温最高值出现在午后14时左右。</div>
+    <div class="quiz-feedback wrong-fb" id="fb-2-wrong">❌ 记住：气温变化的能量来源是地面辐射，不是太阳直接加热空气。地面加热需要时间，所以最高温出现在14时左右，不是12时。</div>
+  </div>
+
+  <div class="quiz-question" data-correct="A">
+    <div class="quiz-q-text">3. 下列哪种降水类型是由湿润气流遇山脉阻挡抬升形成的？</div>
+    <ul class="quiz-options">
+      <li><button class="quiz-btn" data-value="A" onclick="checkAnswer(this)">A. 地形雨</button></li>
+      <li><button class="quiz-btn" data-value="B" onclick="checkAnswer(this)">B. 对流雨</button></li>
+      <li><button class="quiz-btn" data-value="C" onclick="checkAnswer(this)">C. 锋面雨</button></li>
+      <li><button class="quiz-btn" data-value="D" onclick="checkAnswer(this)">D. 台风雨</button></li>
+    </ul>
+    <div class="quiz-feedback correct-fb" id="fb-3-correct">✅ 正确！地形雨是湿润气流遇到山脉等障碍物被迫抬升，冷却凝结形成的降水。迎风坡多雨，背风坡少雨。</div>
+    <div class="quiz-feedback wrong-fb" id="fb-3-wrong">❌ 地形雨的特征就是"遇山抬升"。对流雨是热空气上升形成的；锋面雨是冷暖气团相遇形成的。</div>
+  </div>
+
+  <div class="quiz-question" data-correct="D">
+    <div class="quiz-q-text">4. 地中海气候的特征是：</div>
+    <ul class="quiz-options">
+      <li><button class="quiz-btn" data-value="A" onclick="checkAnswer(this)">A. 全年高温多雨</button></li>
+      <li><button class="quiz-btn" data-value="B" onclick="checkAnswer(this)">B. 夏季高温多雨，冬季寒冷干燥</button></li>
+      <li><button class="quiz-btn" data-value="C" onclick="checkAnswer(this)">C. 全年温和湿润</button></li>
+      <li><button class="quiz-btn" data-value="D" onclick="checkAnswer(this)">D. 夏季炎热干燥，冬季温和多雨</button></li>
+    </ul>
+    <div class="quiz-feedback correct-fb" id="fb-4-correct">✅ 正确！地中海气候最显著的特征是"雨热不同期"——夏季受副高控制干燥，冬季受西风带控制多雨。</div>
+    <div class="quiz-feedback wrong-fb" id="fb-4-wrong">❌ 地中海气候的关键特征是"夏干冬雨"，即雨热不同期。A是热带雨林，B是温带季风，C是温带海洋性。</div>
+  </div>
+
+  <div class="quiz-question" data-correct="B">
+    <div class="quiz-q-text">5. 海拔每升高100米，气温大约下降：</div>
+    <ul class="quiz-options">
+      <li><button class="quiz-btn" data-value="A" onclick="checkAnswer(this)">A. 0.1℃</button></li>
+      <li><button class="quiz-btn" data-value="B" onclick="checkAnswer(this)">B. 0.6℃</button></li>
+      <li><button class="quiz-btn" data-value="C" onclick="checkAnswer(this)">C. 1.0℃</button></li>
+      <li><button class="quiz-btn" data-value="D" onclick="checkAnswer(this)">D. 2.0℃</button></li>
+    </ul>
+    <div class="quiz-feedback correct-fb" id="fb-5-correct">✅ 正确！海拔每升高100米，气温约下降0.6℃。这是干绝热递减率，是计算山地气温的重要常数。</div>
+    <div class="quiz-feedback wrong-fb" id="fb-5-wrong">❌ 记住：海拔每升高100米，气温下降约0.6℃。例：山脚20℃，海拔2000米处 = 20 - 20×0.6 = 8℃。</div>
+  </div>
+
+  <div class="quiz-question" data-correct="C">
+    <div class="quiz-q-text">6. 上海所属的气候类型是：</div>
+    <ul class="quiz-options">
+      <li><button class="quiz-btn" data-value="A" onclick="checkAnswer(this)">A. 温带季风气候</button></li>
+      <li><button class="quiz-btn" data-value="B" onclick="checkAnswer(this)">B. 地中海气候</button></li>
+      <li><button class="quiz-btn" data-value="C" onclick="checkAnswer(this)">C. 亚热带季风气候</button></li>
+      <li><button class="quiz-btn" data-value="D" onclick="checkAnswer(this)">D. 温带海洋性气候</button></li>
+    </ul>
+    <div class="quiz-feedback correct-fb" id="fb-6-correct">✅ 正确！上海位于秦岭-淮河以南（约北纬31°），属亚热带季风气候——夏季高温多雨，冬季温和少雨（最冷月均温>0℃）。</div>
+    <div class="quiz-feedback wrong-fb" id="fb-6-wrong">❌ 上海在秦岭-淮河以南，最冷月均温>0℃，是亚热带季风气候。温带季风气候最冷月<0℃（如北京）。</div>
+  </div>
+
+  <div class="quiz-question" data-correct="A">
+    <div class="quiz-q-text">7. 下列哪个因素不是影响气候的主要因素？</div>
+    <ul class="quiz-options">
+      <li><button class="quiz-btn" data-value="A" onclick="checkAnswer(this)">A. 地球自转速度</button></li>
+      <li><button class="quiz-btn" data-value="B" onclick="checkAnswer(this)">B. 纬度位置</button></li>
+      <li><button class="quiz-btn" data-value="C" onclick="checkAnswer(this)">C. 海陆位置</button></li>
+      <li><button class="quiz-btn" data-value="D" onclick="checkAnswer(this)">D. 地形和洋流</button></li>
+    </ul>
+    <div class="quiz-feedback correct-fb" id="fb-7-correct">✅ 正确！影响气候的主要因素包括：纬度位置、海陆位置、地形、洋流、大气环流。地球自转速度影响昼夜交替，但不是气候的主要影响因素。</div>
+    <div class="quiz-feedback wrong-fb" id="fb-7-wrong">❌ 地球自转速度主要影响昼夜交替和时间计算，不是气候形成的直接因素。纬度、海陆位置、地形和洋流都是直接影响气候的因素。</div>
+  </div>
+
+  <div class="quiz-question" data-correct="D">
+    <div class="quiz-q-text">8. 我国东部地区最主要的降水形式是：</div>
+    <ul class="quiz-options">
+      <li><button class="quiz-btn" data-value="A" onclick="checkAnswer(this)">A. 对流雨</button></li>
+      <li><button class="quiz-btn" data-value="B" onclick="checkAnswer(this)">B. 地形雨</button></li>
+      <li><button class="quiz-btn" data-value="C" onclick="checkAnswer(this)">C. 台风雨</button></li>
+      <li><button class="quiz-btn" data-value="D" onclick="checkAnswer(this)">D. 锋面雨</button></li>
+    </ul>
+    <div class="quiz-feedback correct-fb" id="fb-8-correct">✅ 正确！我国东部季风区最主要的降水形式是锋面雨。夏季风带来的暖湿气流与北方冷空气相遇，形成大范围持续性降水（如梅雨）。</div>
+    <div class="quiz-feedback wrong-fb" id="fb-8-wrong">❌ 我国东部季风区，夏季暖湿气流与北方冷空气相遇形成锋面，产生大范围降水。这就是锋面雨，是我国东部最主要的降水形式。</div>
+  </div>
+
+  <div class="score-bar" id="score-bar">
+    <div>你的得分</div>
+    <div class="score-number" id="score-number"></div>
+    <div id="score-comment"></div>
+  </div>
+</section>
+
+<script>
+let answered = 0;
+const total = document.querySelectorAll('.quiz-question').length;
+
+function checkAnswer(btn) {
+  const question = btn.closest('.quiz-question');
+  if (question.classList.contains('answered')) return;
+  question.classList.add('answered');
+  answered++;
+
+  const correct = question.getAttribute('data-correct');
+  const selected = btn.getAttribute('data-value');
+  const qIndex = Array.from(document.querySelectorAll('.quiz-question')).indexOf(question) + 1;
+
+  question.querySelectorAll('.quiz-btn').forEach(b => {
+    b.classList.add('disabled');
+    if (b.getAttribute('data-value') === correct) {
+      b.classList.add('correct');
+    }
+  });
+
+  if (selected === correct) {
+    btn.classList.add('correct');
+    document.getElementById('fb-' + qIndex + '-correct').classList.add('show');
+  } else {
+    btn.classList.add('wrong');
+    document.getElementById('fb-' + qIndex + '-wrong').classList.add('show');
+  }
+
+  if (answered === total) {
+    let score = document.querySelectorAll('.quiz-feedback.correct-fb.show').length;
+    const bar = document.getElementById('score-bar');
+    const num = document.getElementById('score-number');
+    const comment = document.getElementById('score-comment');
+    num.textContent = score + '/' + total;
+    if (score === total) {
+      comment.textContent = '满分！你对天气与气候的理解非常扎实 🎉';
+    } else if (score >= total * 0.75) {
+      comment.textContent = '很好！再复习一下错题对应的知识点 💪';
+    } else if (score >= total * 0.5) {
+      comment.textContent = '基础不错，建议重新阅读相关章节 📖';
+    } else {
+      comment.textContent = '别灰心，重新学习本课内容后再试一次！🌟';
+    }
+    bar.classList.add('show');
+  }
+}
+</script>
+
+<!-- Navigation -->
+<nav>
+  <a href="0011-earth-motion.html">← 第11课：地球的运动</a>
+  <a href="0013-plate-volcano.html">第13课：板块构造与火山地震 →</a>
+</nav>
+
+</div>
+</body>
+</html>

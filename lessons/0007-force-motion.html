@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第7课：力与运动</title>
+<style>
+  :root {
+    --bg: #faf8f5; --text: #2c2c2c;
+    --accent: #1565c0; --accent-light: #e3f2fd; --border: #90caf9;
+    --quiz-correct: #4caf50; --quiz-wrong: #e53935;
+    --callout-bg: #fff8e1; --callout-border: #ffc107;
+    --solid-bg: #e8eaf6; --solid-border: #9fa8da;
+    --force-bg: #e0f7fa; --force-border: #80deea;
+    --motion-bg: #fce4ec; --motion-border: #f48fb1;
+    --balance-bg: #f1f8e9; --balance-border: #aed581;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: "Noto Serif SC", "Source Han Serif CN", "SimSun", Georgia, serif;
+    background: var(--bg); color: var(--text); line-height: 1.9;
+    font-size: 17px; padding: 2rem 1rem;
+  }
+  .container { max-width: 720px; margin: 0 auto; }
+  header { border-bottom: 3px solid var(--accent); padding-bottom: 1.5rem; margin-bottom: 2rem; }
+  .lesson-meta { font-size: 14px; color: #666; margin-bottom: 0.5rem; font-family: "Noto Sans SC", "Microsoft YaHei", sans-serif; }
+  h1 { font-size: 28px; font-weight: 700; color: var(--accent); margin-bottom: 0.5rem; letter-spacing: 0.02em; }
+  h2 { font-size: 22px; font-weight: 700; color: var(--accent); margin-top: 2.5rem; margin-bottom: 1rem; padding-bottom: 0.3rem; border-bottom: 1px solid var(--border); }
+  h3 { font-size: 18px; font-weight: 700; color: #333; margin-top: 1.5rem; margin-bottom: 0.5rem; }
+  p { margin-bottom: 1rem; }
+  .mission-link { display: inline-block; margin-bottom: 1.5rem; font-size: 14px; color: var(--accent); text-decoration: none; font-family: "Noto Sans SC", "Microsoft YaHei", sans-serif; }
+  .mission-link:hover { text-decoration: underline; }
+  ol, ul { margin-left: 1.5rem; margin-bottom: 1rem; }
+  li { margin-bottom: 0.3rem; }
+  .callout { background: var(--callout-bg); border-left: 4px solid var(--callout-border); padding: 1rem 1.2rem; margin: 1.5rem 0; border-radius: 0 8px 8px 0; font-size: 15px; }
+  .callout-title { font-weight: 700; color: #e65100; margin-bottom: 0.3rem; font-family: "Noto Sans SC", sans-serif; }
+  .force-box { background: var(--force-bg); border: 2px solid var(--force-border); border-radius: 12px; padding: 1.2rem 1.5rem; margin: 1.5rem 0; }
+  .force-title { font-weight: 700; color: #00838f; margin-bottom: 0.5rem; font-family: "Noto Sans SC", sans-serif; font-size: 16px; }
+  .motion-box { background: var(--motion-bg); border: 2px solid var(--motion-border); border-radius: 12px; padding: 1.2rem 1.5rem; margin: 1.5rem 0; }
+  .motion-title { font-weight: 700; color: #c62828; margin-bottom: 0.5rem; font-family: "Noto Sans SC", sans-serif; font-size: 16px; }
+  .balance-box { background: var(--balance-bg); border: 2px solid var(--balance-border); border-radius: 12px; padding: 1.2rem 1.5rem; margin: 1.5rem 0; }
+  .balance-title { font-weight: 700; color: #2e7d32; margin-bottom: 0.5rem; font-family: "Noto Sans SC", sans-serif; font-size: 16px; }
+  .energy-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 14px; }
+  .energy-table th { background: var(--accent); color: white; padding: 0.6rem 0.8rem; text-align: left; font-weight: 600; font-size: 13px; }
+  .energy-table td { padding: 0.5rem 0.8rem; border-bottom: 1px solid #e0e0e0; vertical-align: top; }
+  .energy-table tr:nth-child(even) td { background: #f9f9f9; }
+  .energy-table tr:hover td { background: var(--accent-light); }
+  .highlight-box { background: #fff3e0; border: 2px solid #ffb74d; border-radius: 12px; padding: 1rem 1.2rem; margin: 1.5rem 0; }
+  .highlight-title { font-weight: 700; color: #e65100; margin-bottom: 0.3rem; font-family: "Noto Sans SC", sans-serif; }
+  .quiz-section { background: white; border: 2px solid var(--accent); border-radius: 12px; padding: 1.5rem; margin: 2rem 0; }
+  .quiz-title { font-size: 18px; font-weight: 700; color: var(--accent); margin-bottom: 1.2rem; font-family: "Noto Sans SC", sans-serif; }
+  .quiz-question { margin-bottom: 1.5rem; padding-bottom: 1.2rem; border-bottom: 1px dashed #ddd; }
+  .quiz-question:last-of-type { border-bottom: none; }
+  .quiz-q-text { font-weight: 600; margin-bottom: 0.8rem; font-size: 16px; }
+  .quiz-options { list-style: none; padding: 0; }
+  .quiz-options li { margin-bottom: 0.4rem; }
+  .quiz-btn { display: block; width: 100%; padding: 0.6rem 1rem; margin-bottom: 0.4rem; border: 2px solid #ddd; border-radius: 8px; background: white; cursor: pointer; font-size: 15px; font-family: "Noto Sans SC", "Microsoft YaHei", sans-serif; text-align: left; transition: all 0.2s; }
+  .quiz-btn:hover { border-color: var(--accent); background: var(--accent-light); }
+  .quiz-btn.correct { border-color: var(--quiz-correct); background: #e8f5e9; color: #1b5e20; font-weight: 600; }
+  .quiz-btn.wrong { border-color: var(--quiz-wrong); background: #ffebee; color: #b71c1c; }
+  .quiz-btn.disabled { pointer-events: none; opacity: 0.7; }
+  .quiz-feedback { margin-top: 0.5rem; padding: 0.5rem 0.8rem; border-radius: 6px; font-size: 14px; font-family: "Noto Sans SC", sans-serif; display: none; }
+  .quiz-feedback.show { display: block; }
+  .quiz-feedback.correct-fb { background: #e8f5e9; color: #2e7d32; border: 1px solid #a5d6a7; }
+  .quiz-feedback.wrong-fb { background: #ffebee; color: #c62828; border: 1px solid #ef9a9a; }
+  .score-bar { display: none; text-align: center; padding: 1rem; background: var(--accent-light); border-radius: 8px; margin-top: 1rem; font-family: "Noto Sans SC", sans-serif; }
+  .score-bar.show { display: block; }
+  .score-number { font-size: 32px; font-weight: 700; color: var(--accent); }
+  nav { margin-top: 3rem; padding-top: 1.5rem; border-top: 2px solid var(--border); display: flex; justify-content: space-between; font-family: "Noto Sans SC", sans-serif; }
+  nav a { color: var(--accent); text-decoration: none; padding: 0.5rem 1rem; border: 1px solid var(--border); border-radius: 8px; transition: all 0.2s; }
+  nav a:hover { background: var(--accent-light); text-decoration: none; }
+  .flow-box { background: white; border: 2px solid var(--border); border-radius: 12px; padding: 1.2rem 1.5rem; margin: 1.5rem 0; }
+  .flow-title { font-weight: 700; color: var(--accent); margin-bottom: 0.8rem; font-family: "Noto Sans SC", sans-serif; font-size: 16px; }
+  .flow-path { font-size: 15px; line-height: 2.4; text-align: center; }
+  .flow-node { display: inline-block; background: var(--accent-light); border: 2px solid var(--border); border-radius: 6px; padding: 0.25rem 0.6rem; font-weight: 600; font-size: 13px; margin: 0.15rem; }
+  .flow-arrow { color: var(--accent); font-weight: 700; margin: 0 0.2rem; }
+  .diagram-box { background: #f5f5f5; border: 2px solid #ccc; border-radius: 12px; padding: 1.5rem; margin: 1.5rem 0; text-align: center; font-family: "Noto Sans SC", sans-serif; }
+  .diagram-title { font-weight: 700; margin-bottom: 1rem; font-size: 16px; color: #333; }
+  @media print { body { font-size: 12pt; padding: 1cm; } .container { max-width: 100%; } .quiz-section { break-inside: avoid; } nav { display: none; } }
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <a class="mission-link" href="../MISSION.md">← 回到学习计划</a>
+  <div class="lesson-meta">小高备考 · 第7课 · 物质科学 · 建议用时：25分钟</div>
+  <h1>力与运动</h1>
+  <p style="color:#666;font-size:14px;">力是改变物体运动状态的原因。牛顿三大定律是经典力学的基石。</p>
+</header>
+
+<section>
+<h2>学习目标</h2>
+<p>学完本课，你应该能够：</p>
+<ol style="margin-left:1.5rem;margin-bottom:1rem;">
+  <li>理解力的概念、作用效果和力的三要素</li>
+  <li>掌握重力的计算方法和方向</li>
+  <li>理解二力平衡的条件和应用</li>
+  <li>理解惯性的概念并能解释生活中的惯性现象</li>
+  <li>掌握牛顿第一定律和第二定律的内容</li>
+  <li>理解摩擦力的种类和影响因素</li>
+</ol>
+</section>
+
+<section>
+<h2>一、力的基本概念</h2>
+
+<h3>1. 什么是力</h3>
+<div class="force-box">
+  <div class="force-title">💪 力的定义</div>
+  <p><strong>力是物体对物体的作用。</strong>力不能脱离物体而独立存在，至少需要两个物体——施力物体和受力物体。</p>
+  <ul style="margin-left:1.5rem;margin-top:0.5rem;">
+    <li><strong>力的符号</strong>：F（单位：牛顿，简称牛，符号 N）</li>
+    <li><strong>力的单位</strong>：1N ≈ 拿起两个鸡蛋所用的力</li>
+    <li><strong>力的测量工具</strong>：弹簧测力计</li>
+  </ul>
+</div>
+
+<h3>2. 力的作用效果</h3>
+<table class="energy-table" style="width:100%;">
+  <thead>
+    <tr><th>作用效果</th><th>说明</th><th>实例</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><strong>改变物体形状</strong>（形变）</td><td>使物体发生拉伸、压缩、弯曲等形变</td><td>拉弹簧、压海绵、弯弓射箭</td></tr>
+    <tr><td><strong>改变物体运动状态</strong></td><td>包括速度大小变化和运动方向变化</td><td>刹车减速、转弯、加速起跑</td></tr>
+  </tbody>
+</table>
+
+<h3>3. 力的三要素</h3>
+<div class="highlight-box">
+  <div class="highlight-title">📌 力的三要素</div>
+  <strong>大小、方向、作用点</strong> — 力的三要素都影响力的作用效果。<br><br>
+  例如：推门时，用力的位置不同（靠近门轴 vs 远离门轴），需要的力的大小也不同；用力的方向不同，门的转动方向也不同。
+</div>
+
+<h3>4. 力的示意图</h3>
+<div class="diagram-box">
+  <div class="diagram-title">📐 力的图示方法</div>
+  <div style="font-size:15px;line-height:2.2;">
+    用一条带箭头的线段表示力：<br>
+    <strong>起点</strong> = 力的作用点 &nbsp;&nbsp;|&nbsp;&nbsp;
+    <strong>箭头方向</strong> = 力的方向 &nbsp;&nbsp;|&nbsp;&nbsp;
+    <strong>线段长度</strong> = 力的大小（按比例）<br><br>
+    例：水平向右推一个箱子，力 F = 50N → [起点]———→[箭头]<br>
+    标注：在箭头旁边标出力的符号和大小，如 F=50N
+  </div>
+</div>
+</section>
+
+<section>
+<h2>二、常见的力</h2>
+
+<h3>1. 重力（G）</h3>
+<div class="force-box">
+  <div class="force-title">🌍 重力</div>
+  <ul style="margin-left:1.5rem;margin-bottom:0.5rem;">
+    <li><strong>产生原因</strong>：地球的吸引</li>
+    <li><strong>方向</strong>：<strong>竖直向下</strong>（指向地心）</li>
+    <li><strong>大小计算</strong>：<strong>G = mg</strong>，其中 g ≈ 9.8 N/kg（粗略计算取 10 N/kg）</li>
+    <li><strong>重心</strong>：重力在物体上的等效作用点</li>
+  </ul>
+  <div style="font-size:13px;color:#555;margin-top:0.5rem;">
+    <strong>注意区分</strong>："竖直向下" ≠ "垂直向下"。竖直向下是指向地心的方向，与水平面垂直；而垂直向下是相对于某个面的垂线方向。
+  </div>
+</div>
+
+<h3>2. 弹力</h3>
+<div class="force-box">
+  <div class="force-title">🔩 弹力</div>
+  <ul style="margin-left:1.5rem;margin-bottom:0.5rem;">
+    <li><strong>产生条件</strong>：物体发生弹性形变</li>
+    <li><strong>常见弹力</strong>：压力、支持力、拉力（绳子的张力）、弹簧的弹力</li>
+    <li><strong>胡克定律</strong>：F = kx（弹簧弹力与形变量成正比，k为劲度系数）</li>
+  </ul>
+</div>
+
+<h3>3. 摩擦力（f）</h3>
+<div class="force-box">
+  <div class="force-title">🛤️ 摩擦力</div>
+  <ul style="margin-left:1.5rem;margin-bottom:0.5rem;">
+    <li><strong>产生条件</strong>：接触面粗糙 + 有压力 + 有相对运动或相对运动趋势</li>
+    <li><strong>方向</strong>：与相对运动（或相对运动趋势）方向<strong>相反</strong></li>
+  </ul>
+  <table class="energy-table" style="width:100%;margin-top:0.5rem;">
+    <thead>
+      <tr><th>类型</th><th>定义</th><th>实例</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>静摩擦力</strong></td><td>物体间有相对运动趋势但尚未运动</td><td>推桌子没推动、手握瓶子不掉</td></tr>
+      <tr><td><strong>滑动摩擦力</strong></td><td>物体间发生相对滑动</td><td>滑雪、刹车滑行</td></tr>
+      <tr><td><strong>滚动摩擦力</strong></td><td>物体间发生相对滚动</td><td>车轮滚动、滚珠轴承</td></tr>
+    </tbody>
+  </table>
+  <div style="font-size:13px;color:#555;margin-top:0.5rem;">
+    <strong>影响滑动摩擦力大小的因素</strong>：①接触面所受的压力 ②接触面的粗糙程度<br>
+    <strong>注意</strong>：与接触面积大小无关，与运动速度大小无关！
+  </div>
+</div>
+
+<h3>4. 力的合成与分解（了解）</h3>
+<div class="highlight-box">
+  <div class="highlight-title">📌 合力</div>
+  如果一个力产生的效果跟几个力共同作用的效果相同，这个力就叫那几个力的<strong>合力</strong>。<br><br>
+  <strong>同一直线上力的合成</strong>：<br>
+  - 方向相同：合力 = F₁ + F₂，方向不变<br>
+  - 方向相反：合力 = |F₁ - F₂|，方向与较大的力相同
+</div>
+</section>
+
+<section>
+<h2>三、二力平衡</h2>
+
+<div class="balance-box">
+  <div class="balance-title">⚖️ 二力平衡的条件</div>
+  <p>当一个物体受到两个力的作用时，如果保持<strong>静止状态</strong>或<strong>匀速直线运动状态</strong>，我们就说这两个力彼此平衡。</p>
+  <p style="margin-top:0.5rem;"><strong>二力平衡的四个条件（缺一不可）</strong>：</p>
+  <ol style="margin-left:1.5rem;margin-top:0.5rem;">
+    <li>作用在<strong>同一个物体</strong>上</li>
+    <li>大小<strong>相等</strong></li>
+    <li>方向<strong>相反</strong></li>
+    <li>作用在<strong>同一条直线</strong>上</li>
+  </ol>
+</div>
+
+<div class="callout">
+  <div class="callout-title">⚠️ 考试高频陷阱</div>
+  <strong>一对平衡力 vs 一对相互作用力</strong><br><br>
+  <strong>平衡力</strong>：作用在<strong>同一物体</strong>上，满足等大、反向、共线 → 物体处于平衡状态<br>
+  <strong>相互作用力</strong>：作用在<strong>两个不同物体</strong>上，满足等大、反向、共线 → 牛顿第三定律<br><br>
+  关键区分：看两个力是否作用在同一物体上。
+</div>
+
+<h3>平衡状态</h3>
+<div class="flow-box">
+  <div class="flow-title">🔄 平衡状态的两种情况</div>
+  <div class="flow-path">
+    <span class="flow-node">静止</span>
+    <span class="flow-arrow">或</span>
+    <span class="flow-node">匀速直线运动</span>
+  </div>
+  <div style="font-size:13px;color:#666;margin-top:0.5rem;">
+    当物体处于平衡状态时，所受合力为零。
+  </div>
+</div>
+</section>
+
+<section>
+<h2>四、牛顿第一定律与惯性</h2>
+
+<h3>1. 牛顿第一定律（惯性定律）</h3>
+<div class="motion-box">
+  <div class="motion-title">📜 牛顿第一定律</div>
+  <p><strong>一切物体在没有受到外力作用的时候，总保持静止状态或匀速直线运动状态。</strong></p>
+  <ul style="margin-left:1.5rem;margin-top:0.5rem;">
+    <li>该定律是在大量实验基础上，通过推理概括得出的</li>
+    <li>它揭示了力和运动的关系：<strong>力不是维持物体运动的原因，而是改变物体运动状态的原因</strong></li>
+  </ul>
+</div>
+
+<h3>2. 惯性</h3>
+<div class="motion-box">
+  <div class="motion-title">🌀 惯性</div>
+  <ul style="margin-left:1.5rem;margin-bottom:0.5rem;">
+    <li><strong>定义</strong>：物体保持原来运动状态不变的性质叫做惯性</li>
+    <li><strong>一切物体在任何情况下都有惯性</strong></li>
+    <li><strong>惯性的大小只与质量有关</strong>：质量越大，惯性越大</li>
+    <li><strong>惯性不是力</strong>！不能说"受到惯性"或"惯性力"，只能说"具有惯性"</li>
+  </ul>
+</div>
+
+<h3>3. 生活中的惯性现象</h3>
+<table class="energy-table" style="width:100%;">
+  <thead>
+    <tr><th>现象</th><th>分析</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>刹车时身体前倾</td><td>脚随车减速，上身由于惯性继续向前运动</td></tr>
+    <tr><td>锤头松了，撞击柄端</td><td>柄突然停止，锤头由于惯性继续向下运动而套紧</td></tr>
+    <tr><td>跳远运动员助跑</td><td>利用惯性获得更大的起跳速度，跳得更远</td></tr>
+    <tr><td>泼水时水飞出</td><td>盆突然停止，水由于惯性继续运动而飞出</td></tr>
+    <tr><td>安全带的作用</td><td>紧急刹车时防止人由于惯性撞向前方</td></tr>
+  </tbody>
+</table>
+
+<div class="callout">
+  <div class="callout-title">💡 记忆口诀</div>
+  <strong>"惯性大小只看质量，跟速度无关！"</strong><br><br>
+  很多学生误以为速度越大惯性越大，这是错误的。一辆大卡车即使静止不动，惯性也比一辆高速飞驰的小汽车大，因为卡车的质量更大。
+</div>
+</section>
+
+<section>
+<h2>五、牛顿第二定律（F = ma）</h2>
+
+<div class="motion-box">
+  <div class="motion-title">📐 牛顿第二定律</div>
+  <p><strong>物体的加速度跟作用力成正比，跟物体的质量成反比，加速度的方向与作用力的方向相同。</strong></p>
+  <p style="text-align:center;font-size:22px;font-weight:700;margin:1rem 0;">F = ma</p>
+  <ul style="margin-left:1.5rem;">
+    <li>F — 合外力（单位：N）</li>
+    <li>m — 质量（单位：kg）</li>
+    <li>a — 加速度（单位：m/s²）</li>
+  </ul>
+</div>
+
+<div class="highlight-box">
+  <div class="highlight-title">📌 理解要点</div>
+  <ol style="margin-left:1.5rem;">
+    <li><strong>因果性</strong>：力是产生加速度的原因</li>
+    <li><strong>矢量性</strong>：加速度方向与合外力方向一致</li>
+    <li><strong>瞬时性</strong>：力变化，加速度立即变化</li>
+    <li><strong>独立性</strong>：每个力独立产生加速度</li>
+  </ol>
+</div>
+
+<h3>加速度简介</h3>
+<div class="flow-box">
+  <div class="flow-title">🏃 加速度的含义</div>
+  <p>加速度描述的是<strong>速度变化的快慢</strong>，不是速度的大小。</p>
+  <ul style="margin-left:1.5rem;margin-top:0.5rem;">
+    <li>加速度大 ≠ 速度大（可能速度很小但变化很快）</li>
+    <li>加速度为零 ≠ 速度为零（可能匀速运动）</li>
+    <li>加速度方向与速度方向相同时加速，相反时减速</li>
+  </ul>
+</div>
+</section>
+
+<section>
+<h2>六、力与运动的关系总结</h2>
+
+<div class="balance-box">
+  <div class="balance-title">🔑 核心关系</div>
+  <table class="energy-table" style="width:100%;">
+    <thead>
+      <tr><th>受力情况</th><th>合力</th><th>运动状态</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>不受力或受平衡力</td><td>F<sub>合</sub> = 0</td><td>静止 或 匀速直线运动（平衡状态）</td></tr>
+      <tr><td>受非平衡力</td><td>F<sub>合</sub> ≠ 0</td><td>加速、减速或改变方向（非平衡状态）</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="callout">
+  <div class="callout-title">💡 核心结论</div>
+  <strong>力不是维持物体运动的原因，而是改变物体运动状态的原因。</strong><br><br>
+  这是理解整个力学部分的核心观点。亚里士多德曾认为"力是维持运动的原因"，这个观点是错误的。伽利略通过理想实验首先推翻了这一观点，牛顿在此基础上总结出牛顿第一定律。
+</div>
+</section>
+
+<section>
+<h2>七、易错点总结</h2>
+<table class="energy-table" style="width:100%;">
+  <thead>
+    <tr><th style="background:var(--accent);color:white;padding:0.6rem 0.8rem;text-align:left;">❌ 常见错误</th><th style="background:var(--accent);color:white;padding:0.6rem 0.8rem;text-align:left;">✅ 正确理解</th></tr>
+  </thead>
+  <tbody>
+    <tr><td style="padding:0.5rem 0.8rem;border-bottom:1px solid #e0e0e0;">物体运动需要力来维持</td><td style="padding:0.5rem 0.8rem;border-bottom:1px solid #e0e0e0;">力是改变运动状态的原因，不是维持运动的原因</td></tr>
+    <tr><td style="padding:0.5rem 0.8rem;border-bottom:1px solid #e0e0e0;">速度大的物体惯性大</td><td style="padding:0.5rem 0.8rem;border-bottom:1px solid #e0e0e0;">惯性大小只看质量，与速度无关</td></tr>
+    <tr><td style="padding:0.5rem 0.8rem;border-bottom:1px solid #e0e0e0;">物体受力才能运动</td><td style="padding:0.5rem 0.8rem;border-bottom:1px solid #e0e0e0;">不受力的物体可以保持匀速直线运动（牛顿第一定律）</td></tr>
+    <tr><td style="padding:0.5rem 0.8rem;border-bottom:1px solid #e0e0e0;">"受到惯性"或"惯性力"</td><td style="padding:0.5rem 0.8rem;border-bottom:1px solid #e0e0e0;">惯性是性质不是力，应该说"具有惯性"或"由于惯性"</td></tr>
+    <tr><td style="padding:0.5rem 0.8rem;border-bottom:1px solid #e0e0e0;">摩擦力总是阻碍运动</td><td style="padding:0.5rem 0.8rem;border-bottom:1px solid #e0e0e0;">摩擦力阻碍的是相对运动，可以是动力也可以是阻力</td></tr>
+    <tr><td style="padding:0.5rem 0.8rem;">重力方向是垂直向下</td><td style="padding:0.5rem 0.8rem;">重力方向是<strong>竖直向下</strong>（指向地心）</td></tr>
+    <tr><td style="padding:0.5rem 0.8rem;">平衡力就是相互作用力</td><td style="padding:0.5rem 0.8rem;">平衡力作用在同一物体，相互作用力作用在不同物体</td></tr>
+  </tbody>
+</table>
+</section>
+
+<section>
+<h2>八、与小学教学的联系</h2>
+<div class="callout">
+  <div class="callout-title">🏫 教学建议</div>
+  <strong>"探究摩擦力与什么因素有关"</strong>：让学生用弹簧测力计拉动木块在不同表面上匀速运动，比较摩擦力大小，理解压力和接触面粗糙程度的影响。<br><br>
+  <strong>"惯性演示实验"</strong>：在硬币上放一张纸片，快速抽走纸片，硬币落入杯中，直观展示惯性。<br><br>
+  <strong>"观察生活中的力和运动"</strong>：让学生列举生活中利用和防止摩擦力的例子，以及利用惯性的实例。
+</div>
+</section>
+
+<section>
+<h2>📖 推荐阅读</h2>
+<p>人教版初中物理八年级下册第七章——力；第八章——运动和力。</p>
+<p>🔗 <a href="https://www.pep.com.cn/jyk/djscwl/" target="_blank">人民教育出版社 — 初中物理教材</a></p>
+<p>参考：第6课物质的三态 → <a href="0006-states-of-matter.html">第6课</a> · 第8课声与光 → <a href="0008-sound-light.html">第8课</a></p>
+</section>
+
+<section>
+<h2>✏️ 自我检测</h2>
+<p>请先独立思考，再点击选项查看答案和解析。</p>
+</section>
+
+<div class="quiz-section">
+  <div class="quiz-title">📝 课堂练习</div>
+
+  <div class="quiz-question" data-correct="2">
+    <div class="quiz-q-text">1. 关于力和运动的关系，下列说法正确的是：</div>
+    <ul class="quiz-options">
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 0)">A. 物体受力才能运动</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 1)">B. 力是维持物体运动的原因</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 2)">C. 力是改变物体运动状态的原因</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 3)">D. 不受力的物体一定静止</button></li>
+    </ul>
+    <div class="quiz-feedback correct-fb">✅ 正确！力是改变物体运动状态的原因，不是维持运动的原因。不受力的物体可以保持匀速直线运动。</div>
+    <div class="quiz-feedback wrong-fb">❌ 不对。核心结论：力是改变物体运动状态的原因，不是维持运动的原因。</div>
+  </div>
+
+  <div class="quiz-question" data-correct="1">
+    <div class="quiz-q-text">2. 关于惯性，下列说法正确的是：</div>
+    <ul class="quiz-options">
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 0)">A. 只有运动的物体才有惯性</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 1)">B. 惯性大小只与质量有关</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 2)">C. 速度越大惯性越大</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 3)">D. 静止的物体没有惯性</button></li>
+    </ul>
+    <div class="quiz-feedback correct-fb">✅ 正确！一切物体在任何情况下都有惯性，惯性大小只与质量有关，与运动状态和速度无关。</div>
+    <div class="quiz-feedback wrong-fb">❌ 不对。一切物体在任何情况下都有惯性，惯性大小只取决于质量。</div>
+  </div>
+
+  <div class="quiz-question" data-correct="0">
+    <div class="quiz-q-text">3. 重力 G = mg，其中 g = 9.8 N/kg 表示：</div>
+    <ul class="quiz-options">
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 0)">A. 1 kg 的物体受到的重力是 9.8 N</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 1)">B. 1 N 的物体质量是 9.8 kg</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 2)">C. 重力与质量无关</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 3)">D. 9.8 N 的物体质量是 1 kg</button></li>
+    </ul>
+    <div class="quiz-feedback correct-fb">✅ 正确！g = 9.8 N/kg 的物理意义是：质量为 1 kg 的物体受到的重力为 9.8 N。</div>
+    <div class="quiz-feedback wrong-fb">❌ 不对。g = 9.8 N/kg 表示每千克质量的物体受到的重力是 9.8 牛。</div>
+  </div>
+
+  <div class="quiz-question" data-correct="3">
+    <div class="quiz-q-text">4. 下列属于增大摩擦的方法的是：</div>
+    <ul class="quiz-options">
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 0)">A. 给自行车链条加润滑油</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 1)">B. 使用滚动轴承</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 2)">C. 气垫船悬浮行驶</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 3)">D. 鞋底刻有花纹</button></li>
+    </ul>
+    <div class="quiz-feedback correct-fb">✅ 正确！鞋底刻花纹是通过增大接触面粗糙程度来增大摩擦。其他三项都是减小摩擦的方法。</div>
+    <div class="quiz-feedback wrong-fb">❌ 不对。鞋底刻花纹是通过增大接触面粗糙程度来增大摩擦。加油、滚珠、气垫都是减小摩擦的方法。</div>
+  </div>
+
+  <div class="quiz-question" data-correct="1">
+    <div class="quiz-q-text">5. 一本书静止在水平桌面上，下列属于一对平衡力的是：</div>
+    <ul class="quiz-options">
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 0)">A. 书的重力和书对桌面的压力</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 1)">B. 书的重力和桌面对书的支持力</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 2)">C. 书对桌面的压力和桌面对书的支持力</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 3)">D. 桌面的重力和书的重力</button></li>
+    </ul>
+    <div class="quiz-feedback correct-fb">✅ 正确！书的重力和桌面对书的支持力都作用在书上，等大、反向、共线，是一对平衡力。</div>
+    <div class="quiz-feedback wrong-fb">❌ 不对。平衡力必须作用在同一物体上。书的重力和桌面对书的支持力都作用在书上，是一对平衡力。</div>
+  </div>
+
+  <div class="score-bar" id="scoreBar">
+    <div>🎉 测试完成！</div>
+    <div class="score-number" id="scoreNumber">0/5</div>
+    <div id="scoreMessage" style="margin-top:0.5rem;color:#666;"></div>
+  </div>
+</div>
+
+<nav>
+  <a href="0006-states-of-matter.html">← 第6课：物质的三态与变化</a>
+  <a href="0008-sound-light.html">第8课：声与光 →</a>
+</nav>
+
+</div>
+
+<script>
+let score = 0;
+let answered = 0;
+const total = 5;
+
+const explanations = [
+  // Q1
+  ["物体受力才能运动", "力是维持物体运动的原因", "力是改变物体运动状态的原因", "不受力的物体一定静止"],
+  // Q2
+  ["只有运动的物体才有惯性", "惯性大小只与质量有关", "速度越大惯性越大", "静止的物体没有惯性"],
+  // Q3
+  ["1kg的物体受到的重力是9.8N", "1N的物体质量是9.8kg", "重力与质量无关", "9.8N的物体质量是1kg"],
+  // Q4
+  ["给自行车链条加润滑油", "使用滚动轴承", "气垫船悬浮行驶", "鞋底刻有花纹"],
+  // Q5
+  ["书的重力和书对桌面的压力", "书的重力和桌面对书的支持力", "书对桌面的压力和桌面对书的支持力", "桌面的重力和书的重力"]
+];
+
+function checkAnswer(btn, choiceIndex) {
+  const question = btn.closest('.quiz-question');
+  if (question.classList.contains('answered')) return;
+  question.classList.add('answered');
+  answered++;
+
+  const correctIndex = parseInt(question.dataset.correct);
+  const buttons = question.querySelectorAll('.quiz-btn');
+  const feedback = question.querySelector('.quiz-feedback');
+
+  buttons.forEach(b => b.classList.add('disabled'));
+
+  if (choiceIndex === correctIndex) {
+    btn.classList.add('correct');
+    feedback.className = 'quiz-feedback show correct-fb';
+    feedback.textContent = '✅ 正确！' + explanations[answered - 1][correctIndex];
+    score++;
+  } else {
+    btn.classList.add('wrong');
+    buttons[correctIndex].classList.add('correct');
+    feedback.className = 'quiz-feedback show wrong-fb';
+    feedback.textContent = '❌ 不对。正确答案是：' + explanations[answered - 1][correctIndex];
+  }
+
+  if (answered === total) {
+    const bar = document.getElementById('scoreBar');
+    bar.classList.add('show');
+    document.getElementById('scoreNumber').textContent = score + '/' + total;
+    const msg = document.getElementById('scoreMessage');
+    if (score === total) msg.textContent = '🌟 太棒了！全部正确！';
+    else if (score >= 3) msg.textContent = '👍 不错！继续加油巩固薄弱环节。';
+    else msg.textContent = '💪 多复习几遍，下次一定能更好！';
+  }
+}
+</script>
+
+</body>
+</html>

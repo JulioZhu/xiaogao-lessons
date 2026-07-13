@@ -1,0 +1,9 @@
+name = "xiaogao-0001"
+main = "worker.js"
+compatibility_date = "2024-01-01"
+
+routes = [
+  "xiaogao-0001.juliozhu.com/*"
+]
+
+[vars]

@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第5课：遗传与变异基础</title>
+<style>
+  :root {
+    --bg: #faf8f5; --text: #2c2c2c;
+    --accent: #6a1b9a; --accent-light: #f3e5f5; --border: #ce93d8;
+    --quiz-correct: #4caf50; --quiz-wrong: #e53935;
+    --callout-bg: #fff8e1; --callout-border: #ffc107;
+    --dna-bg: #e8eaf6; --dna-border: #9fa8da;
+    --chromosome-bg: #fce4ec; --chromosome-border: #f48fb1;
+    --comparison-bg: #e3f2fd; --comparison-border: #90caf9;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: "Noto Serif SC", "Source Han Serif CN", "SimSun", Georgia, serif;
+    background: var(--bg); color: var(--text); line-height: 1.9;
+    font-size: 17px; padding: 2rem 1rem;
+  }
+  .container { max-width: 720px; margin: 0 auto; }
+  header { border-bottom: 3px solid var(--accent); padding-bottom: 1.5rem; margin-bottom: 2rem; }
+  .lesson-meta { font-size: 14px; color: #666; margin-bottom: 0.5rem; font-family: "Noto Sans SC", "Microsoft YaHei", sans-serif; }
+  h1 { font-size: 28px; font-weight: 700; color: var(--accent); margin-bottom: 0.5rem; letter-spacing: 0.02em; }
+  h2 { font-size: 22px; font-weight: 700; color: var(--accent); margin-top: 2.5rem; margin-bottom: 1rem; padding-bottom: 0.3rem; border-bottom: 1px solid var(--border); }
+  h3 { font-size: 18px; font-weight: 700; color: #333; margin-top: 1.5rem; margin-bottom: 0.5rem; }
+  p { margin-bottom: 1rem; }
+  .mission-link { display: inline-block; margin-bottom: 1.5rem; font-size: 14px; color: var(--accent); text-decoration: none; font-family: "Noto Sans SC", "Microsoft YaHei", sans-serif; }
+  .mission-link:hover { text-decoration: underline; }
+  ol, ul { margin-left: 1.5rem; margin-bottom: 1rem; }
+  li { margin-bottom: 0.3rem; }
+  .callout { background: var(--callout-bg); border-left: 4px solid var(--callout-border); padding: 1rem 1.2rem; margin: 1.5rem 0; border-radius: 0 8px 8px 0; font-size: 15px; }
+  .callout-title { font-weight: 700; color: #e65100; margin-bottom: 0.3rem; font-family: "Noto Sans SC", sans-serif; }
+  .dna-strand { background: var(--dna-bg); border: 2px solid var(--dna-border); border-radius: 12px; padding: 1.2rem 1.5rem; margin: 1.5rem 0; text-align: center; font-family: "Noto Sans SC", sans-serif; }
+  .dna-title { font-weight: 700; color: #283593; margin-bottom: 0.8rem; font-size: 16px; }
+  .dna-sequence { font-size: 20px; letter-spacing: 0.15em; font-weight: 600; color: #1a237e; }
+  .pair-line { color: #9fa8da; font-size: 18px; }
+  .chromosome-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 14px; }
+  .chromosome-table th { background: var(--accent); color: white; padding: 0.6rem 0.8rem; text-align: left; font-weight: 600; font-size: 13px; }
+  .chromosome-table td { padding: 0.5rem 0.8rem; border-bottom: 1px solid #e0e0e0; vertical-align: top; }
+  .chromosome-table tr:nth-child(even) td { background: #f9f9f9; }
+  .chromosome-table tr:hover td { background: var(--accent-light); }
+  .genotype-box { background: var(--chromosome-bg); border: 2px solid var(--chromosome-border); border-radius: 12px; padding: 1.2rem 1.5rem; margin: 1.5rem 0; }
+  .genotype-title { font-weight: 700; color: #c62828; margin-bottom: 0.8rem; font-family: "Noto Sans SC", sans-serif; font-size: 16px; }
+  .genotype-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.8rem; }
+  .genotype-item { background: white; border: 2px solid var(--chromosome-border); border-radius: 8px; padding: 0.8rem 1rem; text-align: center; }
+  .genotype-symbol { font-size: 22px; font-weight: 700; font-family: "Courier New", monospace; }
+  .genotype-label { font-size: 13px; color: #666; margin-top: 0.3rem; }
+  .punnett-grid { display: grid; grid-template-columns: 60px repeat(2, 1fr); grid-template-rows: repeat(3, 60px); gap: 2px; margin: 1.5rem auto; max-width: 320px; }
+  .punnett-cell { display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 700; font-family: "Courier New", monospace; border: 2px solid #ccc; border-radius: 4px; }
+  .punnett-header { background: var(--accent-light); color: var(--accent); border-color: var(--accent); }
+  .punnett-corner { background: var(--accent); color: white; }
+  .punnett-result { background: white; font-size: 16px; }
+  .comparison-box { background: var(--comparison-bg); border: 2px solid var(--comparison-border); border-radius: 12px; padding: 1.2rem 1.5rem; margin: 1.5rem 0; }
+  .comparison-title { font-weight: 700; color: #1565c0; margin-bottom: 0.5rem; font-family: "Noto Sans SC", sans-serif; }
+  .highlight-box { background: #fff3e0; border: 2px solid #ffb74d; border-radius: 12px; padding: 1rem 1.2rem; margin: 1.5rem 0; }
+  .highlight-title { font-weight: 700; color: #e65100; margin-bottom: 0.3rem; font-family: "Noto Sans SC", sans-serif; }
+  .quiz-section { background: white; border: 2px solid var(--accent); border-radius: 12px; padding: 1.5rem; margin: 2rem 0; }
+  .quiz-title { font-size: 18px; font-weight: 700; color: var(--accent); margin-bottom: 1.2rem; font-family: "Noto Sans SC", sans-serif; }
+  .quiz-question { margin-bottom: 1.5rem; padding-bottom: 1.2rem; border-bottom: 1px dashed #ddd; }
+  .quiz-question:last-of-type { border-bottom: none; }
+  .quiz-q-text { font-weight: 600; margin-bottom: 0.8rem; font-size: 16px; }
+  .quiz-options { list-style: none; padding: 0; }
+  .quiz-options li { margin-bottom: 0.4rem; }
+  .quiz-btn { display: block; width: 100%; padding: 0.6rem 1rem; margin-bottom: 0.4rem; border: 2px solid #ddd; border-radius: 8px; background: white; cursor: pointer; font-size: 15px; font-family: "Noto Sans SC", "Microsoft YaHei", sans-serif; text-align: left; transition: all 0.2s; }
+  .quiz-btn:hover { border-color: var(--accent); background: var(--accent-light); }
+  .quiz-btn.correct { border-color: var(--quiz-correct); background: #e8f5e9; color: #1b5e20; font-weight: 600; }
+  .quiz-btn.wrong { border-color: var(--quiz-wrong); background: #ffebee; color: #b71c1c; }
+  .quiz-btn.disabled { pointer-events: none; opacity: 0.7; }
+  .quiz-feedback { margin-top: 0.5rem; padding: 0.5rem 0.8rem; border-radius: 6px; font-size: 14px; font-family: "Noto Sans SC", sans-serif; display: none; }
+  .quiz-feedback.show { display: block; }
+  .quiz-feedback.correct-fb { background: #e8f5e9; color: #2e7d32; border: 1px solid #a5d6a7; }
+  .quiz-feedback.wrong-fb { background: #ffebee; color: #c62828; border: 1px solid #ef9a9a; }
+  .score-bar { display: none; text-align: center; padding: 1rem; background: var(--accent-light); border-radius: 8px; margin-top: 1rem; font-family: "Noto Sans SC", sans-serif; }
+  .score-bar.show { display: block; }
+  .score-number { font-size: 32px; font-weight: 700; color: var(--accent); }
+  nav { margin-top: 3rem; padding-top: 1.5rem; border-top: 2px solid var(--border); display: flex; justify-content: space-between; font-family: "Noto Sans SC", sans-serif; }
+  nav a { color: var(--accent); text-decoration: none; padding: 0.5rem 1rem; border: 1px solid var(--border); border-radius: 8px; transition: all 0.2s; }
+  nav a:hover { background: var(--accent-light); text-decoration: none; }
+  .flow-box { background: white; border: 2px solid var(--border); border-radius: 12px; padding: 1.2rem 1.5rem; margin: 1.5rem 0; }
+  .flow-title { font-weight: 700; color: var(--accent); margin-bottom: 0.8rem; font-family: "Noto Sans SC", sans-serif; font-size: 16px; }
+  .flow-path { font-size: 15px; line-height: 2.4; text-align: center; }
+  .flow-node { display: inline-block; background: var(--accent-light); border: 2px solid var(--border); border-radius: 6px; padding: 0.25rem 0.6rem; font-weight: 600; font-size: 13px; margin: 0.15rem; }
+  .flow-arrow { color: var(--accent); font-weight: 700; margin: 0 0.2rem; }
+  @media print { body { font-size: 12pt; padding: 1cm; } .container { max-width: 100%; } .quiz-section { break-inside: avoid; } nav { display: none; } }
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <a class="mission-link" href="../MISSION.md">← 回到学习计划</a>
+  <div class="lesson-meta">小高备考 · 第5课 · 生命科学 · 建议用时：25分钟</div>
+  <h1>遗传与变异基础</h1>
+  <p style="color:#666;font-size:14px;">为什么孩子像父母又不完全相同？遗传是生命的"复制密码"，变异是进化的"原材料"。</p>
+</header>
+
+<section>
+<h2>学习目标</h2>
+<p>学完本课，你应该能够：</p>
+<ol style="margin-left:1.5rem;margin-bottom:1rem;">
+  <li>说出DNA、基因和染色体的关系</li>
+  <li>理解人的染色体数目和性别决定</li>
+  <li>解释孟德尔遗传规律（分离定律）</li>
+  <li>区分可遗传变异和不可遗传变异</li>
+  <li>理解遗传病的基本概念和预防措施</li>
+</ol>
+</section>
+
+<section>
+<h2>一、DNA、基因与染色体</h2>
+<p>遗传信息的载体是一个多层次的结构体系，从大到小依次是：<strong>染色体 → DNA → 基因</strong>。</p>
+
+<h3>染色体</h3>
+<p>染色体存在于<strong>细胞核</strong>中，容易被碱性染料染成深色。它是遗传物质的载体。人的体细胞中有<strong>23对（46条）染色体</strong>。</p>
+
+<div class="dna-strand">
+  <div class="dna-title">🧬 染色体 = DNA + 蛋白质</div>
+  <div style="font-size:14px;color:#555;">染色体是由DNA和蛋白质两种物质组成的复合结构</div>
+</div>
+
+<h3>DNA</h3>
+<p>DNA（脱氧核糖核酸）是主要的遗传物质，呈<strong>双螺旋结构</strong>。它像一个长长的梯子，两条长链盘旋而成。</p>
+
+<div class="dna-strand">
+  <div class="dna-title">碱基互补配对原则</div>
+  <div class="dna-sequence">A — T</div>
+  <div class="pair-line">│&ensp;&ensp;│</div>
+  <div class="dna-sequence">T — A</div>
+  <div style="margin-top:0.5rem;font-size:13px;color:#666;">A=腺嘌呤，T=胸腺嘧啶，G=鸟嘌呤，C=胞嘧啶</div>
+  <div class="dna-sequence" style="margin-top:0.3rem;">G — C</div>
+  <div class="pair-line">│&ensp;&ensp;│</div>
+  <div class="dna-sequence">C — G</div>
+</div>
+
+<h3>基因</h3>
+<p>基因是具有<strong>遗传效应的DNA片段</strong>。一个DNA分子上有<strong>多个基因</strong>。基因控制生物的性状。</p>
+
+<div class="highlight-box">
+  <div class="highlight-title">📐 层次关系（必考）</div>
+  <div class="flow-path">
+    <span class="flow-node">细胞核</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-node">染色体</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-node">DNA</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-node">基因</span>
+  </div>
+  <div style="font-size:13px;color:#666;margin-top:0.5rem;">
+    数量关系：1个体细胞 → 23对染色体 → 46个DNA → 数万个基因<br>
+    位置关系：基因在DNA上，DNA在染色体上，染色体在细胞核中
+  </div>
+</div>
+
+<div class="callout">
+  <div class="callout-title">💡 形象比喻</div>
+  <strong>如果把染色体比作一本书：</strong><br>
+  - 书 = 染色体<br>
+  - 书页 = DNA<br>
+  - 一个个段落/章节 = 基因<br>
+  - 每个段落传递不同的信息（控制不同的性状）
+</div>
+</section>
+
+<section>
+<h2>二、人的染色体与性别决定</h2>
+<p>人的体细胞中有23对染色体，其中<strong>22对是常染色体</strong>，<strong>1对是性染色体</strong>。</p>
+
+<h3>常染色体与性染色体</h3>
+<table class="chromosome-table">
+  <thead>
+    <tr><th>类型</th><th>数量</th><th>说明</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><strong>常染色体</strong></td><td>22对（44条）</td><td>男女都一样，与性别无关</td></tr>
+    <tr><td rowspan="2"><strong>性染色体</strong></td><td>女性：XX</td><td>两条形态相同，用XX表示</td></tr>
+    <tr><td>男性：XY</td><td>两条形态不同，用XY表示</td></tr>
+  </tbody>
+</table>
+
+<h3>生殖细胞中的染色体</h3>
+<p>在形成精子或卵细胞的<strong>减数分裂</strong>过程中，染色体数目<strong>减半</strong>。</p>
+
+<div class="flow-box">
+  <div class="flow-title">👨 男性产生精子</div>
+  <div class="flow-path">
+    <span class="flow-node">22对+XY</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-node">22条+X</span>
+    <span class="flow-arrow">+</span>
+    <span class="flow-node">22条+Y</span>
+  </div>
+  <div style="font-size:13px;color:#666;margin-top:0.5rem;">产生两种精子，比例1:1</div>
+</div>
+
+<div class="flow-box">
+  <div class="flow-title">👩 女性产生卵细胞</div>
+  <div class="flow-path">
+    <span class="flow-node">22对+XX</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-node">22条+X</span>
+  </div>
+  <div style="font-size:13px;color:#666;margin-top:0.5rem;">只产生一种卵细胞</div>
+</div>
+
+<div class="highlight-box">
+  <div class="highlight-title">🎯 核心考点</div>
+  <strong>生男生女的概率</strong>：由于两种精子与卵细胞结合的机会均等，因此生男生女的比例接近 <strong>1:1</strong>。<br>
+  决定性别的<strong>是父亲的精子类型</strong>（X精子还是Y精子），与母亲无关！
+</div>
+</section>
+
+<section>
+<h2>三、基因的显性和隐性</h2>
+<p>控制同一性状的不同表现形式称为<strong>相对性状</strong>（如双眼皮vs单眼皮）。每个性状由一对基因控制。</p>
+
+<h3>等位基因</h3>
+<ul style="margin-left:1.5rem;margin-bottom:1rem;">
+  <li><strong>显性基因</strong>：用<strong>大写字母</strong>表示（如 A），控制的性状为显性性状</li>
+  <li><strong>隐性基因</strong>：用<strong>小写字母</strong>表示（如 a），控制的性状为隐性性状</li>
+</ul>
+
+<div class="genotype-box">
+  <div class="genotype-title">🧪 基因型与表现型</div>
+  <div class="genotype-grid">
+    <div class="genotype-item">
+      <div class="genotype-symbol">AA</div>
+      <div class="genotype-label">纯合显性 → 显性性状</div>
+    </div>
+    <div class="genotype-item">
+      <div class="genotype-symbol">Aa</div>
+      <div class="genotype-label">杂合 → 显性性状（携带隐性基因）</div>
+    </div>
+    <div class="genotype-item" style="grid-column: span 2;">
+      <div class="genotype-symbol">aa</div>
+      <div class="genotype-label">纯合隐性 → 隐性性状</div>
+    </div>
+  </div>
+</div>
+
+<div class="callout">
+  <div class="callout-title">⚠️ 关键理解</div>
+  <strong>Aa 中，显性基因A掩盖了隐性基因a的作用</strong>，所以表现为显性性状。但a并没有消失，仍然可以传递给后代。这就是为什么父母都是双眼皮（Aa），孩子可能是单眼皮（aa）。
+</div>
+
+<h3>孟德尔分离定律</h3>
+<p>在形成生殖细胞时，成对的基因彼此<strong>分离</strong>，分别进入不同的生殖细胞中。</p>
+
+<div class="comparison-box">
+  <div class="comparison-title">📊 经典杂交示例：双眼皮(Aa) × 单眼皮(aa)</div>
+  <table style="width:100%;border-collapse:collapse;font-size:14px;">
+    <tr style="border-bottom:1px solid #90caf9;">
+      <td style="padding:0.5rem;font-weight:600;">父方基因型</td>
+      <td style="padding:0.5rem;">Aa（双眼皮）</td>
+    </tr>
+    <tr style="border-bottom:1px solid #90caf9;background:#f5f5f5;">
+      <td style="padding:0.5rem;font-weight:600;">母方基因型</td>
+      <td style="padding:0.5rem;">aa（单眼皮）</td>
+    </tr>
+    <tr style="border-bottom:1px solid #90caf9;">
+      <td style="padding:0.5rem;font-weight:600;">后代基因型</td>
+      <td style="padding:0.5rem;">Aa : aa = 1 : 1</td>
+    </tr>
+    <tr>
+      <td style="padding:0.5rem;font-weight:600;">后代表现型</td>
+      <td style="padding:0.5rem;">双眼皮 : 单眼皮 = 1 : 1</td>
+    </tr>
+  </table>
+</div>
+</section>
+
+<section>
+<h2>四、遗传病与优生优育</h2>
+<h3>人类遗传病</h3>
+<p>由<strong>遗传物质改变</strong>引起的疾病，称为遗传病。主要分为：</p>
+
+<table class="chromosome-table">
+  <thead>
+    <tr><th>类型</th><th>原因</th><th>举例</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><strong>单基因遗传病</strong></td><td>一对等位基因异常</td><td>白化病、色盲、多指、血友病</td></tr>
+    <tr><td><strong>多基因遗传病</strong></td><td>多对基因+环境因素</td><td>高血压、糖尿病、唇裂</td></tr>
+    <tr><td><strong>染色体异常遗传病</strong></td><td>染色体数目/结构异常</td><td>21三体综合征（唐氏综合征）、猫叫综合征</td></tr>
+  </tbody>
+</table>
+
+<div class="highlight-box">
+  <div class="highlight-title">🏥 优生优育措施</div>
+  <ol style="margin-left:1.5rem;">
+    <li><strong>禁止近亲结婚</strong>：近亲携带相同隐性致病基因的概率大大增加</li>
+    <li><strong>遗传咨询</strong>：了解家族病史，评估遗传风险</li>
+    <li><strong>产前诊断</strong>：B超检查、羊水检查、基因检测等</li>
+    <li><strong>适龄生育</strong>：女性最佳生育年龄24-29岁</li>
+  </ol>
+</div>
+
+<div class="callout">
+  <div class="callout-title">🔬 近亲结婚的危害</div>
+  直系血亲和三代以内的旁系血亲<strong>禁止结婚</strong>。因为近亲之间携带相同隐性致病基因的可能性大，婚后子女患遗传病的概率显著增加。<br><br>
+  例如：表兄妹结婚，子女患隐性遗传病的概率是一般人群的<strong>数倍至数十倍</strong>。
+</div>
+</section>
+
+<section>
+<h2>五、变异的类型与来源</h2>
+<h3>变异的分类</h3>
+<table class="chromosome-table">
+  <thead>
+    <tr><th>类型</th><th>能否遗传</th><th>原因</th><th>举例</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><strong>可遗传变异</strong></td><td>能</td><td>遗传物质发生改变</td><td>基因突变、基因重组、染色体变异</td></tr>
+    <tr><td><strong>不可遗传变异</strong></td><td>不能</td><td>环境因素影响，遗传物质未变</td><td>晒黑的皮肤、锻炼获得的肌肉</td></tr>
+  </tbody>
+</table>
+
+<h3>可遗传变异的来源</h3>
+<ol style="margin-left:1.5rem;margin-bottom:1rem;">
+  <li><strong>基因突变</strong>：DNA分子中碱基对的替换、增添或缺失，导致基因结构的改变。是生物变异的<strong>根本来源</strong>。</li>
+  <li><strong>基因重组</strong>：在有性生殖过程中，控制不同性状的基因重新组合。是生物变异的重要来源。</li>
+  <li><strong>染色体变异</strong>：染色体数目或结构的改变。</li>
+</ol>
+
+<div class="callout">
+  <div class="callout-title">💡 变异的意义</div>
+  变异为<strong>生物进化</strong>提供了原材料。没有变异，就没有生物的多样性，自然选择也就无从谈起。可遗传的有利变异在世代积累中推动物种进化。
+</div>
+</section>
+
+<section>
+<h2>六、易错点总结</h2>
+<table class="chromosome-table" style="width:100%;border-collapse:collapse;">
+  <thead>
+    <tr><th style="background:var(--accent);color:white;padding:0.6rem 0.8rem;text-align:left;">❌ 常见错误</th><th style="background:var(--accent);color:white;padding:0.6rem 0.8rem;text-align:left;">✅ 正确理解</th></tr>
+  </thead>
+  <tbody>
+    <tr><td style="padding:0.5rem 0.8rem;border-bottom:1px solid #e0e0e0;">基因在细胞质中</td><td style="padding:0.5rem 0.8rem;border-bottom:1px solid #e0e0e0;">基因位于<strong>染色体</strong>上，染色体在<strong>细胞核</strong>中</td></tr>
+    <tr><td style="padding:0.5rem 0.8rem;border-bottom:1px solid #e0e0e0;">生男生女由母亲决定</td><td style="padding:0.5rem 0.8rem;border-bottom:1px solid #e0e0e0;">由<strong>父亲提供的精子类型</strong>（X或Y）决定</td></tr>
+    <tr><td style="padding:0.5rem 0.8rem;border-bottom:1px solid #e0e0e0;">Aa表现为隐性性状</td><td style="padding:0.5rem 0.8rem;border-bottom:1px solid #e0e0e0;">Aa中A是显性基因，表现为<strong>显性性状</strong></td></tr>
+    <tr><td style="padding:0.5rem 0.8rem;border-bottom:1px solid #e0e0e0;">晒黑的皮肤可以遗传给孩子</td><td style="padding:0.5rem 0.8rem;border-bottom:1px solid #e0e0e0;">环境引起的不可遗传变异，遗传物质未改变</td></tr>
+    <tr><td style="padding:0.5rem 0.8rem;border-bottom:1px solid #e0e0e0;">近亲结婚一定会生出有病的孩子</td><td style="padding:0.5rem 0.8rem;border-bottom:1px solid #e0e0e0;">只是<strong>患病概率大大增加</strong>，不是必然</td></tr>
+    <tr><td style="padding:0.5rem 0.8rem;">人的生殖细胞有23对染色体</td><td style="padding:0.5rem 0.8rem;">生殖细胞染色体<strong>减半</strong>，只有<strong>23条</strong>（不是23对）</td></tr>
+  </tbody>
+</table>
+</section>
+
+<section>
+<h2>七、与小学教学的联系</h2>
+<div class="callout">
+  <div class="callout-title">🏫 教学建议</div>
+  <strong>\"家庭遗传图谱\"</strong>：让学生调查自己家族的性状（如双眼皮/单眼皮、有耳垂/无耳垂、能卷舌/不能卷舌），画出简单的家系图，理解显隐性遗传规律。<br><br>
+  <strong>\"DNA模型制作\"</strong>：用扭扭棒（pipe cleaners）或彩色毛线制作DNA双螺旋模型，直观理解碱基配对原则。<br><br>
+  <strong>\"种子发芽对比实验\"</strong>：同一品种的种子分别种在不同环境中（光照/黑暗、充足/缺水），观察不可遗传变异的现象。
+</div>
+</section>
+
+<section>
+<h2>📖 推荐阅读</h2>
+<p>人教版初中生物学八年级下册第七单元第二章——遗传和变异。</p>
+<p>🔗 <a href="https://www.pep.com.cn/gzs/swsw/" target="_blank">人民教育出版社 — 初中生物教材</a></p>
+<p>参考：第4课循环系统 → <a href="0004-human-circulatory.html">第4课</a> · 第6课物质三态 → <a href="0006-states-of-matter.html">第6课</a></p>
+</section>
+
+<section>
+<h2>✏️ 自我检测</h2>
+<p>请先独立思考，再点击选项查看答案和解析。</p>
+</section>
+
+<div class="quiz-section">
+  <div class="quiz-title">📝 课堂练习</div>
+
+  <div class="quiz-question" data-correct="2">
+    <div class="quiz-q-text">1. 下列关于DNA、基因和染色体的关系，正确的是：</div>
+    <ul class="quiz-options">
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 0)">A. 基因在DNA上，DNA在染色体上</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 1)">B. 染色体在DNA上，DNA在基因上</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 2)">C. 基因在染色体上，染色体由DNA和蛋白质组成</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 3)">D. DNA在基因上，基因在染色体上</button></li>
+    </ul>
+    <div class="quiz-feedback correct-fb">✅ 正确！基因是染色体上的DNA片段，染色体由DNA和蛋白质组成。三者关系：染色体 ⊃ DNA ⊃ 基因。</div>
+    <div class="quiz-feedback wrong-fb">❌ 不对。<strong>基因在染色体上</strong>，染色体由DNA和蛋白质组成，基因是有遗传效应的DNA片段。选项C最准确。</div>
+  </div>
+
+  <div class="quiz-question" data-correct="1">
+    <div class="quiz-q-text">2. 人的精子中染色体的数目是：</div>
+    <ul class="quiz-options">
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 0)">A. 23对</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 1)">B. 23条</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 2)">C. 46对</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 3)">D. 22条</button></li>
+    </ul>
+    <div class="quiz-feedback correct-fb">✅ 正确！生殖细胞（精子或卵细胞）中的染色体数目是体细胞的一半，即23条（不是23对）。</div>
+    <div class="quiz-feedback wrong-fb">❌ 不对。生殖细胞经过减数分裂，染色体<strong>减半</strong>，为<strong>23条</strong>（11对常染色体+1条性染色体）。</div>
+  </div>
+
+  <div class="quiz-question" data-correct="3">
+    <div class="quiz-q-text">3. 一对夫妇均为双眼皮（基因型都为Aa），他们生一个单眼皮孩子的概率是：</div>
+    <ul class="quiz-options">
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 0)">A. 0</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 1)">B. 25%</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 2)">C. 50%</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 3)">D. 75%</button></li>
+    </ul>
+    <div class="quiz-feedback correct-fb">✅ 正确！Aa × Aa 的后代基因型比例为 AA:Aa:aa = 1:2:1，其中aa（单眼皮）占 1/4 = 25%。</div>
+    <div class="quiz-feedback wrong-fb">❌ 不对。Aa × Aa 的后代中，aa的概率是 <strong>25%</strong>（四分之一）。可以用棋盘法验证。</div>
+  </div>
+
+  <div class="quiz-question" data-correct="0">
+    <div class="quiz-q-text">4. 下列属于不可遗传变异的是：</div>
+    <ul class="quiz-options">
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 0)">A. 经常晒太阳皮肤变黑</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 1)">B. 太空椒（基因突变）</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 2)">C. 白化病</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 3)">D. 21三体综合征</button></li>
+    </ul>
+    <div class="quiz-feedback correct-fb">✅ 正确！晒黑是环境影响的结果，遗传物质没有改变，不能遗传给后代。其他三项都是遗传物质改变导致的可遗传变异。</div>
+    <div class="quiz-feedback wrong-fb">❌ 不对。<strong>经常晒太阳皮肤变黑</strong>是环境引起的不可遗传变异，遗传物质没有改变。</div>
+  </div>
+
+  <div class="quiz-question" data-correct="2">
+    <div class="quiz-q-text">5. 关于生男生女的下列说法，正确的是：</div>
+    <ul class="quiz-options">
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 0)">A. 由母亲的卵细胞决定</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 1)">B. 由父母的饮食决定</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 2)">C. 由父亲的精子类型决定</button></li>
+      <li><button class="quiz-btn" onclick="checkAnswer(this, 3)">D. 人为可以完全控制</button></li>
+    </ul>
+    <div class="quiz-feedback correct-fb">✅ 正确！母亲只产生含X染色体的卵细胞，父亲产生含X和含Y的两种精子。受精时若X精子与卵细胞结合则为女孩（XX），Y精子与卵细胞结合则为男孩（XY）。</div>
+    <div class="quiz-feedback wrong-fb">❌ 不对。生男生女取决于<strong>父亲的精子类型</strong>（X精子还是Y精子），因为母亲只产生一种卵细胞（含X染色体）。</div>
+  </div>
+
+  <div class="score-bar" id="scoreBar">
+    <div>🎉 测试完成！</div>
+    <div class="score-number" id="scoreNumber">0/5</div>
+    <div id="scoreMessage" style="margin-top:0.5rem;color:#666;"></div>
+  </div>
+</div>
+
+<nav>
+  <a href="0004-human-circulatory.html">← 第4课：人体循环系统</a>
+  <a href="0006-states-of-matter.html">第6课：物质的三态 →</a>
+</nav>
+
+</div>
+
+<script>
+let score = 0;
+let answered = 0;
+const total = 5;
+
+const explanations = [
+  // Q1
+  ["基因在染色体上，染色体由DNA和蛋白质组成", "染色体在DNA上，DNA在基因上", "基因在DNA上，DNA在染色体上", "DNA在基因上，基因在染色体上"],
+  // Q2
+  ["23对", "23条", "46对", "22条"],
+  // Q3
+  ["0", "25%", "50%", "75%"],
+  // Q4
+  ["经常晒太阳皮肤变黑", "太空椒（基因突变）", "白化病", "21三体综合征"],
+  // Q5
+  ["由母亲的卵细胞决定", "由父母的饮食决定", "由父亲的精子类型决定", "人为可以完全控制"]
+];
+
+function checkAnswer(btn, choiceIndex) {
+  const question = btn.closest('.quiz-question');
+  if (question.classList.contains('answered')) return;
+  question.classList.add('answered');
+  answered++;
+
+  const correctIndex = parseInt(question.dataset.correct);
+  const buttons = question.querySelectorAll('.quiz-btn');
+  const feedback = question.querySelector('.quiz-feedback');
+
+  buttons.forEach(b => b.classList.add('disabled'));
+
+  if (choiceIndex === correctIndex) {
+    btn.classList.add('correct');
+    feedback.className = 'quiz-feedback show correct-fb';
+    feedback.textContent = '✅ 正确！' + explanations[answered - 1][correctIndex];
+    score++;
+  } else {
+    btn.classList.add('wrong');
+    buttons[correctIndex].classList.add('correct');
+    feedback.className = 'quiz-feedback show wrong-fb';
+    feedback.textContent = '❌ 不对。正确答案是：' + explanations[answered - 1][correctIndex];
+  }
+
+  if (answered === total) {
+    const bar = document.getElementById('scoreBar');
+    bar.classList.add('show');
+    document.getElementById('scoreNumber').textContent = score + '/' + total;
+    const msg = document.getElementById('scoreMessage');
+    if (score === total) msg.textContent = '🌟 太棒了！全部正确！';
+    else if (score >= 3) msg.textContent = '👍 不错！继续加油巩固薄弱环节。';
+    else msg.textContent = '💪 多复习几遍，下次一定能更好！';
+  }
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>小高备考 · 课程样式</title>
+<style>
+  :root {
+    --bg: #faf8f5;
+    --text: #2c2c2c;
+    --accent: #2e7d32;
+    --accent-light: #e8f5e9;
+    --border: #c8e6c9;
+    --quiz-correct: #4caf50;
+    --quiz-wrong: #e53935;
+    --callout-bg: #fff8e1;
+    --callout-border: #ffc107;
+    --reaction-bg: #f1f8e9;
+    --reaction-border: #aed581;
+    --comparison-bg: #e3f2fd;
+    --comparison-border: #90caf9;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: "Noto Serif SC", "Source Han Serif CN", "SimSun", Georgia, serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.9;
+    font-size: 17px;
+    padding: 2rem 1rem;
+  }
+  .container { max-width: 720px; margin: 0 auto; }
+  header {
+    border-bottom: 3px solid var(--accent);
+    padding-bottom: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  .lesson-meta {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 0.5rem;
+    font-family: "Noto Sans SC", "Microsoft YaHei", sans-serif;
+  }
+  h1 {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+    letter-spacing: 0.02em;
+  }
+  h2 {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--accent);
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.3rem;
+    border-bottom: 1px solid var(--border);
+  }
+  h3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: #333;
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+  p { margin-bottom: 1rem; }
+  .mission-link {
+    display: inline-block;
+    margin-bottom: 1.5rem;
+    font-size: 14px;
+    color: var(--accent);
+    text-decoration: none;
+    font-family: "Noto Sans SC", "Microsoft YaHei", sans-serif;
+  }
+  .mission-link:hover { text-decoration: underline; }
+  ol, ul { margin-left: 1.5rem; margin-bottom: 1rem; }
+  li { margin-bottom: 0.3rem; }
+
+  /* Callout */
+  .callout {
+    background: var(--callout-bg);
+    border-left: 4px solid var(--callout-border);
+    padding: 1rem 1.2rem;
+    margin: 1.5rem 0;
+    border-radius: 0 8px 8px 0;
+    font-size: 15px;
+  }
+  .callout-title {
+    font-weight: 700;
+    color: #e65100;
+    margin-bottom: 0.3rem;
+    font-family: "Noto Sans SC", sans-serif;
+  }
+
+  /* Reaction box */
+  .reaction-box {
+    background: var(--reaction-bg);
+    border: 2px solid var(--reaction-border);
+    border-radius: 12px;
+    padding: 1.2rem 1.5rem;
+    margin: 1.5rem 0;
+    text-align: center;
+    font-family: "Noto Sans SC", "Microsoft YaHei", monospace, sans-serif;
+    font-size: 15px;
+    line-height: 2.2;
+  }
+  .reaction-title {
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+    font-size: 16px;
+  }
+
+  /* Comparison box */
+  .comparison-box {
+    background: var(--comparison-bg);
+    border: 2px solid var(--comparison-border);
+    border-radius: 12px;
+    padding: 1.2rem 1.5rem;
+    margin: 1.5rem 0;
+  }
+  .comparison-title {
+    font-weight: 700;
+    color: #1565c0;
+    margin-bottom: 0.5rem;
+    font-family: "Noto Sans SC", sans-serif;
+  }
+
+  /* Organelle table */
+  .organelle-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.5rem 0;
+    font-size: 15px;
+  }
+  .organelle-table th {
+    background: var(--accent);
+    color: white;
+    padding: 0.7rem 1rem;
+    text-align: left;
+    font-weight: 600;
+  }
+  .organelle-table td {
+    padding: 0.6rem 1rem;
+    border-bottom: 1px solid #e0e0e0;
+    vertical-align: top;
+  }
+  .organelle-table tr:nth-child(even) td { background: #f9f9f9; }
+  .organelle-table tr:hover td { background: var(--accent-light); }
+
+  /* Quiz */
+  .quiz-section {
+    background: white;
+    border: 2px solid var(--accent);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin: 2rem 0;
+  }
+  .quiz-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 1.2rem;
+    font-family: "Noto Sans SC", sans-serif;
+  }
+  .quiz-question {
+    margin-bottom: 1.5rem;
+    padding-bottom: 1.2rem;
+    border-bottom: 1px dashed #ddd;
+  }
+  .quiz-question:last-of-type { border-bottom: none; }
+  .quiz-q-text {
+    font-weight: 600;
+    margin-bottom: 0.8rem;
+    font-size: 16px;
+  }
+  .quiz-options { list-style: none; padding: 0; }
+  .quiz-options li { margin-bottom: 0.4rem; }
+  .quiz-btn {
+    display: block;
+    width: 100%;
+    padding: 0.6rem 1rem;
+    margin-bottom: 0.4rem;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    background: white;
+    cursor: pointer;
+    font-size: 15px;
+    font-family: "Noto Sans SC", "Microsoft YaHei", sans-serif;
+    text-align: left;
+    transition: all 0.2s;
+  }
+  .quiz-btn:hover {
+    border-color: var(--accent);
+    background: var(--accent-light);
+  }
+  .quiz-btn.correct {
+    border-color: var(--quiz-correct);
+    background: #e8f5e9;
+    color: #1b5e20;
+    font-weight: 600;
+  }
+  .quiz-btn.wrong {
+    border-color: var(--quiz-wrong);
+    background: #ffebee;
+    color: #b71c1c;
+  }
+  .quiz-btn.disabled {
+    pointer-events: none;
+    opacity: 0.7;
+  }
+  .quiz-feedback {
+    margin-top: 0.5rem;
+    padding: 0.5rem 0.8rem;
+    border-radius: 6px;
+    font-size: 14px;
+    font-family: "Noto Sans SC", sans-serif;
+    display: none;
+  }
+  .quiz-feedback.show { display: block; }
+  .quiz-feedback.correct-fb {
+    background: #e8f5e9;
+    color: #2e7d32;
+    border: 1px solid #a5d6a7;
+  }
+  .quiz-feedback.wrong-fb {
+    background: #ffebee;
+    color: #c62828;
+    border: 1px solid #ef9a9a;
+  }
+
+  /* Score bar */
+  .score-bar {
+    display: none;
+    text-align: center;
+    padding: 1rem;
+    background: var(--accent-light);
+    border-radius: 8px;
+    margin-top: 1rem;
+    font-family: "Noto Sans SC", sans-serif;
+  }
+  .score-bar.show { display: block; }
+  .score-number {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--accent);
+  }
+
+  /* Navigation */
+  nav {
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 2px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    font-family: "Noto Sans SC", sans-serif;
+  }
+  nav a {
+    color: var(--accent);
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    transition: all 0.2s;
+  }
+  nav a:hover {
+    background: var(--accent-light);
+    text-decoration: none;
+  }
+
+  /* Print */
+  @media print {
+    body { font-size: 12pt; padding: 1cm; }
+    .container { max-width: 100%; }
+    .quiz-section { break-inside: avoid; }
+    nav { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>小高备考 · 课程共享样式</h1>
+    <p style="color:#666;font-size:14px;">这是所有课程的共享样式组件，课程之间保持视觉一致性。</p>
+  </header>
+  <section>
+    <h2>使用方式</h2>
+    <p>每个课程 HTML 文件的 &lt;style&gt; 部分引用此样式表的变量定义（:root），确保配色统一。如需新增样式，优先在此文件中添加，而非在各课程中重复编写。</p>
+  </section>
+</div>
+</body>
+</html>

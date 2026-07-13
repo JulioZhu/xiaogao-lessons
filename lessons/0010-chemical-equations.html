@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第10课：化学方程式入门</title>
+<style>
+  :root {
+    --bg: #faf8f5; --text: #2c2c2c;
+    --accent: #6a1b9a; --accent-light: #f3e5f5; --border: #ce93d8;
+    --quiz-correct: #4caf50; --quiz-wrong: #e53935;
+    --callout-bg: #fff8e1; --callout-border: #ffc107;
+    --formula-bg: #ede7f6; --formula-border: #b39ddb;
+    --reaction-bg: #e8f5e9; --reaction-border: #a5d6a7;
+    --type-bg: #e3f2fd; --type-border: #90caf9;
+    --balance-bg: #fff3e0; --balance-border: #ffcc80;
+    --gas-bg: #fce4ec; --gas-border: #f48fb1;
+    --safety-bg: #fbe9e7; --safety-border: #ff8a65;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: "Noto Serif SC", "Source Han Serif CN", "SimSun", Georgia, serif;
+    background: var(--bg); color: var(--text); line-height: 1.9;
+    font-size: 17px; padding: 2rem 1rem;
+  }
+  .container { max-width: 720px; margin: 0 auto; }
+  header { border-bottom: 3px solid var(--accent); padding-bottom: 1.5rem; margin-bottom: 2rem; }
+  .lesson-meta { font-size: 14px; color: #666; margin-bottom: 0.5rem; font-family: "Noto Sans SC", "Microsoft YaHei", sans-serif; }
+  h1 { font-size: 28px; font-weight: 700; color: var(--accent); margin-bottom: 0.5rem; letter-spacing: 0.02em; }
+  h2 { font-size: 22px; font-weight: 700; color: var(--accent); margin-top: 2.5rem; margin-bottom: 1rem; padding-bottom: 0.3rem; border-bottom: 1px solid var(--border); }
+  h3 { font-size: 18px; font-weight: 700; color: #333; margin-top: 1.5rem; margin-bottom: 0.5rem; }
+  p { margin-bottom: 1rem; }
+  .mission-link { display: inline-block; margin-bottom: 1.5rem; font-size: 14px; color: var(--accent); text-decoration: none; font-family: "Noto Sans SC", "Microsoft YaHei", sans-serif; }
+  .mission-link:hover { text-decoration: underline; }
+  ol, ul { margin-left: 1.5rem; margin-bottom: 1rem; }
+  li { margin-bottom: 0.3rem; }
+
+  .callout {
+    background: var(--callout-bg); border-left: 4px solid var(--callout-border);
+    padding: 1rem 1.2rem; margin: 1.5rem 0; border-radius: 0 8px 8px 0; font-size: 15px;
+  }
+  .callout-title { font-weight: 700; color: #e65100; margin-bottom: 0.3rem; font-family: "Noto Sans SC", sans-serif; }
+
+  .formula-box {
+    background: var(--formula-bg); border: 2px solid var(--formula-border);
+    border-radius: 12px; padding: 1.2rem 1.5rem; margin: 1.5rem 0;
+    text-align: center; font-family: "Noto Sans SC", "Microsoft YaHei", monospace, sans-serif;
+  }
+  .formula { font-size: 22px; font-weight: 700; color: #6a1b9a; margin: 0.5rem 0; }
+  .formula-note { font-size: 14px; color: #666; }
+
+  .reaction-box {
+    background: var(--reaction-bg); border: 2px solid var(--reaction-border);
+    border-radius: 12px; padding: 1.2rem 1.5rem; margin: 1.5rem 0;
+  }
+  .reaction-title { font-weight: 700; color: #2e7d32; margin-bottom: 0.5rem; font-family: "Noto Sans SC", sans-serif; font-size: 16px; }
+
+  .type-box {
+    background: var(--type-bg); border: 2px solid var(--type-border);
+    border-radius: 12px; padding: 1.2rem 1.5rem; margin: 1.5rem 0;
+  }
+  .type-title { font-weight: 700; color: #1565c0; margin-bottom: 0.5rem; font-family: "Noto Sans SC", sans-serif; font-size: 16px; }
+
+  .balance-box {
+    background: var(--balance-bg); border: 2px solid var(--balance-border);
+    border-radius: 12px; padding: 1.2rem 1.5rem; margin: 1.5rem 0;
+  }
+  .balance-title { font-weight: 700; color: #e65100; margin-bottom: 0.5rem; font-family: "Noto Sans SC", sans-serif; font-size: 16px; }
+
+  .gas-box {
+    background: var(--gas-bg); border: 2px solid var(--gas-border);
+    border-radius: 12px; padding: 1.2rem 1.5rem; margin: 1.5rem 0;
+  }
+  .gas-title { font-weight: 700; color: #ad1457; margin-bottom: 0.5rem; font-family: "Noto Sans SC", sans-serif; font-size: 16px; }
+
+  .data-table {
+    width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 14px;
+  }
+  .data-table th {
+    background: var(--accent); color: white; padding: 0.6rem 0.8rem;
+    text-align: left; font-weight: 600; font-size: 13px;
+  }
+  .data-table td {
+    padding: 0.5rem 0.8rem; border-bottom: 1px solid #e0e0e0; vertical-align: top;
+  }
+  .data-table tr:nth-child(even) td { background: #f9f9f9; }
+  .data-table tr:hover td { background: var(--accent-light); }
+
+  .highlight-box {
+    background: #fff3e0; border: 2px solid #ffb74d; border-radius: 12px;
+    padding: 1rem 1.2rem; margin: 1.5rem 0;
+  }
+  .highlight-title { font-weight: 700; color: #e65100; margin-bottom: 0.3rem; font-family: "Noto Sans SC", sans-serif; }
+
+  .diagram-box {
+    background: #f5f5f5; border: 2px solid #ccc; border-radius: 12px;
+    padding: 1.5rem; margin: 1.5rem 0; text-align: center;
+    font-family: "Noto Sans SC", sans-serif;
+  }
+  .diagram-title { font-weight: 700; margin-bottom: 1rem; font-size: 16px; color: #333; }
+
+  /* Quiz */
+  .quiz-section {
+    background: white; border: 2px solid var(--accent);
+    border-radius: 12px; padding: 1.5rem; margin: 2rem 0;
+  }
+  .quiz-title {
+    font-size: 18px; font-weight: 700; color: var(--accent);
+    margin-bottom: 1.2rem; font-family: "Noto Sans SC", sans-serif;
+  }
+  .quiz-question { margin-bottom: 1.5rem; padding-bottom: 1.2rem; border-bottom: 1px dashed #ddd; }
+  .quiz-question:last-of-type { border-bottom: none; }
+  .quiz-q-text { font-weight: 600; margin-bottom: 0.8rem; font-size: 16px; }
+  .quiz-options { list-style: none; padding: 0; }
+  .quiz-options li { margin-bottom: 0.4rem; }
+  .quiz-btn {
+    display: block; width: 100%; padding: 0.6rem 1rem; margin-bottom: 0.4rem;
+    border: 2px solid #ddd; border-radius: 8px; background: white;
+    cursor: pointer; font-size: 15px; font-family: "Noto Sans SC", "Microsoft YaHei", sans-serif;
+    text-align: left; transition: all 0.2s;
+  }
+  .quiz-btn:hover { border-color: var(--accent); background: var(--accent-light); }
+  .quiz-btn.correct { border-color: var(--quiz-correct); background: #e8f5e9; color: #1b5e20; font-weight: 600; }
+  .quiz-btn.wrong { border-color: var(--quiz-wrong); background: #ffebee; color: #b71c1c; }
+  .quiz-btn.disabled { pointer-events: none; opacity: 0.7; }
+  .quiz-feedback {
+    margin-top: 0.5rem; padding: 0.5rem 0.8rem; border-radius: 6px;
+    font-size: 14px; font-family: "Noto Sans SC", sans-serif; display: none;
+  }
+  .quiz-feedback.show { display: block; }
+  .quiz-feedback.correct-fb { background: #e8f5e9; color: #2e7d32; border: 1px solid #a5d6a7; }
+  .quiz-feedback.wrong-fb { background: #ffebee; color: #c62828; border: 1px solid #ef9a9a; }
+  .score-bar {
+    display: none; text-align: center; padding: 1rem;
+    background: var(--accent-light); border-radius: 8px; margin-top: 1rem;
+    font-family: "Noto Sans SC", sans-serif;
+  }
+  .score-bar.show { display: block; }
+  .score-number { font-size: 32px; font-weight: 700; color: var(--accent); }
+
+  /* Navigation */
+  nav {
+    margin-top: 3rem; padding-top: 1.5rem; border-top: 2px solid var(--border);
+    display: flex; justify-content: space-between; font-family: "Noto Sans SC", sans-serif;
+  }
+  nav a {
+    color: var(--accent); text-decoration: none; padding: 0.5rem 1rem;
+    border: 1px solid var(--border); border-radius: 8px; transition: all 0.2s;
+  }
+  nav a:hover { background: var(--accent-light); text-decoration: none; }
+
+  @media print {
+    body { font-size: 12pt; padding: 1cm; }
+    .container { max-width: 100%; }
+    .quiz-section { break-inside: avoid; }
+    nav { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <a class="mission-link" href="../MISSION.md">← 回到学习计划</a>
+  <div class="lesson-meta">小高备考 · 第10课 · 物质科学 · 建议用时：30分钟</div>
+  <h1>化学方程式入门</h1>
+  <p style="color:#666;font-size:14px;">化学方程式是化学反应的"语言"。学会书写和配平，是理解物质变化的关键一步。</p>
+</header>
+
+<section>
+<h2>学习目标</h2>
+<p>学完本课，你应该能够：</p>
+<ol style="margin-left:1.5rem;margin-bottom:1rem;">
+  <li>理解化学方程式的含义和书写原则</li>
+  <li>掌握质量守恒定律并能用于配平</li>
+  <li>学会用最小整数法配平简单化学方程式</li>
+  <li>认识四种基本反应类型（化合、分解、置换、复分解）</li>
+  <li>理解化学方程式中各符号的意义</li>
+  <li>能写出初中阶段常见的化学方程式</li>
+</ol>
+</section>
+
+<section>
+<h2>一、质量守恒定律</h2>
+
+<h3>1. 核心概念</h3>
+<div class="reaction-box">
+  <div class="reaction-title">⚖️ 质量守恒定律</div>
+  <p><strong>参加化学反应的各物质的质量总和，等于反应后生成的各物质的质量总和。</strong></p>
+  <p style="margin-top:0.5rem;">这就是质量守恒定律。它是一切化学方程式配平的<strong>理论基础</strong>。</p>
+</div>
+
+<h3>2. 为什么质量守恒？</h3>
+<div class="diagram-box">
+  <div class="diagram-title">🔬 微观解释</div>
+  <div style="font-size:15px;line-height:2.4;">
+    化学反应的本质是<strong>原子的重新组合</strong>。<br>
+    反应前后：<strong>原子的种类</strong>不变、<strong>原子的数目</strong>不变、<strong>原子的质量</strong>不变<br>
+    → 所以<strong>物质的总质量</strong>不变
+  </div>
+</div>
+
+<div class="callout">
+  <div class="callout-title">⚠️ 考试高频考点</div>
+  <strong>质量守恒定律适用于一切化学反应</strong>，不适用于物理变化。<br>
+  注意："守恒"指的是<strong>质量</strong>守恒，不是体积守恒、浓度守恒等其他量。
+</div>
+
+<h3>3. 容易混淆的概念</h3>
+<table class="data-table">
+  <thead>
+    <tr><th>概念</th><th>是否正确</th><th>说明</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>化学反应前后，物质种类不变</td><td style="color:#e53935;font-weight:700;">❌ 错</td><td>物质种类一定改变（生成了新物质）</td></tr>
+    <tr><td>化学反应前后，元素种类不变</td><td style="color:#4caf50;font-weight:700;">✅ 对</td></tr>
+    <tr><td>化学反应前后，原子数目不变</td><td style="color:#4caf50;font-weight:700;">✅ 对</td></tr>
+    <tr><td>化学反应前后，分子数目不变</td><td style="color:#e53935;font-weight:700;">❌ 错</td><td>分子数目可能改变，如 2H₂ + O₂ → 2H₂O（3→2）</td></tr>
+    <tr><td>化学反应前后，分子种类不变</td><td style="color:#e53935;font-weight:700;">❌ 错</td><td>分子种类一定改变</td></tr>
+    <tr><td>化学反应前后，原子种类不变</td><td style="color:#4caf50;font-weight:700;">✅ 对</td></tr>
+  </tbody>
+</table>
+</section>
+
+<section>
+<h2>二、化学方程式的含义</h2>
+
+<h3>1. 什么是化学方程式？</h3>
+<div class="formula-box">
+  <div class="formula-note">定义</div>
+  <p style="font-size:16px;padding:0.5rem 0;">用<strong>化学式</strong>来表示化学反应的式子</p>
+</div>
+
+<h3>2. 以氢气燃烧为例</h3>
+<div class="formula-box">
+  <div class="formula-note">化学方程式</div>
+  <div class="formula">2H₂ + O₂ --(点燃)--> 2H₂O</div>
+</div>
+
+<div class="type-box">
+  <div class="type-title">📖 化学方程式的三层含义</div>
+  <ol style="margin-left:1.5rem;margin-bottom:0.5rem;">
+    <li><strong>质的方面</strong>：氢气和氧气在点燃条件下反应生成水</li>
+    <li><strong>量的方面（粒子数）</strong>：每2个氢分子和1个氧分子反应生成2个水分子</li>
+    <li><strong>量的方面（质量）</strong>：每4份质量的氢气和32份质量的氧气反应生成36份质量的水</li>
+  </ol>
+</div>
+
+<h3>3. 化学方程式中的符号</h3>
+<table class="data-table">
+  <thead>
+    <tr><th>符号</th><th>含义</th><th>示例</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><strong>+</strong></td><td>和、与（反应物之间或生成物之间）</td><td>H₂ + O₂</td></tr>
+    <tr><td><strong>--&gt;</strong></td><td>生成（箭头指向生成物）</td><td>--(点燃)--> H₂O</td></tr>
+    <tr><td><strong>↑</strong></td><td>生成气体（反应物中没有气体时）</td><td>Zn + H₂SO₄ --> ZnSO₄ + H₂↑</td></tr>
+    <tr><td><strong>↓</strong></td><td>生成沉淀（溶液中反应）</td><td>CuSO₄ + 2NaOH --> Cu(OH)₂↓ + Na₂SO₄</td></tr>
+    <tr><td><strong>△</strong></td><td>加热</td><td>2KClO₃ --(△,MnO₂)--> 2KCl + 3O₂↑</td></tr>
+    <tr><td><strong>催化剂</strong></td><td>写在箭头上方或下方</td><td>MnO₂ 作催化剂</td></tr>
+  </tbody>
+</table>
+
+<div class="callout">
+  <div class="callout-title">💡 易错提醒</div>
+  <strong>↑ 和 ↓ 的使用条件：</strong><br>
+  • ↑：生成物是气体，且<strong>反应物中没有气体</strong>时才标<br>
+  • ↓：生成物是沉淀（不溶性固体），且反应在<strong>溶液中进行</strong>时才标
+</div>
+</section>
+
+<section>
+<h2>三、化学方程式的配平</h2>
+
+<h3>1. 为什么要配平？</h3>
+<div class="balance-box">
+  <div class="balance-title">⚖️ 配平的依据：质量守恒定律</div>
+  <p>化学方程式两边，每种元素的<strong>原子个数必须相等</strong>。</p>
+  <p style="margin-top:0.5rem;">配平就是在化学式前面配上适当的<strong>系数</strong>（最简整数比），使左右两边各元素的原子总数相等。</p>
+</div>
+
+<h3>2. 最小整数配平法（最常用）</h3>
+<div class="reaction-box">
+  <div class="reaction-title">📝 配平步骤</div>
+  <ol style="margin-left:1.5rem;margin-bottom:0.5rem;">
+    <li><strong>找</strong>：找出左右两边原子个数最多的元素</li>
+    <li><strong>定</strong>：确定该元素的最小公倍数，配出系数</li>
+    <li><strong>调</strong>：根据已确定的系数，逐步调整其他元素的系数</li>
+    <li><strong>查</strong>：检查左右两边各元素原子个数是否相等</li>
+  </ol>
+</div>
+
+<h3>3. 配平示例</h3>
+
+<div class="diagram-box">
+  <div class="diagram-title">📝 示例1：Fe + O₂ --(点燃)--> Fe₃O₄</div>
+  <div style="font-size:15px;line-height:2.6;text-align:left;padding:0 1rem;">
+    <strong>第一步</strong>：找氧原子 → 左边2个，右边4个，最小公倍数4<br>
+    <strong>第二步</strong>：O₂ 配系数2 → Fe + <strong>2</strong>O₂ --> Fe₃O₄<br>
+    <strong>第三步</strong>：Fe₃O₄ 中铁3个 → <strong>3</strong>Fe + 2O₂ --> Fe₃O₄<br>
+    <strong>第四步</strong>：检查 → 左：Fe=3, O=4；右：Fe=3, O=4 ✅<br><br>
+    <strong>最终结果</strong>：<span style="font-size:18px;font-weight:700;color:#6a1b9a;">3Fe + 2O₂ --(点燃)--> Fe₃O₄</span>
+  </div>
+</div>
+
+<div class="diagram-box">
+  <div class="diagram-title">📝 示例2：P + O₂ --(点燃)--> P₂O₅</div>
+  <div style="font-size:15px;line-height:2.6;text-align:left;padding:0 1rem;">
+    <strong>第一步</strong>：找氧原子 → 左边2个，右边5个，最小公倍数10<br>
+    <strong>第二步</strong>：O₂ 配5，P₂O₅ 配2 → P + <strong>5</strong>O₂ --> <strong>2</strong>P₂O₅<br>
+    <strong>第三步</strong>：P₂O₅ 中磷4个 → <strong>4</strong>P + 5O₂ --> 2P₂O₅<br>
+    <strong>第四步</strong>：检查 → 左：P=4, O=10；右：P=4, O=10 ✅<br><br>
+    <strong>最终结果</strong>：<span style="font-size:18px;font-weight:700;color:#6a1b9a;">4P + 5O₂ --(点燃)--> 2P₂O₅</span>
+  </div>
+</div>
+
+<div class="diagram-box">
+  <div class="diagram-title">📝 示例3：CuSO₄ + NaOH --> Cu(OH)₂↓ + Na₂SO₄</div>
+  <div style="font-size:15px;line-height:2.6;text-align:left;padding:0 1rem;">
+    <strong>观察法</strong>：右边Na₂SO₄中有2个Na → NaOH前配2<br>
+    <strong>检查</strong>：Cu(OH)₂中有2个OH，2NaOH恰好提供2个OH ✅<br><br>
+    <strong>最终结果</strong>：<span style="font-size:18px;font-weight:700;color:#6a1b9a;">CuSO₄ + <strong>2</strong>NaOH --> Cu(OH)₂↓ + Na₂SO₄</span>
+  </div>
+</div>
+
+<div class="callout">
+  <div class="callout-title">💡 配平口诀</div>
+  <strong>左写反应物，右写生成物；<br>
+  写好化学式，系数要配平；<br>
+  中间连等号，条件不能丢；<br>
+  生成气体标↑，沉淀要标↓。</strong>
+</div>
+</section>
+
+<section>
+<h2>四、四种基本反应类型</h2>
+
+<div class="type-box">
+  <div class="type-title">📊 四种基本反应类型速查</div>
+  <table style="width:100%;border-collapse:collapse;font-size:14px;margin-top:0.5rem;">
+    <tr style="border-bottom:1px solid #90caf9;background:#f5f5f5;">
+      <td style="padding:0.5rem;font-weight:700;"><strong>类型</strong></td>
+      <td style="padding:0.5rem;font-weight:700;"><strong>通式</strong></td>
+      <td style="padding:0.5rem;font-weight:700;"><strong>特征</strong></td>
+      <td style="padding:0.5rem;font-weight:700;"><strong>实例</strong></td>
+    </tr>
+    <tr style="border-bottom:1px solid #90caf9;">
+      <td style="padding:0.5rem;font-weight:700;">化合反应</td>
+      <td style="padding:0.5rem;">A + B --> AB</td>
+      <td style="padding:0.5rem;">多变一</td>
+      <td style="padding:0.5rem;">C + O₂ --(点燃)--> CO₂</td>
+    </tr>
+    <tr style="border-bottom:1px solid #90caf9;background:#f5f5f5;">
+      <td style="padding:0.5rem;font-weight:700;">分解反应</td>
+      <td style="padding:0.5rem;">AB --> A + B</td>
+      <td style="padding:0.5rem;">一变多</td>
+      <td style="padding:0.5rem;">2H₂O --(通电)--> 2H₂↑ + O₂↑</td>
+    </tr>
+    <tr style="border-bottom:1px solid #90caf9;">
+      <td style="padding:0.5rem;font-weight:700;">置换反应</td>
+      <td style="padding:0.5rem;">A + BC --> AC + B</td>
+      <td style="padding:0.5rem;">单质+化合物→新单质+新化合物</td>
+      <td style="padding:0.5rem;">Zn + H₂SO₄ --> ZnSO₄ + H₂↑</td>
+    </tr>
+    <tr>
+      <td style="padding:0.5rem;font-weight:700;">复分解反应</td>
+      <td style="padding:0.5rem;">AB + CD --> AD + CB</td>
+      <td style="padding:0.5rem;">两种化合物交换成分</td>
+      <td style="padding:0.5rem;">NaOH + HCl --> NaCl + H₂O</td>
+    </tr>
+  </table>
+</div>
+
+<h3>1. 化合反应</h3>
+<div class="reaction-box">
+  <div class="reaction-title">🔥 多变一</div>
+  <table style="width:100%;border-collapse:collapse;font-size:14px;margin-top:0.5rem;">
+    <tr><td style="padding:0.4rem 0;">碳燃烧</td><td style="font-family:monospace;">C + O₂ --(点燃)--> CO₂</td></tr>
+    <tr><td style="padding:0.4rem 0;">硫燃烧</td><td style="font-family:monospace;">S + O₂ --(点燃)--> SO₂</td></tr>
+    <tr><td style="padding:0.4rem 0;">磷燃烧</td><td style="font-family:monospace;">4P + 5O₂ --(点燃)--> 2P₂O₅</td></tr>
+    <tr><td style="padding:0.4rem 0;">铁燃烧</td><td style="font-family:monospace;">3Fe + 2O₂ --(点燃)--> Fe₃O₄</td></tr>
+    <tr><td style="padding:0.4rem 0;">氢气燃烧</td><td style="font-family:monospace;">2H₂ + O₂ --(点燃)--> 2H₂O</td></tr>
+    <tr><td style="padding:0.4rem 0;">氧化钙与水</td><td style="font-family:monospace;">CaO + H₂O --> Ca(OH)₂</td></tr>
+  </table>
+</div>
+
+<h3>2. 分解反应</h3>
+<div class="reaction-box">
+  <div class="reaction-title">💧 一变多</div>
+  <table style="width:100%;border-collapse:collapse;font-size:14px;margin-top:0.5rem;">
+    <tr><td style="padding:0.4rem 0;">电解水</td><td style="font-family:monospace;">2H₂O --(通电)--> 2H₂↑ + O₂↑</td></tr>
+    <tr><td style="padding:0.4rem 0;">加热高锰酸钾</td><td style="font-family:monospace;">2KMnO₄ --(△)--> K₂MnO₄ + MnO₂ + O₂↑</td></tr>
+    <tr><td style="padding:0.4rem 0;">氯酸钾分解</td><td style="font-family:monospace;">2KClO₃ --(△,MnO₂)--> 2KCl + 3O₂↑</td></tr>
+    <tr><td style="padding:0.4rem 0;">碳酸分解</td><td style="font-family:monospace;">H₂CO₃ --> H₂O + CO₂↑</td></tr>
+  </table>
+</div>
+
+<h3>3. 置换反应</h3>
+<div class="reaction-box">
+  <div class="reaction-title">⚔️ 单质换单质</div>
+  <table style="width:100%;border-collapse:collapse;font-size:14px;margin-top:0.5rem;">
+    <tr><td style="padding:0.4rem 0;">锌与稀硫酸</td><td style="font-family:monospace;">Zn + H₂SO₄ --> ZnSO₄ + H₂↑</td></tr>
+    <tr><td style="padding:0.4rem 0;">铁与硫酸铜</td><td style="font-family:monospace;">Fe + CuSO₄ --> FeSO₄ + Cu</td></tr>
+    <tr><td style="padding:0.4rem 0;">氢气还原氧化铜</td><td style="font-family:monospace;">H₂ + CuO --(△)--> Cu + H₂O</td></tr>
+    <tr><td style="padding:0.4rem 0;">碳还原氧化铜</td><td style="font-family:monospace;">C + 2CuO --(高温)--> 2Cu + CO₂↑</td></tr>
+  </table>
+</div>
+
+<h3>4. 复分解反应</h3>
+<div class="reaction-box">
+  <div class="reaction-title">🔄 成分互换</div>
+  <table style="width:100%;border-collapse:collapse;font-size:14px;margin-top:0.5rem;">
+    <tr><td style="padding:0.4rem 0;">酸碱中和</td><td style="font-family:monospace;">NaOH + HCl --> NaCl + H₂O</td></tr>
+    <tr><td style="padding:0.4rem 0;">盐酸除锈</td><td style="font-family:monospace;">Fe₂O₃ + 6HCl --> 2FeCl₃ + 3H₂O</td></tr>
+    <tr><td style="padding:0.4rem 0;">碳酸钙与盐酸</td><td style="font-family:monospace;">CaCO₃ + 2HCl --> CaCl₂ + H₂O + CO₂↑</td></tr>
+    <tr><td style="padding:0.4rem 0;">生成沉淀</td><td style="font-family:monospace;">BaCl₂ + Na₂SO₄ --> BaSO₄↓ + 2NaCl</td></tr>
+  </table>
+</div>
+
+<div class="callout">
+  <div class="callout-title">💡 复分解反应发生的条件</div>
+  生成物中必须有<strong>沉淀</strong>、<strong>气体</strong>或<strong>水</strong>（三者至少其一），反应才能发生。<br>
+  这就是为什么酸碱中和能发生——生成了水！
+</div>
+</section>
+
+<section>
+<h2>五、常见气体的实验室制法</h2>
+
+<div class="gas-box">
+  <div class="gas-title">🧪 三种常见气体的制取</div>
+  <table style="width:100%;border-collapse:collapse;font-size:14px;margin-top:0.5rem;">
+    <tr style="border-bottom:1px solid #f48fb1;background:#f5f5f5;">
+      <td style="padding:0.5rem;font-weight:700;">气体</td>
+      <td style="padding:0.5rem;font-weight:700;">反应原理</td>
+      <td style="padding:0.5rem;font-weight:700;">收集方法</td>
+    </tr>
+    <tr style="border-bottom:1px solid #f48fb1;">
+      <td style="padding:0.5rem;font-weight:600;">O₂（氧气）</td>
+      <td style="padding:0.5rem;font-family:monospace;font-size:13px;">2KClO₃ --(△,MnO₂)--> 2KCl + 3O₂↑</td>
+      <td style="padding:0.5rem;">排水法或向上排空气法</td>
+    </tr>
+    <tr style="border-bottom:1px solid #f48fb1;background:#f5f5f5;">
+      <td style="padding:0.5rem;font-weight:600;">CO₂（二氧化碳）</td>
+      <td style="padding:0.5rem;font-family:monospace;font-size:13px;">CaCO₃ + 2HCl --> CaCl₂ + H₂O + CO₂↑</td>
+      <td style="padding:0.5rem;">向上排空气法（密度比空气大，溶于水）</td></tr>
+    <tr>
+      <td style="padding:0.5rem;font-weight:600;">H₂（氢气）</td>
+      <td style="padding:0.5rem;font-family:monospace;font-size:13px;">Zn + H₂SO₄ --> ZnSO₄ + H₂↑</td>
+      <td style="padding:0.5rem;">排水法或向下排空气法（密度最小）</td>
+    </tr>
+  </table>
+</div>
+</section>
+
+<section>
+<h2>六、易错点总结</h2>
+
+<div class="callout">
+  <div class="callout-title">❌ 常见错误</div>
+  <table style="width:100%;border-collapse:collapse;font-size:14px;margin-top:0.5rem;">
+    <tr style="border-bottom:1px solid #ffc107;"><td style="padding:0.4rem 0;"><strong>错误1</strong></td><td style="padding:0.4rem;">化学式写错（如把氧化铁写成FeO）→ 方程式一定错</td></tr>
+    <tr style="border-bottom:1px solid #ffc107;background:#fff8e1;"><td style="padding:0.4rem 0;"><strong>错误2</strong></td><td style="padding:0.4rem;">没有配平就写等号 → 违反质量守恒</td></tr>
+    <tr style="border-bottom:1px solid #ffc107;"><td style="padding:0.4rem 0;"><strong>错误3</strong></td><td style="padding:0.4rem;">漏写反应条件（点燃、加热、催化剂等）</td></tr>
+    <tr style="border-bottom:1px solid #ffc107;background:#fff8e1;"><td style="padding:0.4rem 0;"><strong>错误4</strong></td><td style="padding:0.4rem;">不该标↑↓时标了（如反应物已有气体，生成气体不标↑）</td></tr>
+    <tr style="border-bottom:1px solid #ffc107;"><td style="padding:0.4rem 0;"><strong>错误5</strong></td><td style="padding:0.4rem;">混淆"点燃"和"燃烧"——条件是"点燃"，现象是"燃烧"</td></tr>
+    <tr><td style="padding:0.4rem 0;"><strong>错误6</strong></td><td style="padding:0.4rem;">把质量守恒理解为体积守恒——气体反应前后体积可能变化</td></tr>
+  </table>
+</div>
+</section>
+
+<section>
+<h2>七、随堂练习</h2>
+<p>请先独立思考，再点击选项查看答案和解析。</p>
+</section>
+
+<!-- Quiz Section -->
+<section class="quiz-section">
+  <div class="quiz-title">📝 课堂小测验（共8题）</div>
+
+  <div class="quiz-question" data-correct="B">
+    <div class="quiz-q-text">1. 下列变化中，遵循质量守恒定律的是：</div>
+    <ul class="quiz-options">
+      <li><button class="quiz-btn" data-value="A" onclick="checkAnswer(this)">A. 冰融化成水</button></li>
+      <li><button class="quiz-btn" data-value="B" onclick="checkAnswer(this)">B. 铁在氧气中燃烧</button></li>
+      <li><button class="quiz-btn" data-value="C" onclick="checkAnswer(this)">C. 酒精挥发</button></li>
+      <li><button class="quiz-btn" data-value="D" onclick="checkAnswer(this)">D. 玻璃破碎</button></li>
+    </ul>
+    <div class="quiz-feedback correct-fb" id="fb-1-correct">✅ 正确！铁燃烧是化学反应，遵循质量守恒定律。冰融化、酒精挥发、玻璃破碎都是物理变化。</div>
+    <div class="quiz-feedback wrong-fb" id="fb-1-wrong">❌ 不对哦。质量守恒定律只适用于<strong>化学反应</strong>。铁燃烧是化学变化，其他三个都是物理变化。</div>
+  </div>
+
+  <div class="quiz-question" data-correct="C">
+    <div class="quiz-q-text">2. 化学方程式 2H₂ + O₂ --(点燃)--> 2H₂O 中，氢气和氧气的分子个数比为：</div>
+    <ul class="quiz-options">
+      <li><button class="quiz-btn" data-value="A" onclick="checkAnswer(this)">A. 1:1</button></li>
+      <li><button class="quiz-btn" data-value="B" onclick="checkAnswer(this)">B. 2:1</button></li>
+      <li><button class="quiz-btn" data-value="C" onclick="checkAnswer(this)">C. 2:1</button></li>
+      <li><button class="quiz-btn" data-value="D" onclick="checkAnswer(this)">D. 1:2</button></li>
+    </ul>
+    <div class="quiz-feedback correct-fb" id="fb-2-correct">✅ 正确！系数比就是分子个数比，H₂系数为2，O₂系数为1，比例为2:1。</div>
+    <div class="quiz-feedback wrong-fb" id="fb-2-wrong">❌ 再想想。化学方程式前面的系数表示分子个数比。2H₂ 和 O₂ 的系数分别是2和1。</div>
+  </div>
+
+  <div class="quiz-question" data-correct="B">
+    <div class="quiz-q-text">3. 下列反应属于分解反应的是：</div>
+    <ul class="quiz-options">
+      <li><button class="quiz-btn" data-value="A" onclick="checkAnswer(this)">A. C + O₂ --(点燃)--> CO₂</button></li>
+      <li><button class="quiz-btn" data-value="B" onclick="checkAnswer(this)">B. 2H₂O --(通电)--> 2H₂↑ + O₂↑</button></li>
+      <li><button class="quiz-btn" data-value="C" onclick="checkAnswer(this)">C. Zn + H₂SO₄ --> ZnSO₄ + H₂↑</button></li>
+      <li><button class="quiz-btn" data-value="D" onclick="checkAnswer(this)">D. NaOH + HCl --> NaCl + H₂O</button></li>
+    </ul>
+    <div class="quiz-feedback correct-fb" id="fb-3-correct">✅ 正确！一变多是分解反应的特征。2H₂O --> 2H₂ + O₂ 是一个物质变成两个物质。</div>
+    <div class="quiz-feedback wrong-fb" id="fb-3-wrong">❌ 分解反应的特征是"一变多"。A是化合反应，C是置换反应，D是复分解反应。</div>
+  </div>
+
+  <div class="quiz-question" data-correct="D">
+    <div class="quiz-q-text">4. 实验室制取CO₂，最适合的方法是：</div>
+    <ul class="quiz-options">
+      <li><button class="quiz-btn" data-value="A" onclick="checkAnswer(this)">A. 煅烧石灰石</button></li>
+      <li><button class="quiz-btn" data-value="B" onclick="checkAnswer(this)">B. 木炭在空气中燃烧</button></li>
+      <li><button class="quiz-btn" data-value="C" onclick="checkAnswer(this)">C. 碳酸分解</button></li>
+      <li><button class="quiz-btn" data-value="D" onclick="checkAnswer(this)">D. 大理石与稀盐酸反应</button></li>
+    </ul>
+    <div class="quiz-feedback correct-fb" id="fb-4-correct">✅ 正确！CaCO₃(大理石) + 2HCl --> CaCl₂ + H₂O + CO₂↑。反应速率适中，便于收集。</div>
+    <div class="quiz-feedback wrong-fb" id="fb-4-wrong">❌ 大理石(CaCO₃)与稀盐酸反应是实验室制CO₂的标准方法。煅烧需要高温，木炭燃烧产物不纯。</div>
+  </div>
+
+  <div class="quiz-question" data-correct="A">
+    <div class="quiz-q-text">5. 配平 Fe₂O₃ + CO --(高温)--> Fe + CO₂，正确的系数依次是：</div>
+    <ul class="quiz-options">
+      <li><button class="quiz-btn" data-value="A" onclick="checkAnswer(this)">A. 1, 3, 2, 3</button></li>
+      <li><button class="quiz-btn" data-value="B" onclick="checkAnswer(this)">B. 1, 1, 1, 1</button></li>
+      <li><button class="quiz-btn" data-value="C" onclick="checkAnswer(this)">C. 2, 3, 4, 3</button></li>
+      <li><button class="quiz-btn" data-value="D" onclick="checkAnswer(this)">D. 1, 2, 1, 2</button></li>
+    </ul>
+    <div class="quiz-feedback correct-fb" id="fb-5-correct">✅ 正确！Fe₂O₃ + 3CO --(高温)--> 2Fe + 3CO₂。铁原子：左2=右2；氧原子：左3+3=6=右6；碳原子：左3=右3。</div>
+    <div class="quiz-feedback wrong-fb" id="fb-5-wrong">❌ 试试用观察法。Fe₂O₃中有3个O，需要3个CO来夺取这些O，生成3个CO₂，同时得到2个Fe。</div>
+  </div>
+
+  <div class="quiz-question" data-correct="C">
+    <div class="quiz-q-text">6. 化学反应前后，一定不变的是：</div>
+    <ul class="quiz-options">
+      <li><button class="quiz-btn" data-value="A" onclick="checkAnswer(this)">A. 分子种类</button></li>
+      <li><button class="quiz-btn" data-value="B" onclick="checkAnswer(this)">B. 物质种类</button></li>
+      <li><button class="quiz-btn" data-value="C" onclick="checkAnswer(this)">C. 原子种类</button></li>
+      <li><button class="quiz-btn" data-value="D" onclick="checkAnswer(this)">D. 分子数目</button></li>
+    </ul>
+    <div class="quiz-feedback correct-fb" id="fb-6-correct">✅ 正确！化学反应中分子种类和物质种类一定改变，分子数目可能改变，但原子种类和数目一定不变。</div>
+    <div class="quiz-feedback wrong-fb" id="fb-6-wrong">❌ 化学反应的本质是分子分裂成原子，原子重新组合成新分子。所以原子种类一定不变。</div>
+  </div>
+
+  <div class="quiz-question" data-correct="B">
+    <div class="quiz-q-text">7. 下列符号中，表示"生成沉淀"的是：</div>
+    <ul class="quiz-options">
+      <li><button class="quiz-btn" data-value="A" onclick="checkAnswer(this)">A. ↑</button></li>
+      <li><button class="quiz-btn" data-value="B" onclick="checkAnswer(this)">B. ↓</button></li>
+      <li><button class="quiz-btn" data-value="C" onclick="checkAnswer(this)">C. △</button></li>
+      <li><button class="quiz-btn" data-value="D" onclick="checkAnswer(this)">D. →</button></li>
+    </ul>
+    <div class="quiz-feedback correct-fb" id="fb-7-correct">✅ 正确！↓表示生成沉淀，↑表示生成气体，△表示加热，→表示生成。</div>
+    <div class="quiz-feedback wrong-fb" id="fb-7-wrong">❌ 记住：↑像气泡往上冒（气体），↓像沉淀往下沉（固体沉淀）。</div>
+  </div>
+
+  <div class="quiz-question" data-correct="D">
+    <div class="quiz-q-text">8. 下列化学方程式书写完全正确的是：</div>
+    <ul class="quiz-options">
+      <li><button class="quiz-btn" data-value="A" onclick="checkAnswer(this)">A. H₂ + O₂ --(点燃)--> H₂O</button></li>
+      <li><button class="quiz-btn" data-value="B" onclick="checkAnswer(this)">B. 2H₂ + O₂ --> 2H₂O</button></li>
+      <li><button class="quiz-btn" data-value="C" onclick="checkAnswer(this)">C. 2H₂ + O₂ --(点燃)--> 2H₂O↑</button></li>
+      <li><button class="quiz-btn" data-value="D" onclick="checkAnswer(this)">D. 2H₂ + O₂ --(点燃)--> 2H₂O</button></li>
+    </ul>
+    <div class="quiz-feedback correct-fb" id="fb-8-correct">✅ 正确！A未配平，B缺反应条件，C中H₂O是液体不应标↑，D完全正确。</div>
+    <div class="quiz-feedback wrong-fb" id="fb-8-wrong">❌ A没配平，B缺条件，C不该标↑（水是液态）。只有D同时满足配平、条件和符号规范。</div>
+  </div>
+
+  <div class="score-bar" id="score-bar">
+    <div class="score-number" id="score-number"></div>
+    <div style="font-size:16px;margin-top:0.5rem;">答对了 <span id="score-text"></span> / 8 题</div>
+  </div>
+</section>
+
+<!-- Quiz JavaScript -->
+<script>
+(function() {
+  let answered = 0;
+  let correct = 0;
+  const total = 8;
+
+  window.checkAnswer = function(btn) {
+    const question = btn.closest('.quiz-question');
+    if (question.classList.contains('answered')) return;
+    question.classList.add('answered');
+    answered++;
+
+    const options = question.querySelectorAll('.quiz-btn');
+    const correctVal = question.dataset.correct;
+    const selectedVal = btn.dataset.value;
+    const isCorrect = selectedVal === correctVal;
+
+    // Disable all buttons
+    options.forEach(b => {
+      b.classList.add('disabled');
+      if (b.dataset.value === correctVal) {
+        b.classList.add('correct');
+      }
+    });
+
+    if (isCorrect) {
+      btn.classList.add('correct');
+      correct++;
+      question.querySelector('.correct-fb').classList.add('show');
+    } else {
+      btn.classList.add('wrong');
+      question.querySelector('.wrong-fb').classList.add('show');
+    }
+
+    if (answered === total) {
+      const scoreBar = document.getElementById('score-bar');
+      document.getElementById('score-number').textContent = Math.round(correct / total * 100) + '%';
+      document.getElementById('score-text').textContent = correct;
+      scoreBar.classList.add('show');
+    }
+  };
+})();
+</script>
+
+<!-- Navigation -->
+<nav>
+  <a href="0009-electricity-basics.html">← 第9课：电的基础</a>
+  <a href="../reference/0001-cell-quick-reference.html">📚 速查资料</a>
+</nav>
+
+</div>
+</body>
+</html>
